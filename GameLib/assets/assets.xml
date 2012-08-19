@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:929795b2f4f18eee3c781cb7025ca81e$ -->
+<TextureAtlas imagePath="assets.png">
+    <SubTexture name="ArialFont" x="510" y="644" width="252" height="216" frameX="-2" frameY="-2" frameWidth="256" frameHeight="256"/>
+    <SubTexture name="Hero" x="2" y="644" width="506" height="508" frameX="-2" frameY="-2" frameWidth="512" frameHeight="512"/>
+    <SubTexture name="ParticleTexture" x="877" y="644" width="64" height="64"/>
+    <SubTexture name="background" x="2" y="2" width="960" height="640"/>
+    <SubTexture name="img/map/background" x="2" y="2" width="960" height="640"/>
+    <SubTexture name="stone" x="764" y="644" width="111" height="22"/>
+</TextureAtlas>
