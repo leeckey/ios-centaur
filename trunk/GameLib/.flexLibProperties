@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="GameMain"/>
+    <classEntry path="GameState"/>
+    <classEntry path="MyStarlingGameState"/>
+    <classEntry path="centaur.scene.entity.elements.MovableBall"/>
+    <classEntry path="centaur.scene.view.GameView"/>
+    <classEntry path="centaur.scene.entity.EntityManager"/>
+    <classEntry path="centaur.scene.data.entity.EntityData"/>
+    <classEntry path="centaur.scene.data.GlobalData"/>
+    <classEntry path="centaur.scene.entity.EntityFactory"/>
+    <classEntry path="centaur.scene.entity.elements.EntityBase"/>
+    <classEntry path="centaur.scene.entity.elements.PlatformEntity"/>
+    <classEntry path="centaur.scene.consts.EntityType"/>
+    <classEntry path="centaur.utils.UniqueNameFactory"/>
+    <classEntry path="centaur.scene.entity.elements.MainPlayer"/>
+    <classEntry path="centaur.utils.DebugTrace"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
