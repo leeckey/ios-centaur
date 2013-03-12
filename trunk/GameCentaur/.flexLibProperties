@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="centaur.data.card.CardData"/>
+    <classEntry path="centaur.data.act.ActData"/>
+    <classEntry path="centaur.data.act.HeroData"/>
+    <classEntry path="centaur.data.skill.SkillData"/>
+    <classEntry path="centaur.data.map.MapData"/>
+    <classEntry path="centaur.data.map.MapDataList"/>
+    <classEntry path="centaur.data.act.InsMapData"/>
+    <classEntry path="centaur.logic.combat.CombatLogic"/>
+    <classEntry path="centaur.logic.act.BaseActObj"/>
+    <classEntry path="centaur.logic.render.BaseActRender"/>
+    <classEntry path="centaur.logic.act.BaseCardObj"/>
+    <classEntry path="centaur.data.card.CardDataList"/>
+    <classEntry path="centaur.data.act.ActDataList"/>
+    <classEntry path="centaur.data.skill.SkillDataList"/>
+    <classEntry path="centaur.logic.render.BaseCardRender"/>
+    <classEntry path="centaur.logic.combat.CombatLogicObj"/>
+    <classEntry path="centaur.logic.action.ActionBase"/>
+    <classEntry path="centaur.logic.action.SelectCardToWaitAreaAction"/>
+    <classEntry path="centaur.logic.act.HeroActObj"/>
+    <classEntry path="centaur.data.combat.CombatData"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
