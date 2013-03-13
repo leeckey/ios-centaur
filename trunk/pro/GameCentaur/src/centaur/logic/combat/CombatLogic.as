@@ -2,16 +2,17 @@ package centaur.logic.combat
 {
 	import centaur.data.act.ActData;
 	import centaur.logic.act.BaseActObj;
+	import centaur.logic.action.AddRoundAction;
 
 	public final class CombatLogic
 	{
-		public static const ACTION_SELECT_TO_WAITAREA:int = 1;
-		public static const ACTION_SELECT_TO_COMBATAREA:int = 2;
-		public static const ACTION_ATTACK:int = 3;
-		public static const ACTION_SKILL:int = 4;
-		public static const ACTION_PRESKILL:int = 5;
-		public static const ACTION_DEAD_REMOVE:int = 6;
-		public static const ACTION_ROUND_ADD:int = 7;
+		public static const ACTION_SELECT_TO_WAITAREA:int = 1;		// 从卡堆移动卡牌到等待区
+		public static const ACTION_SELECT_TO_COMBATAREA:int = 2;	// 从等待区移动卡牌到战斗区
+		public static const ACTION_ATTACK:int = 3;					// 普通攻击
+		public static const ACTION_SKILL:int = 4;					// 技能攻击
+		public static const ACTION_PRESKILL:int = 5;				// 回合前阶段技能
+		public static const ACTION_DEAD_REMOVE:int = 6;				// 从战斗区移动卡牌到墓地区
+		public static const ACTION_ROUND_ADD:int = 7;				// 新回合开始
 		
 		private var _selfLogic:CombatLogicObj;
 		private var _targetLogic:CombatLogicObj;
@@ -20,18 +21,23 @@ package centaur.logic.combat
 		{
 		}
 		
+		/**
+		 *   计算两组卡牌数据
+		 */ 
 		public function combat(selfAct:BaseActObj, targetAct:BaseActObj):Object
 		{
 			_selfLogic = new CombatLogicObj(selfAct, targetAct);
 			_targetLogic = new CombatLogicObj(targetAct, selfAct);
 			
 			// 未分胜负，继续战斗
+			var combatResult:int;
 			var combatList:Array = [];
 			var round:uint;
-			while (!checkWin())
+			while (!(combatResult = checkWin()))
 			{
 				// 当前新回合
 				round++;
+				addRound(round, combatList);
 				var curLogic:CombatLogicObj = ((round % 2) != 0) ? _selfLogic : _targetLogic;
 				
 				// 回合前阶段
@@ -47,7 +53,7 @@ package centaur.logic.combat
 				curLogic.doCombat(combatList);
 			}
 			
-			return null;
+			return {combatResult : combatResult, combatList : combatList};
 		}
 		
 		/**
@@ -56,6 +62,13 @@ package centaur.logic.combat
 		private function checkWin():int
 		{
 	 		return 1;	
+		}
+		
+		private function addRound(round:uint, list:Array):void
+		{
+			var action:AddRoundAction = new AddRoundAction();
+			action.round = round;
+			list.push(action);
 		}
 	}
 }

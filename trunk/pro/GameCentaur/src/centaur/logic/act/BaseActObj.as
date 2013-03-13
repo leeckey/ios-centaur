@@ -32,6 +32,14 @@ package centaur.logic.act
 			if (!combatData)
 				combatData = new CombatData();
 			combatData.reset(cardObjList);
+			
+			var len:int = cardObjList.length;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var obj:BaseCardObj = cardObjList[i] as BaseCardObj;
+				if (obj)
+					obj.resetCombatData();
+			}
 		}
 		
 		protected function init():void
