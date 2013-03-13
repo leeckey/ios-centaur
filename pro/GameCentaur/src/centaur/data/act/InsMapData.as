@@ -9,6 +9,10 @@ package centaur.data.act
 		public static const INS_NORMAL_TYPE:int = 2;
 		public static const INS_HARD_TYPE:int = 3;
 		
+		public var name:String;				// 名称
+		public var lv:uint;					// 等级
+		public var hp:uint;					// 当前血量
+		public var maxHP:uint;				// 最大血量
 		public var curStarLv:int;			// 当前星级
 		public var needMobility:int;		// 消耗行动力
 		

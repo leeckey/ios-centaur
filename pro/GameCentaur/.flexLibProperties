@@ -21,6 +21,10 @@
     <classEntry path="centaur.logic.action.SelectCardToWaitAreaAction"/>
     <classEntry path="centaur.logic.act.HeroActObj"/>
     <classEntry path="centaur.data.combat.CombatData"/>
+    <classEntry path="centaur.logic.action.AddRoundAction"/>
+    <classEntry path="centaur.logic.action.SelectCardToCombatAreaAction"/>
+    <classEntry path="centaur.logic.action.NormalAttackAction"/>
+    <classEntry path="centaur.data.GlobalData"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
