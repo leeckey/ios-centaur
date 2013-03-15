@@ -1,6 +1,8 @@
 package centaur.logic.act
 {
 	import centaur.data.card.CardData;
+	import centaur.data.card.CardTemplateData;
+	import centaur.data.card.CardTemplateDataList;
 	import centaur.logic.render.BaseCardRender;
 	import centaur.utils.UniqueNameFactory;
 
@@ -24,8 +26,12 @@ package centaur.logic.act
 		{
 			if (cardData)
 			{
-				cardData.hp = cardData.maxHP;
-				cardData.waitRound = cardData.maxWaitRound;
+				var templateData:CardTemplateData = CardTemplateDataList.getCardData(cardData.templateID);
+				if (templateData)
+				{
+					cardData.hp = cardData.maxHP;
+					cardData.waitRound = templateData.maxWaitRound;
+				}
 			}
 		}
 		

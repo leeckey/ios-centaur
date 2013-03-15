@@ -12,9 +12,14 @@ package centaur.data.skill
 			//
 		}
 		
-		public static function getCardData(templateID:uint):SkillData
+		public static function getSkillTemplateData(templateID:uint):SkillData
 		{
 			return _skillDic[templateID];
+		}
+		
+		public static function loadStrData(str:String):void
+		{
+			
 		}
 	}
 }
