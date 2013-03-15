@@ -1,6 +1,16 @@
 package
 {
+	import centaur.data.GlobalAPI;
 	import centaur.data.GlobalData;
+	import centaur.data.act.ActData;
+	import centaur.data.act.HeroData;
+	import centaur.data.act.InsMapData;
+	import centaur.data.card.CardData;
+	import centaur.data.card.CardTemplateDataList;
+	import centaur.display.GameBase;
+	import centaur.logic.act.BaseActObj;
+	import centaur.logic.combat.CombatLogic;
+	import centaur.manager.PathManager;
 	
 	import flash.desktop.NativeApplication;
 	import flash.desktop.SystemIdleMode;
@@ -11,9 +21,12 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.StageOrientationEvent;
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
 	import flash.text.TextField;
 	
-	public class GameMain extends Sprite
+	public class GameMain extends GameBase
 	{
 		public function GameMain()
 		{
@@ -26,7 +39,23 @@ package
 			setup();
 		}
 		
-		private function setup():void
+		override protected function init():void
+		{
+			setupGlobals();
+			
+			// 初始化配置表
+			InitConfig.initConfig();
+			
+			super.init();
+		}
+		
+		protected function setupGlobals():void
+		{
+			GlobalData.asite = "D:/Tools/pro/assets/";	// 配置资源总路径
+			GlobalAPI.pathManager = new PathManager;
+		}
+		
+		protected function setup():void
 		{
 			////----wangq
 			var text:TextField = new TextField();
@@ -37,6 +66,9 @@ package
 			
 			// 初始化事件
 			initEvents();
+			
+			////----wangq
+			forTest();
 		}
 		
 		/**
@@ -105,6 +137,28 @@ package
 		private function onStageResize(e:Event):void
 		{
 			GlobalData.onGameResize(stage.stageWidth, stage.stageHeight);
+		}
+		
+		////----wangqing
+		private function forTest():void
+		{
+			var actDataA:HeroData = new HeroData();	// 角色卡组
+			var cardData:CardData = new CardData();
+			cardData.templateID = 1;
+			cardData.update();
+			actDataA.cardList = [cardData];
+			actDataA.maxHP = 236;
+			var actA:BaseActObj = new BaseActObj(actDataA);
+			
+			var actDataB:InsMapData = new InsMapData();
+			var cardDataB:CardData = new CardData();
+			cardDataB.templateID = 2;
+			cardDataB.update();
+			actDataB.cardList = [cardDataB];
+			actDataB.maxHP = 186;
+			var actB:BaseActObj = new BaseActObj(actDataB);
+			
+			var logicData:Object = new CombatLogic().combat(actA, actB);
 		}
 	}
 }
