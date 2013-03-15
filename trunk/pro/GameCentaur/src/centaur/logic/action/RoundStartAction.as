@@ -5,13 +5,13 @@ package centaur.logic.action
 	/**
 	 *   回合次数增加操作
 	 */ 
-	public final class AddRoundAction extends ActionBase
+	public final class RoundStartAction extends ActionBase
 	{
 		public var round:int;
 		
-		public function AddRoundAction()
+		public function RoundStartAction()
 		{
-			type = CombatLogic.ACTION_ROUND_ADD;
+			type = CombatLogic.ACTION_ROUND_START;
 		}
 	}
 }

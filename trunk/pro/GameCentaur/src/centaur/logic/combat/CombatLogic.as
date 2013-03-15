@@ -2,17 +2,19 @@ package centaur.logic.combat
 {
 	import centaur.data.act.ActData;
 	import centaur.logic.act.BaseActObj;
-	import centaur.logic.action.AddRoundAction;
+	import centaur.logic.action.RoundEndAction;
+	import centaur.logic.action.RoundStartAction;
 
 	public final class CombatLogic
 	{
 		public static const ACTION_SELECT_TO_WAITAREA:int = 1;		// 从卡堆移动卡牌到等待区
 		public static const ACTION_SELECT_TO_COMBATAREA:int = 2;	// 从等待区移动卡牌到战斗区
-		public static const ACTION_ATTACK:int = 3;					// 普通攻击
-		public static const ACTION_SKILL:int = 4;					// 技能攻击
-		public static const ACTION_PRESKILL:int = 5;				// 回合前阶段技能
-		public static const ACTION_DEAD_REMOVE:int = 6;				// 从战斗区移动卡牌到墓地区
-		public static const ACTION_ROUND_ADD:int = 7;				// 新回合开始
+		public static const ACTION_SELECT_TO_CEMETERYAREA:int = 3;	// 将卡牌移动到墓地区
+		public static const ACTION_ATTACK:int = 4;					// 普通攻击
+		public static const ACTION_SKILL:int = 5;					// 技能攻击
+		public static const ACTION_PRESKILL:int = 6;				// 回合前阶段技能
+		public static const ACTION_ROUND_START:int = 7;				// 新回合开始
+		public static const ACTION_ROUND_END:int = 8;				// 当前回合结束
 		
 		private var _selfLogic:CombatLogicObj;
 		private var _targetLogic:CombatLogicObj;
@@ -37,7 +39,7 @@ package centaur.logic.combat
 			{
 				// 当前新回合
 				round++;
-				addRound(round, combatList);
+				addRoundStart(round, combatList);
 				var curLogic:CombatLogicObj = ((round % 2) != 0) ? _selfLogic : _targetLogic;
 				
 				// 回合前阶段
@@ -51,6 +53,11 @@ package centaur.logic.combat
 				
 				// 攻击对方
 				curLogic.doCombat(combatList);
+				
+				// 当前回合结束
+				_selfLogic.roundEndCallback();
+				_targetLogic.roundEndCallback();
+				addRoundEnd(round, combatList);
 			}
 			
 			return {combatResult : combatResult, combatList : combatList};
@@ -61,12 +68,24 @@ package centaur.logic.combat
 		 */ 
 		private function checkWin():int
 		{
-	 		return 1;	
+			if (_selfLogic.checkIsWin())
+				return 1;
+			if (_targetLogic.checkIsWin())
+				return -1
+			
+	 		return 0;
 		}
 		
-		private function addRound(round:uint, list:Array):void
+		private function addRoundStart(round:uint, list:Array):void
 		{
-			var action:AddRoundAction = new AddRoundAction();
+			var action:RoundStartAction = new RoundStartAction();
+			action.round = round;
+			list.push(action);
+		}
+		
+		private function addRoundEnd(round:uint, list:Array):void
+		{
+			var action:RoundEndAction = new RoundEndAction();
 			action.round = round;
 			list.push(action);
 		}

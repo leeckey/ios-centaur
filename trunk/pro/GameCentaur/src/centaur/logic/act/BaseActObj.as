@@ -1,7 +1,8 @@
 package centaur.logic.act
 {
 	import centaur.data.act.ActData;
-	import centaur.data.card.CardDataList;
+	import centaur.data.card.CardData;
+	import centaur.data.card.CardTemplateDataList;
 	import centaur.data.combat.CombatData;
 	import centaur.logic.render.BaseActRender;
 	import centaur.utils.UniqueNameFactory;
@@ -40,6 +41,8 @@ package centaur.logic.act
 				if (obj)
 					obj.resetCombatData();
 			}
+			
+			actData.hp = actData.maxHP;
 		}
 		
 		protected function init():void
@@ -51,8 +54,8 @@ package centaur.logic.act
 			var len:int = actData.cardList ? actData.cardList.length : 0;
 			for (var i:int = 0; i < len; ++i)
 			{
-				var cardID:uint = actData.cardList[i] as uint;
-				var cardObj:BaseCardObj = new BaseCardObj(CardDataList.getCardData(cardID));
+				var cardData:CardData = actData.cardList[i] as CardData;
+				var cardObj:BaseCardObj = new BaseCardObj(cardData);
 				cardObjList.push(cardObj);
 			}
 			
