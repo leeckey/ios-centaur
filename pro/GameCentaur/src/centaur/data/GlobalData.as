@@ -9,8 +9,6 @@ package centaur.data
 		
 		public static function onGameResize(stageWidth:int, stageHeight:int):void
 		{
-			GAME_WIDTH = stageWidth;
-			GAME_HEIGHT = stageHeight;
 			
 			
 		}

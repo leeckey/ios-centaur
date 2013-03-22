@@ -8,7 +8,7 @@ package centaur.logic.action
 	public final class SelectCardToCemeteryArea extends ActionBase
 	{
 		public var ownerID:uint;
-		
+			
 		public function SelectCardToCemeteryArea()
 		{
 			type = CombatLogic.ACTION_SELECT_TO_CEMETERYAREA;

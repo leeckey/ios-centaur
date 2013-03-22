@@ -4,6 +4,7 @@ package centaur.logic.act
 	import centaur.data.card.CardData;
 	import centaur.data.card.CardTemplateDataList;
 	import centaur.data.combat.CombatData;
+	import centaur.logic.action.SelectCardToCemeteryArea;
 	import centaur.logic.render.BaseActRender;
 	import centaur.utils.UniqueNameFactory;
 
@@ -19,6 +20,7 @@ package centaur.logic.act
 		public var cardObjList:Array;
 		
 		public var combatData:CombatData;
+		public var enemyActObj:BaseActObj;
 		
 		public function BaseActObj(data:ActData)
 		{
@@ -31,7 +33,7 @@ package centaur.logic.act
 		public function resetCombatData():void
 		{
 			if (!combatData)
-				combatData = new CombatData();
+				combatData = new CombatData(this);
 			combatData.reset(cardObjList);
 			
 			var len:int = cardObjList.length;
@@ -55,12 +57,38 @@ package centaur.logic.act
 			for (var i:int = 0; i < len; ++i)
 			{
 				var cardData:CardData = actData.cardList[i] as CardData;
-				var cardObj:BaseCardObj = new BaseCardObj(cardData);
+				var cardObj:BaseCardObj = new BaseCardObj(cardData, this);
 				cardObjList.push(cardObj);
 			}
+		}
+		
+		/**
+		 *   卡牌移动到墓地区
+		 */ 
+		public function cardToCemeteryArea(cardObj:BaseCardObj, list:Array):void
+		{
+			if (!cardObj)
+				return;
 			
+			var combatData:CombatData = combatData;
+			// 从战斗区,等待区或卡堆中移除
+			var idx:int = combatData.selfCombatArea.indexOf(cardObj);
+			if (idx > -1)
+				combatData.selfCombatArea[idx] = null;	// 位置不变，回合结束后梳理
+			else if ((idx = combatData.selfCardArea.indexOf(cardObj)) > -1)
+				combatData.selfCardArea.splice(idx, 1);
+			else if ((idx = combatData.selfWaitArea.indexOf(cardObj)) > -1)
+				combatData.selfWaitArea.splice(idx, 1);
 			
+			// 添加到墓地区
+			if (combatData.selfCemeteryArea.indexOf(cardObj) == -1)
+				combatData.selfCemeteryArea.push(cardObj);
 			
+			// 添加相应操作数据
+			var action:SelectCardToCemeteryArea = new SelectCardToCemeteryArea();
+			action.ownerID = objID;
+			action.targetObj = cardObj.objID;
+			list.push(action);
 		}
 	}
 }

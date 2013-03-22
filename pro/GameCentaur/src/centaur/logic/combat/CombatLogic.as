@@ -10,12 +10,15 @@ package centaur.logic.combat
 		public static const ACTION_SELECT_TO_WAITAREA:int = 1;		// 从卡堆移动卡牌到等待区
 		public static const ACTION_SELECT_TO_COMBATAREA:int = 2;	// 从等待区移动卡牌到战斗区
 		public static const ACTION_SELECT_TO_CEMETERYAREA:int = 3;	// 将卡牌移动到墓地区
-		public static const ACTION_ATTACK:int = 4;					// 普通攻击
-		public static const ACTION_SKILL:int = 5;					// 技能攻击
+		public static const ACTION_ATTACK_EFFECT:int = 4;			// 普通效果
+		public static const ACTION_SKILL_EFFECT:int = 5;			// 技能效果
 		public static const ACTION_PRESKILL:int = 6;				// 回合前阶段技能
 		public static const ACTION_ROUND_START:int = 7;				// 新回合开始
 		public static const ACTION_ROUND_END:int = 8;				// 当前回合结束
+		public static const ACTION_DAMAGE_NOTIFY:int = 9;			// 专门处理伤害的操作类型
+		public static const ACTION_BUFF_NOTIFY:int = 10;			// BUFF操作类型
 		
+		public static var combatList:Array;
 		private var _selfLogic:CombatLogicObj;
 		private var _targetLogic:CombatLogicObj;
 		
@@ -33,7 +36,7 @@ package centaur.logic.combat
 			
 			// 未分胜负，继续战斗
 			var combatResult:int;
-			var combatList:Array = [];
+			combatList = [];
 			var round:uint;
 			while (!(combatResult = checkWin()))
 			{
@@ -51,8 +54,9 @@ package centaur.logic.combat
 				// 从等待区选卡到战斗区
 				curLogic.selectCardToCombatArea(combatList);
 				
-				// 攻击对方
-				curLogic.doCombat(combatList);
+				// 攻击对方,true时直接已经分出胜负，无需继续
+				if (curLogic.doCombat(combatList))
+					break;
 				
 				// 当前回合结束
 				_selfLogic.roundEndCallback();

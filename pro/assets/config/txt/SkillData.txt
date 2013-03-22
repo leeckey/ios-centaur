@@ -1,0 +1,4 @@
+templateID	name	effectPath	discription	skillType	selectTargetType	isAffectSelf	damage	vampireRatio	buffPath	buffType	durationRound	durationDamage	avoidBuffTypeRatio	attackChange	hpChange	avoidAttackDamageRatio	avoidMagicDamageRatio	maxDamageWhenMagic	maxDamageWhenAttack	avoidMagicDamage	avoidAttackDamage	reduceMagicDamage	reduceAttackDamage	reflexMagicDamage	reflexAttackDamage	avoidTransToDie	avoidTransToWait	avoidTransToCard	specialType
+模板ID	名称	资源路径	描述	技能类型	选择目标类型	是否影响己方	伤害	吸血比率	BUFF资源	BUFF类型	持续回合	持续伤害	跳过BUFF阶段概率	攻击属性变更	血量属性变更	物理闪避概率	魔法闪避概率	最大承受魔法伤害	最大承受物理伤害	魔免	物免	抵抗魔法伤害值	抵抗物理伤害值	反弹魔法伤害值	反弹物理伤害值	无视摧毁	无视送还到等待区	无视送还	特殊技能类型(送还，摧毁等)
+1	狙击1	hello	狙击技能XXX	1	20	0	100	0			0																		
+2	格挡1	hello1	格挡技能XXX	4		0										30							50						

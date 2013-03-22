@@ -37,6 +37,10 @@ package centaur.utils
 					Utils.toUint(arr);
 					dataObj[propertyName] = arr;
 				}
+				else if (dataObj[propertyName] is Boolean)
+					dataObj[propertyName] = (propertyValue == "true");
+				else if (dataObj[propertyName] is Number)
+					dataObj[propertyName] = Number(propertyValue);
 				else
 					dataObj[propertyName] = propertyValue;
 			}
