@@ -12,7 +12,7 @@
     <classEntry path="centaur.logic.act.BaseActObj"/>
     <classEntry path="centaur.logic.render.BaseActRender"/>
     <classEntry path="centaur.logic.act.BaseCardObj"/>
-    <classEntry path="centaur.data.card.CardDataList"/>
+    <classEntry path="centaur.data.card.CardTemplateDataList"/>
     <classEntry path="centaur.data.act.ActDataList"/>
     <classEntry path="centaur.data.skill.SkillDataList"/>
     <classEntry path="centaur.logic.render.BaseCardRender"/>
@@ -21,10 +21,26 @@
     <classEntry path="centaur.logic.action.SelectCardToWaitAreaAction"/>
     <classEntry path="centaur.logic.act.HeroActObj"/>
     <classEntry path="centaur.data.combat.CombatData"/>
-    <classEntry path="centaur.logic.action.AddRoundAction"/>
+    <classEntry path="centaur.logic.action.RoundStartAction"/>
     <classEntry path="centaur.logic.action.SelectCardToCombatAreaAction"/>
-    <classEntry path="centaur.logic.action.NormalAttackAction"/>
+    <classEntry path="centaur.logic.action.AttackEffectAction"/>
     <classEntry path="centaur.data.GlobalData"/>
+    <classEntry path="centaur.logic.action.SkillEffectAction"/>
+    <classEntry path="centaur.logic.action.RoundEndAction"/>
+    <classEntry path="centaur.logic.action.SelectCardToCemeteryArea"/>
+    <classEntry path="centaur.display.GameBase"/>
+    <classEntry path="centaur.data.card.CardTemplateData"/>
+    <classEntry path="centaur.utils.Utils"/>
+    <classEntry path="centaur.manager.PathManager"/>
+    <classEntry path="centaur.data.GlobalAPI"/>
+    <classEntry path="centaur.data.act.InsMapDataList"/>
+    <classEntry path="centaur.display.ui.login.LoginPanel"/>
+    <classEntry path="centaur.data.skill.SkillEnumDefines"/>
+    <classEntry path="centaur.logic.action.DamageNotifyAction"/>
+    <classEntry path="centaur.logic.combat.SkillLogic"/>
+    <classEntry path="centaur.data.buff.BuffData"/>
+    <classEntry path="centaur.logic.action.BuffNotifyAction"/>
+    <classEntry path="centaur.logic.combat.BuffLogic"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

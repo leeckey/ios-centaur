@@ -3,11 +3,11 @@ package centaur.logic.combat
 	import centaur.data.combat.CombatData;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
-	import centaur.logic.action.NormalAttackAction;
+	import centaur.logic.action.AttackEffectAction;
 	import centaur.logic.action.SelectCardToCemeteryArea;
 	import centaur.logic.action.SelectCardToCombatAreaAction;
 	import centaur.logic.action.SelectCardToWaitAreaAction;
-	import centaur.logic.action.SkillAttackAction;
+	import centaur.logic.action.SkillEffectAction;
 	
 	import flashx.textLayout.elements.BreakElement;
 
@@ -25,7 +25,7 @@ package centaur.logic.combat
 		public function CombatLogicObj(selfAct:BaseActObj, targetAct:BaseActObj)
 		{
 			this.selfAct = selfAct;
-			this.targetAct = targetAct;
+			selfAct.enemyActObj = this.targetAct = targetAct;
 			
 			init();
 		}
@@ -123,6 +123,9 @@ package centaur.logic.combat
 				action.targetObj = targetAct.objID;
 				action.cardID = cardObj.objID;
 				list.push(action);
+				
+				// 处理卡牌降临时
+				cardObj.onPresent();
 			}
 			
 			return null;
@@ -140,7 +143,7 @@ package centaur.logic.combat
 			// 从战斗区移除
 			var idx:int = combatData.selfCombatArea.indexOf(cardObj);
 			if (idx > -1)
-				combatData.selfCombatArea.splice(idx, 1);
+				combatData.selfCombatArea[idx] = null;	// 位置不变，回合结束后梳理
 			
 			// 添加到墓地区
 			if (combatData.selfCemeteryArea.indexOf(cardObj) == -1)
@@ -166,17 +169,30 @@ package centaur.logic.combat
 				if (!cardObj)
 					continue;
 				
-				var targetObj:BaseCardObj = targetAct.combatData.selfCombatArea[i];
-				if (doCombatImpl(cardObj, targetObj, list))
-					return true;	// true战斗分出胜负,false表示还得继续战斗
+				if (cardObj.checkDead())
+					continue;
+				
+				if (cardObj.onRoundStart())
+					continue;
+				
+				if (cardObj.onSkiller(targetAct, list))
+					continue;
+				
+				if (cardObj.onAttacker(targetAct, list))
+					continue;
+				
+				// 检测下对方英雄血条，因为普通攻击涉及到血条变更
+				if (targetAct.actData.hp <= 0)
+					return true;
+				
+				cardObj.onRoundEnd();
 			}
 			
 			return false;
-			
 		}
 		
 		/**
-		 *   回合结束阶段的处理
+		 *   整个回合结束阶段的处理
 		 */ 
 		public function roundEndCallback():void
 		{
@@ -197,103 +213,6 @@ package centaur.logic.combat
 				if (!selfCombatData.selfCombatArea[i])
 					selfCombatData.selfCombatArea.splice(i, 1);
 			}
-		}
-		
-		private function doCombatImpl(srcObj:BaseCardObj, targetObj:BaseCardObj, list:Array):Boolean
-		{
-			// 对位目标卡牌存在，攻击它，否则技能攻击位置0的卡，普通攻击血槽
-			// 主动技能攻击,选择对位卡牌，没有则选择0位卡牌，再没有不释放
-			var skillTargetObj:BaseCardObj = targetObj;
-			if (!skillTargetObj)
-				skillTargetObj = targetAct.combatData.selfCombatArea[0];
-			if (skillTargetObj)
-			{
-				doSkillAttack(srcObj, skillTargetObj, list);
-			}
-			
-			// 普通攻击
-			var normalTargetObj:Object = targetObj;
-			if (!normalTargetObj)
-				normalTargetObj = targetAct;
-			if (doNormalAttack(srcObj, normalTargetObj, list))
-				return true;
-			
-			return false;
-		}
-		
-		/**
-		 *   技能攻击
-		 */ 
-		private function doSkillAttack(srcObj:BaseCardObj, targetObj:BaseCardObj, list:Array):void
-		{
-			var skillAction:SkillAttackAction = new SkillAttackAction();
-			skillAction.srcObj = srcObj.objID;
-			skillAction.targetObj = targetObj.objID;
-			
-			
-			// 目标受技能攻击时被动技能的触发
-			
-			// 主动技能时影响到自身被动技能的触发
-		}
-		
-		/**
-		 *   普通攻击
-		 */ 
-		private function doNormalAttack(srcObj:BaseCardObj, normalTargetObj:Object, list:Array):Boolean
-		{
-			var damage:int = srcObj.cardData.attack;
-			if (normalTargetObj is BaseActObj)
-			{
-				// 攻击血槽
-				var actObj:BaseActObj = normalTargetObj as BaseActObj;
-				actObj.actData.hp -= damage;
-				
-				// 增加攻击操作
-				addNormalAttackAction(damage, srcObj.objID, actObj.objID, list);
-				
-				// 如果击杀目标，直接结束战斗，则增加相应操作
-				if (actObj.actData.hp <= 0)
-				{
-					actObj.actData.hp = 0;
-					isWin = true;
-					return true;	// 表示已分出胜负
-				}
-			}
-			else if (normalTargetObj is BaseCardObj)
-			{
-				// 伤害掉血，后续增加复杂的闪避等判定
-				var cardObj:BaseCardObj = normalTargetObj as BaseCardObj;
-				cardObj.cardData.hp -= damage;
-				
-				// 增加攻击操作
-				var action:NormalAttackAction = addNormalAttackAction(damage, srcObj.objID, cardObj.objID, list);
-				if (cardObj.cardData.hp <= 0)
-				{
-					// 卡牌死亡,从战斗区转移到墓地区
-					cardObj.cardData.hp = 0;
-					cardToCemeteryArea(targetAct, cardObj, list);
-				}
-				
-				
-				// 目标受普通攻击时的被动技能的触发
-				
-				// 普通攻击时影响到自身被动技能的触发
-				
-				
-			}
-			
-			return false;
-		}
-		
-		private function addNormalAttackAction(srcID:uint, targetID:uint, damage:int, list:Array):NormalAttackAction
-		{
-			var action:NormalAttackAction = new NormalAttackAction();
-			action.damage = damage;
-			action.srcObj = srcID;
-			action.targetObj = targetID;
-			list.push(action);
-			
-			return action;
 		}
 		
 	}

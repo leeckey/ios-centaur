@@ -8,6 +8,7 @@ package
 	import centaur.data.card.CardData;
 	import centaur.data.card.CardTemplateDataList;
 	import centaur.display.GameBase;
+	import centaur.display.ui.login.LoginPanel;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.combat.CombatLogic;
 	import centaur.manager.PathManager;
@@ -24,7 +25,11 @@ package
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.system.ApplicationDomain;
 	import flash.text.TextField;
+	import flash.utils.getDefinitionByName;
+	
+	import net.hires.debug.Stats;
 	
 	public class GameMain extends GameBase
 	{
@@ -58,14 +63,16 @@ package
 		protected function setup():void
 		{
 			////----wangq
-			var text:TextField = new TextField();
-			text.text = "helloworld";
-			addChild(text);
+			var loginPanel:LoginPanel = new LoginPanel();
+			this.addChild(loginPanel);
 			
 			autoSize();
 			
 			// 初始化事件
 			initEvents();
+			
+			// 调试帧频显示
+			addChild(new Stats());
 			
 			////----wangq
 			forTest();
@@ -76,6 +83,18 @@ package
 		 */ 
 		protected function autoSize():void
 		{
+			var factorX:Number = stage.stageWidth / GlobalData.GAME_WIDTH;
+			var factorY:Number = stage.stageHeight / GlobalData.GAME_HEIGHT;
+			if (factorX > factorY)
+			{
+				this.scaleX = this.scaleY = factorY;
+				this.x = (stage.stageWidth - GlobalData.GAME_WIDTH * factorY) * 0.5;
+			}
+			else
+			{
+				this.scaleX = this.scaleY = factorX;
+				this.y = (stage.stageHeight - GlobalData.GAME_HEIGHT * factorX) * 0.5;
+			}
 			
 		}
 		
@@ -136,6 +155,7 @@ package
 		
 		private function onStageResize(e:Event):void
 		{
+			autoSize();
 			GlobalData.onGameResize(stage.stageWidth, stage.stageHeight);
 		}
 		
