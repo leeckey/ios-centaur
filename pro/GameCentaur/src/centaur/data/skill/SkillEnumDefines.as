@@ -9,6 +9,19 @@ package centaur.data.skill
 		public static const	SKILL_ATTACK_DEFENSE_TYPE:int = 4;		// 防御技能类型，受物理攻击时触发
 		public static const SKILL_DEATH_TYPE:int = 5;				// 死契技能
 		public static const SKILL_PRESENT_TYPE:int = 6;				// 降临技能
+		public static const SKILL_SPEC_DEFENSE_TYPE:int = 7;		// 特殊技能的防御类型,如送还,摧毁
+		
+		public static const SKILL2STR:Array = [
+			"",
+			"magicType",
+			"attackType",
+			"magicDefenseType",
+			"attackDefenseType",
+			"deathType",
+			"presentType",
+			"specDefenseType"
+		];
+		
 		
 		// 技能目标选择类型
 		public static const TARGET_SELF_FRONT_TYPE:int = 0;		// 自身对面
@@ -19,6 +32,7 @@ package centaur.data.skill
 		public static const TARGET_MIN_HP_TYPE:int = 20;		// 血量最少的一个 
 		public static const TARGET_MAX_LOSE_HP_TYPE:int = 21;	// 掉血最多的一个
 		public static const TARGET_ALL_TYPE:int = 30;			// 对方所有
+		public static const TARGET_ATTACKER_TYPE:int = 40;		// 攻击我的那个
 		
 		// 特殊技能的类型
 		public static const SPEC_COMBATTOCARD_TYPE:int = 1;			// 送还：将对面的卡牌送回卡组
