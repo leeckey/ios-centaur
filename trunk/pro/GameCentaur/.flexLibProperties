@@ -37,10 +37,19 @@
     <classEntry path="centaur.display.ui.login.LoginPanel"/>
     <classEntry path="centaur.data.skill.SkillEnumDefines"/>
     <classEntry path="centaur.logic.action.DamageNotifyAction"/>
-    <classEntry path="centaur.logic.combat.SkillLogic"/>
+    <classEntry path="centaur.logic.skill.SkillLogic"/>
     <classEntry path="centaur.data.buff.BuffData"/>
     <classEntry path="centaur.logic.action.BuffNotifyAction"/>
     <classEntry path="centaur.logic.combat.BuffLogic"/>
+    <classEntry path="centaur.logic.skill.SkillHandlerBase"/>
+    <classEntry path="centaur.logic.skill.MagicSkillHandler"/>
+    <classEntry path="centaur.logic.skill.AttackSkillHandler"/>
+    <classEntry path="centaur.logic.skill.MagicDefenseSkillHandler"/>
+    <classEntry path="centaur.logic.skill.SpecSkillHandler"/>
+    <classEntry path="centaur.logic.skill.SkillScriptRegister"/>
+    <classEntry path="centaur.logic.skill.AttackDefenseSkillHandler"/>
+    <classEntry path="centaur.logic.skill.SpecDefenseSkillHandler"/>
+    <classEntry path="centaur.logic.combat.CombatScene"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

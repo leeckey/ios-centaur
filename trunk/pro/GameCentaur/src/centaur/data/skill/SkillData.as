@@ -7,7 +7,8 @@ package centaur.data.skill
 	{
 		// 基础属性
 		public var templateID:uint;			// 模板ID
-		public var name:String;				// 技能名称		
+		public var name:String;				// 技能名称
+		public var script:String;			// 脚本名称
 		public var effectPath:String;		// 技能效果资源
 		public var discription:String;		// 技能描述
 		public var skillType:int;			// 技能的类型，主动法术伤害（包括加血），物理伤害(包括吸血)，被动防御技能，特殊辅助技能,死契技能，降临技能

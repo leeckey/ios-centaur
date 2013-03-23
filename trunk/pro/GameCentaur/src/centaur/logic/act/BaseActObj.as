@@ -5,6 +5,7 @@ package centaur.logic.act
 	import centaur.data.card.CardTemplateDataList;
 	import centaur.data.combat.CombatData;
 	import centaur.logic.action.SelectCardToCemeteryArea;
+	import centaur.logic.combat.CombatScene;
 	import centaur.logic.render.BaseActRender;
 	import centaur.utils.UniqueNameFactory;
 
@@ -19,6 +20,7 @@ package centaur.logic.act
 		public var render:BaseActRender;
 		public var cardObjList:Array;
 		
+		public var scene:CombatScene;
 		public var combatData:CombatData;
 		public var enemyActObj:BaseActObj;
 		

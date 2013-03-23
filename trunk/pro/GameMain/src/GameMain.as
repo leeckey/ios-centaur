@@ -11,6 +11,7 @@ package
 	import centaur.display.ui.login.LoginPanel;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.combat.CombatLogic;
+	import centaur.logic.combat.CombatScene;
 	import centaur.manager.PathManager;
 	
 	import flash.desktop.NativeApplication;
@@ -178,7 +179,7 @@ package
 			actDataB.maxHP = 186;
 			var actB:BaseActObj = new BaseActObj(actDataB);
 			
-			var logicData:Object = new CombatLogic().combat(actA, actB);
+			var logicData:Object = new CombatScene(actA, actB).start();
 		}
 	}
 }
