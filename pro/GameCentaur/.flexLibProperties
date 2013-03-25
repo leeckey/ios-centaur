@@ -50,6 +50,12 @@
     <classEntry path="centaur.logic.skill.AttackDefenseSkillHandler"/>
     <classEntry path="centaur.logic.skill.SpecDefenseSkillHandler"/>
     <classEntry path="centaur.logic.combat.CombatScene"/>
+    <classEntry path="centaur.manager.TickManager"/>
+    <classEntry path="centaur.interfaces.ITick"/>
+    <classEntry path="centaur.loader.LoaderManager"/>
+    <classEntry path="centaur.logic.events.CardEvent"/>
+    <classEntry path="centaur.loader.fam.FamManager"/>
+    <classEntry path="centaur.loader.fam.FamLoader"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
