@@ -2,33 +2,26 @@ package
 {
 	import centaur.data.GlobalAPI;
 	import centaur.data.GlobalData;
-	import centaur.data.act.ActData;
 	import centaur.data.act.HeroData;
 	import centaur.data.act.InsMapData;
 	import centaur.data.card.CardData;
-	import centaur.data.card.CardTemplateDataList;
 	import centaur.display.GameBase;
 	import centaur.display.ui.login.LoginPanel;
+	import centaur.loader.LoaderManager;
 	import centaur.logic.act.BaseActObj;
-	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.combat.CombatScene;
 	import centaur.manager.PathManager;
+	import centaur.manager.TickManager;
+	import centaur.movies.FanmMovieClip;
 	
 	import flash.desktop.NativeApplication;
 	import flash.desktop.SystemIdleMode;
-	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageOrientation;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.StageOrientationEvent;
-	import flash.filesystem.File;
-	import flash.filesystem.FileMode;
-	import flash.filesystem.FileStream;
-	import flash.system.ApplicationDomain;
-	import flash.text.TextField;
-	import flash.utils.getDefinitionByName;
 	
 	import net.hires.debug.Stats;
 	
@@ -59,6 +52,8 @@ package
 		{
 			GlobalData.asite = "D:/Tools/pro/assets/";	// 配置资源总路径
 			GlobalAPI.pathManager = new PathManager;
+			GlobalAPI.tickManager = new TickManager(stage);
+			GlobalAPI.loaderManager = new LoaderManager;
 		}
 		
 		protected function setup():void
@@ -66,6 +61,14 @@ package
 			////----wangq
 			var loginPanel:LoginPanel = new LoginPanel();
 			this.addChild(loginPanel);
+			
+			////----wangq movie test
+			var famMovie:FanmMovieClip = new FanmMovieClip(null);
+			famMovie.setPath("fortest");
+			famMovie.setLoop(3);
+			famMovie.play();
+			famMovie.x = famMovie.y = 150;
+			addChild(famMovie);
 			
 			autoSize();
 			

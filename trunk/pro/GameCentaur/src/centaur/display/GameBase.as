@@ -1,5 +1,7 @@
 package centaur.display
 {
+	import centaur.data.GlobalAPI;
+	
 	import flash.display.Sprite;
 
 	public class GameBase extends Sprite
@@ -11,6 +13,7 @@ package centaur.display
 		
 		protected function init():void
 		{
+			
 		}
 	}
 }

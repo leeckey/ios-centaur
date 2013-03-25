@@ -18,6 +18,9 @@ package centaur.logic.skill
 	{
 		SkillScriptRegister.register();
 		
+		/**
+		 *   特殊技能效果的逻辑
+		 */ 
 		public static function doSpecSkiller(skillData:SkillData, srcObj:BaseCardObj, targetObj:BaseActObj, list:Array, specifics:* = null):void
 		{
 			if (!skillData)
@@ -30,6 +33,9 @@ package centaur.logic.skill
 			skillHandler.doHandler(skillData, srcObj, targetObj, list, specifics);
 		}
 		
+		/**
+		 *   特殊技能效果的防御逻辑
+		 */ 
 		public static function doSpecDefenser(skillData:SkillData, srcObj:BaseCardObj, targetObj:BaseActObj, list:Array, specifics:* = null):Object
 		{
 			var skillHandler:SkillHandlerBase = getHandler(skillData ? skillData.script : "", 
@@ -82,6 +88,9 @@ package centaur.logic.skill
 			return skillHandler.doHandler(atkSkillData, srcObj, targetObj, list, specifics);
 		}
 		
+		/**
+		 *   被普通攻击，处理防御逻辑
+		 */ 
 		public static function doAttackDefenser(skillData:SkillData, srcObj:BaseCardObj, targetObj:BaseActObj, list:Array, specifics:* = null):Object
 		{
 			var skillHandler:SkillHandlerBase = getHandler(skillData ? skillData.script : "", 

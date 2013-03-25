@@ -14,10 +14,12 @@ package centaur.logic.act
 	import centaur.logic.action.SkillEffectAction;
 	import centaur.logic.combat.BuffLogic;
 	import centaur.logic.combat.CombatLogic;
+	import centaur.logic.events.CardEvent;
 	import centaur.logic.render.BaseCardRender;
 	import centaur.logic.skill.SkillLogic;
 	import centaur.utils.UniqueNameFactory;
 	
+	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	
 	import mx.controls.List;
@@ -25,7 +27,7 @@ package centaur.logic.act
 	/**
 	 *   卡牌数据对象
 	 */ 
-	public class BaseCardObj
+	public class BaseCardObj extends EventDispatcher
 	{
 		public var objID:uint;
 		
@@ -130,6 +132,9 @@ package centaur.logic.act
 			if (len <= 0)		// 没有需要主动释放的攻击技能，不处理
 				return false;
 			
+			// 准备主动技能攻击，派发事件
+			this.dispatchEvent(new CardEvent(CardEvent.ON_MAGIC_SKILLER));
+			
 			for (var i:int = 0; i < len; ++i)
 			{
 				if (checkDead())
@@ -159,6 +164,9 @@ package centaur.logic.act
 			attacker = srcObj;
 			srcObj.target = this;
 			
+			// 派发事件
+			this.dispatchEvent(new CardEvent(CardEvent.ON_MAGIC_HURT));
+			
 			// 受技能攻击时，与自身防御技能相计算
 			var defenseSkillList:Array = skillDic[SkillEnumDefines.SKILL_MAGIC_DEFENSE_TYPE];
 			var len:int = defenseSkillList ? defenseSkillList.length : 0;
@@ -179,6 +187,9 @@ package centaur.logic.act
 			lastDamageValue = 0;
 			if (!targetActObj)
 				return false;
+			
+			// 派发事件
+			this.dispatchEvent(new CardEvent(CardEvent.ON_ATTACK_SKILLER));
 			
 			// 处理普通攻击
 			var atkList:Array = skillDic[SkillEnumDefines.SKILL_ATTACK_TYPE];
@@ -205,6 +216,9 @@ package centaur.logic.act
 			attacker = srcObj;
 			srcObj.target = this;
 			
+			// 派发事件
+			this.dispatchEvent(new CardEvent(CardEvent.ON_ATTACK_HURT));
+			
 			var defenseSkillList:Array = skillDic[SkillEnumDefines.SKILL_ATTACK_DEFENSE_TYPE];
 			var defenseSkill:SkillData = defenseSkillList ? defenseSkillList[0] : null;
 			damage = SkillLogic.doAttackDefenser(defenseSkill, srcObj, this.owner, list, atkSkillData) as int;
@@ -216,9 +230,15 @@ package centaur.logic.act
 		 */ 
 		public function onDead():void
 		{
+			// 派发事件
+			this.dispatchEvent(new CardEvent(CardEvent.ON_DEAD));
+			
 			var deathSkill:SkillData = skillDic[SkillEnumDefines.SKILL_DEATH_TYPE];
 			if (deathSkill)
 			{
+				// 派发事件
+				this.dispatchEvent(new CardEvent(CardEvent.ON_SPEC_SKILLER));
+				
 				// 死契技能处理
 				SkillLogic.doSpecSkiller(deathSkill, this, this.owner.enemyActObj, CombatLogic.combatList);
 			}
@@ -239,9 +259,15 @@ package centaur.logic.act
 		 */ 
 		public function onPresent():void
 		{
+			// 派发事件
+			this.dispatchEvent(new CardEvent(CardEvent.ON_PRESENT));
+			
 			var presentSkill:SkillData = skillDic[SkillEnumDefines.SKILL_PRESENT_TYPE];
 			if (!presentSkill)
 				return;
+			
+			// 派发事件
+			this.dispatchEvent(new CardEvent(CardEvent.ON_SPEC_SKILLER));
 			
 			// 降临技能处理
 			SkillLogic.doSpecSkiller(presentSkill, this, this.owner.enemyActObj, CombatLogic.combatList);
@@ -259,6 +285,9 @@ package centaur.logic.act
 			if (!specSkillData || !srcObj)
 				return;
 			
+			// 派发事件
+			this.dispatchEvent(new CardEvent(CardEvent.ON_SPEC_HURT));
+			
 			var specDefenseSkillList:Array = skillDic[SkillEnumDefines.SKILL_ATTACK_DEFENSE_TYPE];
 			var specDefenseSkill:SkillData = specDefenseSkillList ? specDefenseSkillList[0] : null;
 		}
@@ -272,6 +301,9 @@ package centaur.logic.act
 			if (BuffLogic.doBuffer(this, SkillEnumDefines.BUFF_ROUND_START, CombatLogic.combatList))
 				return true;
 			
+			// 派发事件
+			this.dispatchEvent(new CardEvent(CardEvent.ON_ROUND_START));
+			
 			return isDead();
 		}
 		
@@ -283,6 +315,9 @@ package centaur.logic.act
 			// 检测自身BUFF，回合结束时触发的BUFF
 			if (BuffLogic.doBuffer(this, SkillEnumDefines.BUFF_ROUND_END, CombatLogic.combatList))
 				return true;
+			
+			// 派发事件
+			this.dispatchEvent(new CardEvent(CardEvent.ON_ROUND_END));
 			
 			return isDead();
 		}
