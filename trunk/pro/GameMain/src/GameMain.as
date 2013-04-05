@@ -50,7 +50,7 @@ package
 		
 		protected function setupGlobals():void
 		{
-			GlobalData.asite = "E:/Game/pro/assets/";	// 配置资源总路径
+			GlobalData.asite = "D:/Tools/pro/assets/";	// 配置资源总路径
 			GlobalAPI.pathManager = new PathManager;
 			GlobalAPI.tickManager = new TickManager(stage);
 			GlobalAPI.loaderManager = new LoaderManager;
