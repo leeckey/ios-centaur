@@ -7,11 +7,10 @@ package centaur.data.act
 	 */ 
 	public class ActData
 	{
-		public var templateID:uint;		// 模板ID
+		public var templateID:uint;		                // 模板ID
 		public var cardList:Array = Utils.EMPTY_ARRAY;		// 卡组
-		public var headPicID:int;		// 头像资源
-		public var hp:int;					// 当前血量
-		public var maxHP:uint;				// 最大血量
+		public var headPicID:int;		                    // 头像资源
+		public var maxHP:uint;				                // 最大血量
 		
 		public function ActData()
 		{

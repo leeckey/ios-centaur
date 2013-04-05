@@ -8,16 +8,22 @@ package centaur.logic.action
 		
 		public function DamageNotifyAction()
 		{
-			type = CombatLogic.ACTION_DAMAGE_NOTIFY;
+			type = ACTION_DAMAGE_NOTIFY;
 		}
 		
-		public static function addDamageAction(damage:int, targetID:uint):DamageNotifyAction
+		public static function getAction(damage:int, targetID:uint):DamageNotifyAction
 		{
 			var action:DamageNotifyAction = new DamageNotifyAction();
 			action.damage = damage;
 			action.targetObj = targetID;
 			
+			trace(action.toString());
 			return action;
+		}
+		
+		public override function toString():String
+		{
+			return targetObj + "受到" + damage + "伤害";
 		}
 	}
 }

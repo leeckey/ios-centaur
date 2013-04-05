@@ -12,7 +12,22 @@ package centaur.logic.action
 		
 		public function SelectCardToWaitAreaAction()
 		{
-			type = CombatLogic.ACTION_SELECT_TO_WAITAREA;
+			type = ACTION_SELECT_TO_WAITAREA;
+		}
+		
+		public static function getAction(ownerID:int, cardID:int):SelectCardToWaitAreaAction
+		{
+			var action:SelectCardToWaitAreaAction = new SelectCardToWaitAreaAction();
+			action.srcObj = ownerID;
+			action.cardID = cardID;
+			
+			trace(action.toString());
+			return action;
+		}
+		
+		public override function toString():String
+		{
+			return "卡牌" + cardID + "进入等待区";
 		}
 	}
 }

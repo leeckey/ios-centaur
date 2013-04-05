@@ -12,7 +12,22 @@ package centaur.logic.action
 		
 		public function SelectCardToCombatAreaAction()
 		{
-			type = CombatLogic.ACTION_SELECT_TO_COMBATAREA;
+			type = ACTION_SELECT_TO_COMBATAREA;
+		}
+		
+		public static function getAction(ownerID:int, cardID:int):SelectCardToCombatAreaAction
+		{
+			var action:SelectCardToCombatAreaAction = new SelectCardToCombatAreaAction();
+			action.srcObj = ownerID;
+			action.cardID = cardID;
+			
+			trace(action.toString());
+			return action;
+		}
+		
+		public override function toString():String
+		{
+			return "卡牌" + cardID + "进入战斗区";
 		}
 	}
 }
