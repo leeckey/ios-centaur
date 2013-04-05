@@ -50,7 +50,7 @@ package
 		
 		protected function setupGlobals():void
 		{
-			GlobalData.asite = "D:/Tools/pro/assets/";	// 配置资源总路径
+			GlobalData.asite = "E:/Game/pro/assets/";	// 配置资源总路径
 			GlobalAPI.pathManager = new PathManager;
 			GlobalAPI.tickManager = new TickManager(stage);
 			GlobalAPI.loaderManager = new LoaderManager;
@@ -60,15 +60,15 @@ package
 		{
 			////----wangq
 			var loginPanel:LoginPanel = new LoginPanel();
-			this.addChild(loginPanel);
+			//this.addChild(loginPanel);
 			
 			////----wangq movie test
-			var famMovie:FanmMovieClip = new FanmMovieClip(null);
+/*			var famMovie:FanmMovieClip = new FanmMovieClip(null);
 			famMovie.setPath("fortest");
 			famMovie.setLoop(3);
 			famMovie.play();
 			famMovie.x = famMovie.y = 150;
-			addChild(famMovie);
+			addChild(famMovie);*/
 			
 			autoSize();
 			
@@ -76,7 +76,7 @@ package
 			initEvents();
 			
 			// 调试帧频显示
-			addChild(new Stats());
+			//addChild(new Stats());
 			
 			////----wangq
 			forTest();
@@ -167,19 +167,29 @@ package
 		private function forTest():void
 		{
 			var actDataA:HeroData = new HeroData();	// 角色卡组
-			var cardData:CardData = new CardData();
-			cardData.templateID = 1;
-			cardData.update();
-			actDataA.cardList = [cardData];
-			actDataA.maxHP = 236;
+			var cardData:CardData;
+			actDataA.cardList = [];
+			actDataA.maxHP = 2000;
+			for (var i:int = 0; i < 3; i++)
+			{
+				cardData = new CardData();
+				cardData.templateID = 1;
+				cardData.update();
+				actDataA.cardList.push(cardData);
+			}
+			
 			var actA:BaseActObj = new BaseActObj(actDataA);
 			
 			var actDataB:InsMapData = new InsMapData();
-			var cardDataB:CardData = new CardData();
-			cardDataB.templateID = 2;
-			cardDataB.update();
-			actDataB.cardList = [cardDataB];
-			actDataB.maxHP = 186;
+			actDataB.cardList = [];
+			actDataB.maxHP = 2000;
+			for (var j:int = 0; j < 3; j++)
+			{
+				cardData = new CardData();
+				cardData.templateID = 2;
+				cardData.update();
+				actDataB.cardList.push(cardData);
+			}
 			var actB:BaseActObj = new BaseActObj(actDataB);
 			
 			var logicData:Object = new CombatScene(actA, actB).start();
