@@ -13,17 +13,23 @@ package centaur.logic.action
 		
 		public function BuffNotifyAction()
 		{
-			type = CombatLogic.ACTION_BUFF_NOTIFY;
+			type = ACTION_BUFF_NOTIFY;
 		}
 		
-		public static function addBuffAction(buffData:BuffData, targetID:uint, actionType:int = BUFF_ADD_ACTION):BuffNotifyAction
+		public static function getAction(buffData:BuffData, targetID:uint, actionType:int = BUFF_ADD_ACTION):BuffNotifyAction
 		{
 			var action:BuffNotifyAction = new BuffNotifyAction();
 			action.buffData = buffData;
 			action.targetObj = targetID;
 			action.actionType = actionType;
 			
+			trace(action.toString());
 			return action;
+		}
+		
+		public override function toString():String
+		{
+			return "增加了一个buff";
 		}
 	}
 }

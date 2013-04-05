@@ -4,7 +4,7 @@ package centaur.data.combat
 	import centaur.logic.act.BaseCardObj;
 
 	/**
-	 *   战斗先关数据
+	 *   战斗相关数据
 	 */ 
 	public final class CombatData
 	{
@@ -73,9 +73,9 @@ package centaur.data.combat
 			for (var i:int = 0; i < selfCombatArea.length; ++i)
 			{
 				var target:BaseCardObj = selfCombatArea[i];
-				if (target && minHP > target.cardData.hp)
+				if (target && minHP > target.hp)
 				{
-					minHP = target.cardData.hp;
+					minHP = target.hp;
 					res = target;
 				}
 			}
@@ -90,9 +90,9 @@ package centaur.data.combat
 			for (var i:int = 0; i < selfCombatArea.length; ++i)
 			{
 				var target:BaseCardObj = selfCombatArea[i];
-				if (target && max < (target.cardData.maxHP - target.cardData.hp))
+				if (target && max < (target.cardData.maxHP - target.hp))
 				{
-					max = (target.cardData.maxHP - target.cardData.hp);
+					max = (target.cardData.maxHP - target.hp);
 					res = target;
 				}
 			}

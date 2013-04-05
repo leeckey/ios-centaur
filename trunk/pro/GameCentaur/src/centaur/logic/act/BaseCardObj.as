@@ -8,21 +8,17 @@ package centaur.logic.act
 	import centaur.data.skill.SkillData;
 	import centaur.data.skill.SkillDataList;
 	import centaur.data.skill.SkillEnumDefines;
-	import centaur.logic.action.AttackEffectAction;
-	import centaur.logic.action.BuffNotifyAction;
-	import centaur.logic.action.DamageNotifyAction;
-	import centaur.logic.action.SkillEffectAction;
+	import centaur.logic.action.*;
 	import centaur.logic.combat.BuffLogic;
 	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.events.CardEvent;
 	import centaur.logic.render.BaseCardRender;
-	import centaur.logic.skill.SkillLogic;
+	import centaur.logic.skills.*;
 	import centaur.utils.UniqueNameFactory;
 	
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	
-	import mx.controls.List;
 
 	/**
 	 *   卡牌数据对象
@@ -31,16 +27,72 @@ package centaur.logic.act
 	{
 		public var objID:uint;
 		
-		public var owner:BaseActObj;
-		public var cardData:CardData;
-		public var render:BaseCardRender;
-		public var skillDic:Dictionary;
-		public var buffDic:Dictionary;
+		public var owner:BaseActObj;          // 卡牌所有者
+		public var cardData:CardData;         // 卡牌初始化数据
+		public var render:BaseCardRender;     // 卡牌显示控制
+		public var skills:Array;              // 卡牌的技能
+		public var buffDic:Dictionary;        // 卡牌Buff
 		
-		public var lastDamageValue:int;			// 最近一次伤害敌方的伤害值
+		public var lastDamageValue:int;		// 最近一次伤害敌方的伤害值
+		public var lastBeAttackVal:int;        // 最近一次受到普通攻击的攻击力
 		public var lastBeDamagedVal:int;		// 最近一次受到的伤害值
 		public var attacker:BaseCardObj;		// 最近一次攻击我的卡牌
 		public var target:BaseCardObj;			// 攻击目标
+		
+		private var _attack:int;               // 卡牌的攻击力
+		private var _hp:int;                   // 卡牌的血量
+		public var waitRound:int;              // 冷却回合数
+		public var isDead:Boolean;             // 是否已经死亡
+		public var attackSkill:BaseSkill;      // 普通攻击技能
+		
+		public function get attack():int
+		{
+			return this._attack;
+		}
+		
+		
+		/**
+		 * 只读属性,只能用ReductHP来修改 
+		 * @return 
+		 * 
+		 */		
+		public function get hp():int
+		{
+			return this._hp;
+		}
+		
+		/**
+		 * 增加攻击力,暂不设上限 
+		 * @param num
+		 * @return 
+		 * 
+		 */		
+		public function addAttack(num:int):int
+		{
+			this._attack += num;
+			CombatLogic.combatList.push(AttackChangeAction.getAction(objID, num));
+			trace(objID + "当前攻击力为:" + attack);
+			return num;
+		}
+		
+		/**
+		 * 减少攻击力 
+		 * @param nun
+		 * @return 
+		 * 
+		 */		
+		public function deductAttack(num:int):int
+		{
+			var temp:int = this._attack;
+			this._attack -= num;
+			if (this._attack < 0)
+				this._attack = 0;
+			
+			temp -= this._attack;
+			CombatLogic.combatList.push(AttackChangeAction.getAction(objID, -temp));
+			trace(objID + "当前攻击力为:" + attack);
+			return temp;
+		}
 		
 		public function BaseCardObj(data:CardData, owner:BaseActObj)
 		{
@@ -51,17 +103,31 @@ package centaur.logic.act
 			init();
 		}
 		
+		/**
+		 * 初始化卡牌 
+		 * 
+		 */		
 		protected function init():void
 		{
 			if (!cardData)
 				return;
 			
+			skills = [];
 			var cardTemplateData:CardTemplateData = CardTemplateDataList.getCardData(cardData.templateID);
-			if (!cardTemplateData)
-				return;
+			if (cardTemplateData)
+			{
+				// 设置技能,暂时先加入一个攻击技能
+				attackSkill = new Skill_100(this);
+				skills.push(new Skill_101(this));
+				skills.push(new Skill_201(this));
+				skills.push(new Skill_202(this));
+				skills.push(new Skill_200(this));
+			}
 			
-			buffDic = new Dictionary();	
-			// 对技能进行分类，方便计算查找
+			resetCombatData();
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_INITIALIZE, this));
+			
+/*			// 对技能进行分类，方便计算查找
 			skillDic = new Dictionary();
 			var skillLen:int = cardTemplateData.skillList.length;
 			for (var i:int = 0; i < skillLen; ++i)
@@ -75,28 +141,48 @@ package centaur.logic.act
 					list = skillDic[skillData.skillType] = [skillData];
 				else if (list.indexOf(skillData) == -1)
 					list.push(skillData);
-			}
+			}*/
 		}
 		
 		public function resetCombatData():void
 		{
-			if (cardData)
-			{
-				var templateData:CardTemplateData = CardTemplateDataList.getCardData(cardData.templateID);
-				if (templateData)
-				{
-					cardData.hp = cardData.maxHP;
-					cardData.waitRound = templateData.maxWaitRound;
-				}
-			}
-			buffDic = new Dictionary();
+			if (!cardData)
+				return;
+
+			buffDic = new Dictionary();	
+			
+			// 设置血量和攻击力
+			this._hp = cardData.maxHP;
+			this._attack = cardData.attack;
+			this.waitRound = cardData.waitRound;
+			this.isDead = false;
 		}
 		
-		public function get waitRound():int
+		/**
+		 * 增加卡牌技能 
+		 * @param skill
+		 * 
+		 */		
+		public function addSkill(skill:BaseSkill):void
 		{
-			return cardData ? cardData.waitRound : 0;
+			skill.registerCard(this);
 		}
 		
+		/**
+		 * 取消卡牌技能 
+		 * @param skill
+		 * 
+		 */		
+		public function removeSkill(skill:BaseSkill):void
+		{
+			skill.removeCard();
+		}
+		
+		/**
+		 * 增加Buff 
+		 * @param buffData
+		 * 
+		 */		
 		public function addBuff(buffData:BuffData):void
 		{
 			if (!buffData)
@@ -115,12 +201,19 @@ package centaur.logic.act
 		}
 		
 		/**
-		 *   处于技能施法者攻击
+		 *  施放技能
 		 */ 
-		public function onSkiller(targetActObj:BaseActObj, list:Array):Boolean
+		public function onSkill():Boolean
 		{
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_SKILL, this));
+			
+			for (var i:int = 0; i < skills.length; ++i)
+			{
+				var skill:BaseSkill = skills[i] as BaseSkill;
+				skill.doSkill();
+			}
 			// 检测自身BUFF，技能释放时触发的BUFF
-			if (BuffLogic.doBuffer(this, SkillEnumDefines.BUFF_SKILL_START, list))
+/*			if (BuffLogic.doBuffer(this, SkillEnumDefines.BUFF_SKILL_START, list))
 				return true;
 			
 			lastDamageValue = 0;
@@ -142,19 +235,19 @@ package centaur.logic.act
 				
 				var skillData:SkillData = atkSkillList[i];
 				SkillLogic.doMagicSkiller(skillData, this, targetActObj, list);
-			}
+			}*/
 			
-			return isDead();
+			return isDead;
 		}
 		
 		/**
-		 *   处于被技能攻击者
+		 *   被技能攻击
 		 */
-		public function onSkilled(skillData:SkillData, srcObj:BaseCardObj, list:Array):int
+		public function onSkilled(skillData:SkillData, srcObj:BaseCardObj):int
 		{
 			lastBeDamagedVal = 0;
 			var damage:int;
-			if (!skillData || !srcObj || !cardData)
+/*			if (!skillData || !srcObj || !cardData)
 				return damage;
 			
 			// 如果被攻击前，已死亡，不处理
@@ -171,87 +264,110 @@ package centaur.logic.act
 			var defenseSkillList:Array = skillDic[SkillEnumDefines.SKILL_MAGIC_DEFENSE_TYPE];
 			var len:int = defenseSkillList ? defenseSkillList.length : 0;
 			var defenseSkill:SkillData = (len > 0) ? defenseSkillList[0] : null;
-			damage = SkillLogic.doMagicDefenser(defenseSkill, srcObj, this.owner, list, skillData) as int;
+			damage = SkillLogic.doMagicDefenser(defenseSkill, srcObj, this.owner, list, skillData) as int;*/
 			return damage;
 		}
 		
 		/**
-		 *   处于普通攻击者
+		 *   普通攻击
 		 */ 
-		public function onAttacker(targetActObj:BaseActObj, list:Array):Boolean
+		public function onAttack():Boolean
 		{
 			// 检测自身BUFF，普通攻击时触发的BUFF
-			if (BuffLogic.doBuffer(this, SkillEnumDefines.BUFF_ATTACK_START, list))
-				return true;
+/*			if (BuffLogic.doBuffer(this, SkillEnumDefines.BUFF_ATTACK_START, list))
+				return true;*/
+
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_PRE_ATTACK, this));
 			
-			lastDamageValue = 0;
-			if (!targetActObj)
-				return false;
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_ATTACK, this));
 			
-			// 派发事件
-			this.dispatchEvent(new CardEvent(CardEvent.ON_ATTACK_SKILLER));
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_AFTER_ATTACK, this));
 			
-			// 处理普通攻击
-			var atkList:Array = skillDic[SkillEnumDefines.SKILL_ATTACK_TYPE];
-			var len:int = atkList ? atkList.length : 0;
-			var skillData:SkillData = (len > 0) ? atkList[0] : null;
-			SkillLogic.doAttacker(skillData, this, targetActObj, list);
-			
-			return checkDead();
+			return isDead;
 		}
 		
 		/**
-		 *   处于被普通攻击者
-		 */ 
-		public function onAttacked(atkSkillData:SkillData, srcObj:BaseCardObj, list:Array):int
+		 * 普通攻击受创 
+		 * @param attack
+		 * @return 
+		 * 
+		 */		
+		public function onAttackHurt(attacker:BaseCardObj, hurt:int):int
 		{
-			var damage:int;
-			if (!srcObj)
-				return damage;
+			// 已经死亡不做处理
+			if (this.isDead || hurt <= 0)
+				return 0;
 			
-			// 如果被攻击前，已死亡，不处理
-			if (this.isDead())
-				return damage;
+			// 保存攻击来源
+			this.attacker = attacker;
 			
-			attacker = srcObj;
-			srcObj.target = this;
+			// 设置攻击数值
+			lastBeAttackVal = hurt;
 			
-			// 派发事件
-			this.dispatchEvent(new CardEvent(CardEvent.ON_ATTACK_HURT));
+			// 发送攻击前事件
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_PRE_HURT, this));
 			
-			var defenseSkillList:Array = skillDic[SkillEnumDefines.SKILL_ATTACK_DEFENSE_TYPE];
-			var defenseSkill:SkillData = defenseSkillList ? defenseSkillList[0] : null;
-			damage = SkillLogic.doAttackDefenser(defenseSkill, srcObj, this.owner, list, atkSkillData) as int;
-			return damage;
+			// 如果攻击数值小于0,返回
+			if (lastBeAttackVal <= 0)
+				return 0;
+			
+			// 扣除生命值
+			lastBeDamagedVal = deductHP(lastBeAttackVal);
+			
+			// 发送攻击后事件
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_AFTER_HURT, this));
+			
+			// 返回造成的伤害值
+			return lastBeDamagedVal;
 		}
+		
+		/**
+		 * 直接造成伤害,不触发任何被动技能
+		 * @param damage
+		 * 
+		 */		
+		public function onHurt(damage:int):int
+		{
+			lastBeDamagedVal = deductHP(damage);
+			return lastBeDamagedVal;
+		}
+		
+		/**
+		 * 增加或扣除hp
+		 * @param num
+		 * @return 
+		 * 
+		 */		
+		public function deductHP(num:int):int
+		{
+			var temp:int = _hp;
+			_hp = _hp - num;
+			if (_hp <= 0) _hp = 0;
+			temp = temp - _hp;
+			
+			CombatLogic.combatList.push(DamageNotifyAction.getAction(temp, this.objID));
+			
+			trace(objID + "当前生命值为:" + _hp);
+			if (_hp == 0) onDead();
+			return temp;
+		}
+		
 		
 		/**
 		 *   处于濒临死亡时
 		 */ 
 		public function onDead():void
 		{
-			// 派发事件
-			this.dispatchEvent(new CardEvent(CardEvent.ON_DEAD));
+			if (isDead)
+				return;
 			
-			var deathSkill:SkillData = skillDic[SkillEnumDefines.SKILL_DEATH_TYPE];
-			if (deathSkill)
-			{
-				// 派发事件
-				this.dispatchEvent(new CardEvent(CardEvent.ON_SPEC_SKILLER));
-				
-				// 死契技能处理
-				SkillLogic.doSpecSkiller(deathSkill, this, this.owner.enemyActObj, CombatLogic.combatList);
-			}
+			isDead = true;
+			
+			// 派发事件
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_DEAD, this));
 			
 			if (owner)
-				owner.cardToCemeteryArea(this, CombatLogic.combatList);
-		}
-		
-		/**
-		 *   受到死契技能时
-		 */ 
-		public function onDeathSkilled():void
-		{
+				owner.cardToCemeteryArea(this);
 		}
 		
 		/**
@@ -259,37 +375,7 @@ package centaur.logic.act
 		 */ 
 		public function onPresent():void
 		{
-			// 派发事件
-			this.dispatchEvent(new CardEvent(CardEvent.ON_PRESENT));
-			
-			var presentSkill:SkillData = skillDic[SkillEnumDefines.SKILL_PRESENT_TYPE];
-			if (!presentSkill)
-				return;
-			
-			// 派发事件
-			this.dispatchEvent(new CardEvent(CardEvent.ON_SPEC_SKILLER));
-			
-			// 降临技能处理
-			SkillLogic.doSpecSkiller(presentSkill, this, this.owner.enemyActObj, CombatLogic.combatList);
-		}
-		
-		/**
-		 *   受到降临技能时
-		 */ 
-		public function onPresented():void
-		{
-		}
-		
-		public function onSpecSkilled(specSkillData:SkillData, srcObj:BaseCardObj, list:Array):void
-		{
-			if (!specSkillData || !srcObj)
-				return;
-			
-			// 派发事件
-			this.dispatchEvent(new CardEvent(CardEvent.ON_SPEC_HURT));
-			
-			var specDefenseSkillList:Array = skillDic[SkillEnumDefines.SKILL_ATTACK_DEFENSE_TYPE];
-			var specDefenseSkill:SkillData = specDefenseSkillList ? specDefenseSkillList[0] : null;
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_PRESENT, this));
 		}
 		
 		/**
@@ -297,14 +383,14 @@ package centaur.logic.act
 		 */ 
 		public function onRoundStart():Boolean
 		{
-			// 检测自身BUFF，回合开始时触发的BUFF
+/*			// 检测自身BUFF，回合开始时触发的BUFF
 			if (BuffLogic.doBuffer(this, SkillEnumDefines.BUFF_ROUND_START, CombatLogic.combatList))
-				return true;
+				return true;*/
 			
 			// 派发事件
-			this.dispatchEvent(new CardEvent(CardEvent.ON_ROUND_START));
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_ROUND_START, this));
 			
-			return isDead();
+			return isDead;
 		}
 		
 		/**
@@ -312,30 +398,15 @@ package centaur.logic.act
 		 */ 
 		public function onRoundEnd():Boolean
 		{
-			// 检测自身BUFF，回合结束时触发的BUFF
+/*			// 检测自身BUFF，回合结束时触发的BUFF
 			if (BuffLogic.doBuffer(this, SkillEnumDefines.BUFF_ROUND_END, CombatLogic.combatList))
-				return true;
+				return true;*/
 			
 			// 派发事件
-			this.dispatchEvent(new CardEvent(CardEvent.ON_ROUND_END));
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_ROUND_END, this));
 			
-			return isDead();
+			return isDead;
 		}
 		
-		public function isDead():Boolean
-		{
-			return cardData ? (cardData.hp <= 0) : false;
-		}
-		
-		public function checkDead():Boolean
-		{
-			if (cardData.hp <= 0)
-			{
-				this.onDead();
-				return true;
-			}
-			
-			return false;
-		}
 	}
 }

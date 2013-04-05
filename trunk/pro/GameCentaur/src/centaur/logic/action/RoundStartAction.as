@@ -11,7 +11,21 @@ package centaur.logic.action
 		
 		public function RoundStartAction()
 		{
-			type = CombatLogic.ACTION_ROUND_START;
+			type = ACTION_ROUND_START;
+		}
+		
+		public static function getAction(round:int):RoundStartAction
+		{
+			var action:RoundStartAction = new RoundStartAction();
+			action.round = round;
+			
+			trace(action.toString());
+			return action;
+		}
+		
+		public override function toString():String
+		{
+			return "第" + round + "回合开始";
 		}
 	}
 }

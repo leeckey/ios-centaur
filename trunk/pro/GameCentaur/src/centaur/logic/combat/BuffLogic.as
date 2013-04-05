@@ -37,10 +37,10 @@ package centaur.logic.combat
 				// 持续伤害,负数表示加血
 				if (buffSkill.durationDamage != 0)
 				{
-					var damage:int = srcObj.cardData.hp < buffSkill.durationDamage ? srcObj.cardData.hp : buffSkill.durationDamage;
-					srcObj.cardData.hp -= damage;
-					list.push(DamageNotifyAction.addDamageAction(damage, srcObj.objID));
-					list.push(BuffNotifyAction.addBuffAction(buffData, srcObj.objID, BuffNotifyAction.BUFF_REMOE_ACTION));
+					var damage:int = srcObj.hp < buffSkill.durationDamage ? srcObj.hp : buffSkill.durationDamage;
+					srcObj.deductHP(damage);
+					list.push(DamageNotifyAction.getAction(damage, srcObj.objID));
+					list.push(BuffNotifyAction.getAction(buffData, srcObj.objID, BuffNotifyAction.BUFF_REMOE_ACTION));
 				}
 				if (buffSkill.avoidBuffTypeRatio > 0 &&
 					(Math.random() * 100 <= buffSkill.avoidBuffTypeRatio))

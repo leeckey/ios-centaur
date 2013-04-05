@@ -9,9 +9,21 @@ package centaur.logic.action
 		
 		public function RoundEndAction()
 		{
-			type = CombatLogic.ACTION_ROUND_END;
+			type = ACTION_ROUND_END;
 		}
 		
+		public static function getAction(round:int):RoundEndAction
+		{
+			var action:RoundEndAction = new RoundEndAction();
+			action.round = round;
+			
+			trace(action.toString());
+			return action;
+		}
 		
+		public override function toString():String
+		{
+			return "第" + round + "回合结束";
+		}
 	}
 }

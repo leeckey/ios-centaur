@@ -7,11 +7,28 @@ package centaur.logic.action
 	 */ 
 	public final class SelectCardToCemeteryArea extends ActionBase
 	{
-		public var ownerID:uint;
+		public var cardID:uint;
 			
 		public function SelectCardToCemeteryArea()
 		{
-			type = CombatLogic.ACTION_SELECT_TO_CEMETERYAREA;
+			type = ACTION_SELECT_TO_CEMETERYAREA;
+		}
+		
+		
+		public static function getAction(ownerID:int, cardID:int):SelectCardToCemeteryArea
+		{
+			var action:SelectCardToCemeteryArea = new SelectCardToCemeteryArea();
+			action.cardID = cardID;
+			action.srcObj = ownerID;
+			
+			trace(action.toString());
+			return action;
+		}
+		
+		
+		public override function toString():String
+		{
+			return "卡牌" + cardID + "进入墓地";
 		}
 	}
 }
