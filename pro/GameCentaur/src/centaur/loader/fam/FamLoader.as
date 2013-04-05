@@ -88,7 +88,7 @@ package centaur.loader.fam
 		
 		private function addCallback(callback:Function):void
 		{
-			if (!callback)
+			if (callback == null)
 				return;
 			
 			if (!_callbackList)

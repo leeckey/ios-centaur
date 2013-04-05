@@ -8,7 +8,7 @@ package centaur.loader.fam
 	 */ 
 	public final class FamManager
 	{
-		[Embed(source="D:/Tools/pro/assets/effects/jgjf01.fam",mimeType="application/octet-stream")]
+		[Embed(source="E:/Game/pro/assets/effects/jgjf01.fam",mimeType="application/octet-stream")]
 		public static var FamTestBytes:Class;
 		
 		private var _famBytesDic:Dictionary = new Dictionary();
