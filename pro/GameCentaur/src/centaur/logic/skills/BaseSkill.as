@@ -109,6 +109,13 @@ package centaur.logic.skills
 					// HP最低的卡牌
 					target = targetAct.combatData.getCardFromCombatAreaMinHP();
 					return target ? [target] : null;
+				case SkillEnumDefines.TARGET_RANDOM_TYPE:
+					// 随机一个目标
+					var randomIdx:int = Math.random() * targetAct.combatData.selfCombatArea.length;
+					var randomTarget:BaseCardObj = targetAct.combatData.selfCombatArea[randomIdx];
+					if (!randomTarget)
+						randomTarget = targetAct.combatData.getCardFromCombatArea();
+					return randomTarget ? [randomTarget] : null;
 			}
 			
 			return null;

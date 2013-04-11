@@ -118,10 +118,10 @@ package centaur.logic.act
 			{
 				// 设置技能,暂时先加入一个攻击技能
 				attackSkill = new Skill_100(this);
-				skills.push(new Skill_101(this));
+				skills.push(new Skill_102(this));
 				skills.push(new Skill_201(this));
-				skills.push(new Skill_202(this));
-				skills.push(new Skill_200(this));
+				//skills.push(new Skill_202(this));
+				//skills.push(new Skill_200(this));
 			}
 			
 			resetCombatData();
@@ -266,6 +266,41 @@ package centaur.logic.act
 			var defenseSkill:SkillData = (len > 0) ? defenseSkillList[0] : null;
 			damage = SkillLogic.doMagicDefenser(defenseSkill, srcObj, this.owner, list, skillData) as int;*/
 			return damage;
+		}
+		
+		/**
+		 * 被技能攻击 
+		 * @param attacker
+		 * @param hurt
+		 * 
+		 */		
+		public function onSkillHurt(attacker:BaseCardObj, hurt:int):int
+		{
+			// 已经死亡不做处理
+			if (this.isDead || hurt <= 0)
+				return 0;
+			
+			// 保存攻击来源
+			this.attacker = attacker;
+			
+			// 设置攻击数值
+			lastBeAttackVal = hurt;
+			
+			// 发送攻击前事件
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_PRE_SKILL_HURT, this));
+			
+			// 如果攻击数值小于0,返回
+			if (lastBeAttackVal <= 0)
+				return 0;
+			
+			// 扣除生命值
+			lastBeDamagedVal = deductHP(lastBeAttackVal);
+			
+			// 发送攻击后事件
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_AFTER_SKILL_HURT, this));
+			
+			// 返回造成的伤害值
+			return lastBeDamagedVal;
 		}
 		
 		/**

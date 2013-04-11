@@ -74,6 +74,16 @@ package centaur.logic.events
 		public static const ON_AFTER_HURT:String = "onAfterHurt";
 		
 		/**
+		 * 被技能攻击前事件 
+		 */		
+		public static const ON_PRE_SKILL_HURT:String = "onPreSkillHurt";
+		
+		/**
+		 * 被技能攻击后事件 
+		 */		
+		public static const ON_AFTER_SKILL_HURT:String = "onAfterSkillHurt";
+		
+		/**
 		 * 释放技能事件 
 		 */		
 		public static const ON_SKILL:String = "onSkill";
