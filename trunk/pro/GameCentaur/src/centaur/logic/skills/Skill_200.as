@@ -88,6 +88,7 @@ package centaur.logic.skills
 						targetID.push(targetCard.objID);
 				}
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, targetID));
+				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 				
 				// 攻击对面的卡牌
 				targetCard = targets[0] as BaseCardObj;
