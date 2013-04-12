@@ -18,6 +18,9 @@ package
 		override public function loadGBKString(path:String):String
 		{
 			var file:File = File.applicationDirectory.resolvePath(path);
+			if (!file.exists)
+				return null;
+			
 			var fileStream:FileStream = new FileStream();
 			fileStream.open(file, FileMode.READ);
 			var str:String = fileStream.readMultiByte(fileStream.bytesAvailable, "gbk");
@@ -29,6 +32,9 @@ package
 		override public function loadByteArray(path:String):ByteArray
 		{
 			var file:File = File.applicationDirectory.resolvePath(path);
+			if (!file.exists)
+				return null;
+				
 			var fileStream:FileStream = new FileStream();
 			fileStream.open(file, FileMode.READ);
 			var bytes:ByteArray = new ByteArray();

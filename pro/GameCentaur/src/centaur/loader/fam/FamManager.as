@@ -26,6 +26,12 @@ package centaur.loader.fam
 				var bytes:ByteArray = _famBytesDic[path];
 				if (!bytes)
 					bytes = GlobalAPI.loaderManager.loadByteArray(path);
+				if (!bytes)
+				{
+					if (callback != null)
+						callback(null);
+					return;
+				}
 				
 				var famLoader:FamLoader = new FamLoader(path, callback);
 				famLoader.load(bytes, onLoadComplete);
@@ -38,7 +44,7 @@ package centaur.loader.fam
 				
 			}
 			else if (callback != null)
-				callback(path);
+				callback(famInfo);
 		}
 	}
 }
