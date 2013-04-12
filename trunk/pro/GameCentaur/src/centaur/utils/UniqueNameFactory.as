@@ -30,5 +30,10 @@ package centaur.utils
 			UniqueObjDic[id] = obj;
 			return id;
 		}
+		
+		public static function removeUniqueByID(id:uint):void
+		{
+			delete UniqueObjDic[id];
+		}
     }
 }

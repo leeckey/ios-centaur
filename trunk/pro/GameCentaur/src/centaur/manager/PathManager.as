@@ -6,7 +6,7 @@ package centaur.manager
 	{
 		public function getConfigPath(name:String):String
 		{
-			return GlobalData.asite + "config/txt/" + name;
+			return GlobalData.asite + "assets/config/txt/" + name;
 		}
 		
 		
