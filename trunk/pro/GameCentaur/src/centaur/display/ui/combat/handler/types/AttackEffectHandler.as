@@ -58,7 +58,7 @@ package centaur.display.ui.combat.handler.types
 			if (!target)
 				return;
 			
-			var skillData:SkillData = SkillDataList.getSkillTemplateData(skillID);
+			var skillData:SkillData = SkillDataList.getSkillData(skillID);
 			if (!skillData)
 				skillData = null;	// 默认普通攻击
 			
