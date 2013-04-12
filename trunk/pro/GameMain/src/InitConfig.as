@@ -4,6 +4,7 @@ package
 	import centaur.data.act.InsMapDataList;
 	import centaur.data.card.CardTemplateDataList;
 	import centaur.data.skill.SkillDataList;
+	import centaur.logic.skills.SkillManager;
 	
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -24,6 +25,8 @@ package
 			
 			// 技能配置表
 			SkillDataList.loadStrData(load("SkillData.txt"));
+			
+			SkillManager.init();
 		}
 		
 		private static function load(fileName:String):String

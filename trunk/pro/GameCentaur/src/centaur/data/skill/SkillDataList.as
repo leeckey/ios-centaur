@@ -39,8 +39,8 @@ package centaur.data.skill
 				var skillData:SkillData = new SkillData();
 				Utils.initStrDataToObjectData(skillData, dataStr, format);
 				
-				if (skillData.templateID > 0)
-					_skillDic[skillData.templateID] = skillData;
+				if (skillData.id > 0)
+					_skillDic[skillData.id] = skillData;
 			}
 		}
 	}

@@ -40,8 +40,9 @@ package centaur.logic.skills
 			var hurt:int = min + (max - min) * Math.random();
 			var targetCard:BaseCardObj = target[0] as BaseCardObj;
 			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [targetCard.objID]));
-			targetCard.onSkillHurt(card, hurt);
 			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
+			targetCard.onSkillHurt(card, hurt);
+			
 		}
 	}
 }

@@ -15,7 +15,7 @@ package centaur.logic.combat
 	 */ 
 	public final class BuffLogic
 	{
-		public static function doBuffer(srcObj:BaseCardObj, buffType:int, list:Array):Boolean
+/*		public static function doBuffer(srcObj:BaseCardObj, buffType:int, list:Array):Boolean
 		{
 			if (!srcObj || !srcObj.buffDic)
 				return false;
@@ -53,6 +53,6 @@ package centaur.logic.combat
 			}
 			
 			return skipCurrentAction;
-		}
+		}*/
 	}
 }
