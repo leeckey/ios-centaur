@@ -18,6 +18,7 @@ package centaur.logic.act
 	
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
+	import flash.utils.getDefinitionByName;
 	
 
 	/**
@@ -49,7 +50,7 @@ package centaur.logic.act
 		{
 			return this._attack;
 		}
-		
+
 		
 		/**
 		 * 只读属性,只能用ReductHP来修改 
@@ -113,35 +114,41 @@ package centaur.logic.act
 				return;
 			
 			skills = [];
+			// 普通攻击
+			attackSkill = new Skill_100(this);
 			var cardTemplateData:CardTemplateData = CardTemplateDataList.getCardData(cardData.templateID);
 			if (cardTemplateData)
 			{
-				// 设置技能,暂时先加入一个攻击技能
-				attackSkill = new Skill_100(this);
-				skills.push(new Skill_102(this));
-				skills.push(new Skill_201(this));
-				//skills.push(new Skill_202(this));
-				//skills.push(new Skill_200(this));
+				var skillLen:int = cardTemplateData.skillList.length;
+				
+				for (var i:int = 0; i < skillLen; ++i)
+				{
+					var skillData:SkillData = SkillDataList.getSkillTemplateData(cardTemplateData.skillList[i]);
+					if (!skillData)
+						continue;
+					
+					skills.push(GetSkillByID(skillData.id));
+				}
 			}
 			
 			resetCombatData();
 			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_INITIALIZE, this));
+		}
+		
+		/**
+		 * 根据ID获取技能对象 
+		 * @param id
+		 * @return 
+		 * 
+		 */		
+		public function GetSkillByID(id:int):BaseSkill
+		{
+			var skillID:String = "centaur.logic.skills.Skill_" + id.toString();
+			var skill:Class= getDefinitionByName(skillID) as Class;
+			if (skill != null)	
+				return new skill(this);
 			
-/*			// 对技能进行分类，方便计算查找
-			skillDic = new Dictionary();
-			var skillLen:int = cardTemplateData.skillList.length;
-			for (var i:int = 0; i < skillLen; ++i)
-			{
-				var skillData:SkillData = SkillDataList.getSkillTemplateData(cardTemplateData.skillList[i]);
-				if (!skillData)
-					continue;
-				
-				var list:Array = skillDic[skillData.skillType];
-				if (!list)
-					list = skillDic[skillData.skillType] = [skillData];
-				else if (list.indexOf(skillData) == -1)
-					list.push(skillData);
-			}*/
+			return null;
 		}
 		
 		public function resetCombatData():void

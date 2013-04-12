@@ -71,7 +71,7 @@ package centaur.logic.skills
 				// 攻击对面的卡牌
 				var targetCard:BaseCardObj = target[0] as BaseCardObj;
 				
-				CombatLogic.combatList.push(AttackEffectAction.getAction(card.objID, skillID, []));
+				CombatLogic.combatList.push(AttackEffectAction.getAction(card.objID, targetCard.objID));
 				
 				card.lastDamageValue = targetCard.onAttackHurt(card, card.attack);
 				
