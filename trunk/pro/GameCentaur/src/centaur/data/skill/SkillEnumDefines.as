@@ -24,15 +24,15 @@ package centaur.data.skill
 		
 		
 		// 技能目标选择类型
-		public static const TARGET_SELF_FRONT_TYPE:int = 0;		// 自身对面
-		public static const TARGET_SELF_FRONT3_TYPE:int = 1;	// 自身对面3个，左边各扩展一个
-		public static const TARGET_SELF_TYPE:int = 2;			// 自身
-		public static const TARGET_RANDOM_TYPE:int = 10;		// 随机一个
-		public static const TARGET_RANDOM3_TYPE:int = 11;		// 随机3个
-		public static const TARGET_MIN_HP_TYPE:int = 20;		// 血量最少的一个 
-		public static const TARGET_MAX_LOSE_HP_TYPE:int = 21;	// 掉血最多的一个
-		public static const TARGET_ALL_TYPE:int = 30;			// 对方所有
-		public static const TARGET_ATTACKER_TYPE:int = 40;		// 攻击我的那个
+		public static const TARGET_SELF_TYPE:int = 0;			    // 自身
+		public static const TARGET_SELF_FRONT_TYPE:int = 1;		// 自身对面
+		public static const TARGET_SELF_FRONT3_TYPE:int = 2;	    // 自身对面3个，左边各扩展一个
+		public static const TARGET_RANDOM_TYPE:int = 3;		    // 随机一个
+		public static const TARGET_RANDOM3_TYPE:int = 4;		    // 随机3个
+		public static const TARGET_MIN_HP_TYPE:int = 5;		    // 血量最少的一个 
+		public static const TARGET_MAX_LOSE_HP_TYPE:int = 6;	    // 掉血最多的一个
+		public static const TARGET_ALL_TYPE:int = 7;			    // 对方所有
+		public static const TARGET_ATTACKER_TYPE:int = 8;		    // 攻击我的那个
 		
 		// 特殊技能的类型
 		public static const SPEC_COMBATTOCARD_TYPE:int = 1;			// 送还：将对面的卡牌送回卡组

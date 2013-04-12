@@ -1,5 +1,7 @@
 package centaur.logic.skills
 {
+	import centaur.data.card.CardData;
+	import centaur.data.skill.SkillData;
 	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
@@ -10,29 +12,52 @@ package centaur.logic.skills
 	 * 
 	 */	
 	public class BaseSkill
-	{
-		/**
-		 * 技能所有者 
-		 */		
-		public var card:BaseCardObj;
-		
+	{	
 		/**
 		 * 技能攻击目标类型 
 		 */		
-		public var selectTargetType:int;
+		public var _selectTargetType:int;
 		
 		/**
 		 * 技能ID 
 		 */		
 		protected var _skillID:int;
 		
+		/**
+		 * 技能触发优先级 
+		 */		
+		protected var _priority:int;
+		
+		/**
+		 * 技能所有者 
+		 */	
+		public var card:BaseCardObj;
+		
+		
 		public function get skillID():int
 		{
 			return _skillID;
 		}
 		
-		public function BaseSkill()
+		public function BaseSkill(data:SkillData, card:BaseCardObj)
 		{
+			if (data != null)
+				initConfig(data);
+			
+			if (card != null)
+				registerCard(card);
+		}
+		
+		/**
+		 * 初始化技能参数,这里设置一些公共的参数
+		 * @return 
+		 * 
+		 */		
+		public function initConfig(data:SkillData):void
+		{
+			_skillID = data.id;
+			_priority = data.priority;
+			_selectTargetType = data.selectTargetType;
 		}
 		
 		/**
@@ -77,7 +102,7 @@ package centaur.logic.skills
 			var idx:int;
 			var target:BaseCardObj
 			var targetAct:BaseActObj = card.owner.enemyActObj;
-			switch(selectTargetType)
+			switch(_selectTargetType)
 			{
 				case SkillEnumDefines.TARGET_SELF_FRONT_TYPE:
 				default:

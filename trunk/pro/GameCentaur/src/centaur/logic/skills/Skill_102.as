@@ -1,5 +1,6 @@
 package centaur.logic.skills
 {
+	import centaur.data.skill.SkillData;
 	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
@@ -14,18 +15,35 @@ package centaur.logic.skills
 	 */	
 	public class Skill_102 extends BaseSkill
 	{
+		/**
+		 * 最小攻击力 
+		 */		
 		public var min:int
+		
+		/**
+		 * 最大攻击力 
+		 */		
 		public var max:int;
 		
-		public function Skill_102(card:BaseCardObj)
+		public function Skill_102(data:SkillData, card:BaseCardObj)
 		{
-			_skillID = 102;
-			min = 100;
-			max = 300;
-			selectTargetType = SkillEnumDefines.TARGET_RANDOM_TYPE;
-			
-			registerCard(card);
+			super(data, card);
 		}
+		
+		/**
+		 * 设置卡牌参数 
+		 * @param data
+		 * 
+		 */		
+		public override function initConfig(data:SkillData):void
+		{
+			// 设置公共信息
+			super.initConfig(data);
+			
+			min = data.param1;
+			max = data.param2;
+		}
+		
 		
 		public override function doSkill():void
 		{

@@ -1,11 +1,11 @@
 package centaur.logic.skills
 {
+	import centaur.data.skill.SkillData;
 	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseCardObj;
-	import centaur.logic.events.CardEvent;
-	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.action.*;
-	
+	import centaur.logic.combat.CombatLogic;
+	import centaur.logic.events.CardEvent;
 	
 	/**
 	 * 普通攻击技能 
@@ -14,11 +14,9 @@ package centaur.logic.skills
 	 */	
 	public class Skill_100 extends BaseSkill
 	{
-		public function Skill_100(card:BaseCardObj)
+		public function Skill_100(data:SkillData, card:BaseCardObj)
 		{
-			selectTargetType = SkillEnumDefines.TARGET_SELF_FRONT_TYPE;
-			
-			registerCard(card);
+			super(data, card);
 		}
 		
 		/**
@@ -30,7 +28,7 @@ package centaur.logic.skills
 		{
 			super.registerCard(card);
 			if (card != null)
-				card.addEventListener(CardEvent.ON_ATTACK, onAttack);
+				card.addEventListener(CardEvent.ON_ATTACK, onAttack, false, _priority);
 		}
 		
 		/**

@@ -1,11 +1,13 @@
 package centaur.logic.skills
 {
+	import centaur.data.card.CardData;
+	import centaur.data.skill.SkillData;
 	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
-	import centaur.logic.events.CardEvent;
 	import centaur.logic.action.*;
 	import centaur.logic.combat.CombatLogic;
+	import centaur.logic.events.CardEvent;
 	
 	/**
 	 * 阻击:给HP最少的卡牌100点伤害 
@@ -17,16 +19,28 @@ package centaur.logic.skills
 		// 造成的伤害值
 		public var damage:int;
 		
-		public function Skill_101(card:BaseCardObj)
-		{	
-			// TODO:改为读取配置
-			_skillID = 101;
-			damage = 100;
-			selectTargetType = SkillEnumDefines.TARGET_MIN_HP_TYPE;
-			
-			registerCard(card);
+		public function Skill_101(data:SkillData, card:BaseCardObj)
+		{
+			super(data, card);
 		}
 		
+		/**
+		 * 设置卡牌参数 
+		 * @param data
+		 * 
+		 */		
+		public override function initConfig(data:SkillData):void
+		{
+			// 设置公共信息
+			super.initConfig(data);
+			
+			damage = data.param1;
+		}
+		
+		/**
+		 * 施放技能 
+		 * 
+		 */		
 		public override function doSkill():void
 		{
 			if (!card || card.isDead)

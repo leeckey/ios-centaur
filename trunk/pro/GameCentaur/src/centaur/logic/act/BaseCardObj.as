@@ -120,7 +120,7 @@ package centaur.logic.act
 			
 			skills = [];
 			// 普通攻击
-			attackSkill = new Skill_100(this);
+			attackSkill = new Skill_100(null, this);
 			var cardTemplateData:CardTemplateData = CardTemplateDataList.getCardData(cardData.templateID);
 			if (cardTemplateData)
 			{
@@ -128,11 +128,11 @@ package centaur.logic.act
 				
 				for (var i:int = 0; i < skillLen; ++i)
 				{
-					var skillData:SkillData = SkillDataList.getSkillTemplateData(cardTemplateData.skillList[i]);
+					var skillData:SkillData = SkillDataList.getSkillData(cardTemplateData.skillList[i]);
 					if (!skillData)
 						continue;
 					
-					skills.push(GetSkillByID(skillData.id));
+					skills.push(GetSkillByID(skillData));
 				}
 			}
 			
@@ -146,12 +146,12 @@ package centaur.logic.act
 		 * @return 
 		 * 
 		 */		
-		public function GetSkillByID(id:int):BaseSkill
+		public function GetSkillByID(data:SkillData):BaseSkill
 		{
-			var skillID:String = "centaur.logic.skills.Skill_" + id.toString();
+			var skillID:String = "centaur.logic.skills.Skill_" + data.templateID.toString();
 			var skill:Class= getDefinitionByName(skillID) as Class;
 			if (skill != null)	
-				return new skill(this);
+				return new skill(data, this);
 			
 			return null;
 		}
@@ -166,6 +166,10 @@ package centaur.logic.act
 			render.updateRenderByType(skinType);
 		}
 		
+		/**
+		 * 重置卡牌技能 
+		 * 
+		 */		
 		public function resetCombatData():void
 		{
 			if (!cardData)

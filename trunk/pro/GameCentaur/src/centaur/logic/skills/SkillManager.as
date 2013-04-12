@@ -8,6 +8,9 @@ package centaur.logic.skills
 	 */	
 	public class SkillManager
 	{
+		/**
+		 * 引用一下,通过反射创建技能 
+		 */		
 		private var dummyClass:Array= [ Skill_101, Skill_102, Skill_200, Skill_201, Skill_202, Skill_203];
 		
 		public static function init():void

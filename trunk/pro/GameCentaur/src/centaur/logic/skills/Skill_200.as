@@ -1,5 +1,6 @@
 package centaur.logic.skills
 {
+	import centaur.data.skill.SkillData;
 	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.action.*;
@@ -12,20 +13,12 @@ package centaur.logic.skills
 	 * 
 	 */	
 	public class Skill_200 extends BaseSkill
-	{
-		/**
-		 * 事件监听优先级 
-		 */		
-		public var priority:int;
-		
-		public function Skill_200(card:BaseCardObj)
+	{		
+		public function Skill_200(data:SkillData, card:BaseCardObj)
 		{
-			_skillID = 200;
-			priority = 1;
-			selectTargetType = SkillEnumDefines.TARGET_SELF_FRONT3_TYPE;
-
-			registerCard(card);
+			super(data, card);
 		}
+		
 		
 		/**
 		 * 监听攻击事件 
@@ -37,7 +30,7 @@ package centaur.logic.skills
 			super.registerCard(card);
 			
 			if (card != null)
-				card.addEventListener(CardEvent.ON_ATTACK, onAttack, false, priority);
+				card.addEventListener(CardEvent.ON_ATTACK, onAttack, false, _priority);
 		}
 		
 		/**
@@ -112,8 +105,7 @@ package centaur.logic.skills
 				}
 				
 			}
-			
-			
+
 		}
 	}
 }
