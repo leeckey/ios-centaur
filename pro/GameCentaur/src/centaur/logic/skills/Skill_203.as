@@ -1,5 +1,6 @@
 package centaur.logic.skills
 {
+	import centaur.data.skill.SkillData;
 	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
@@ -18,12 +19,22 @@ package centaur.logic.skills
 		 */		
 		public var damage:int;
 		
-		public function Skill_203(card:BaseCardObj)
+		public function Skill_203(data:SkillData, card:BaseCardObj)
 		{
-			_skillID = 203;
-			damage = 120;
+			super(data, card);
+		}
+		
+		/**
+		 * 设置卡牌参数 
+		 * @param data
+		 * 
+		 */	
+		public override function initConfig(data:SkillData):void
+		{
+			// 设置公共信息
+			super.initConfig(data);
 			
-			registerCard(card);
+			damage = data.param1;
 		}
 		
 		/**

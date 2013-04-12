@@ -14,9 +14,9 @@ package centaur.data.skill
 			//
 		}
 		
-		public static function getSkillTemplateData(templateID:uint):SkillData
+		public static function getSkillData(id:uint):SkillData
 		{
-			return _skillDic[templateID];
+			return _skillDic[id];
 		}
 		
 		public static function loadStrData(str:String):void

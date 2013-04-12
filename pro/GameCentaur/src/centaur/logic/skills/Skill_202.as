@@ -1,5 +1,6 @@
 package centaur.logic.skills
 {
+	import centaur.data.skill.SkillData;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.events.CardEvent;
 	import centaur.logic.combat.CombatLogic;
@@ -17,12 +18,22 @@ package centaur.logic.skills
 		 */		
 		public var defence:int;
 		
-		public function Skill_202(card:BaseCardObj)
+		public function Skill_202(data:SkillData, card:BaseCardObj)
 		{
-			defence = 30;
-			_skillID = 202;
+			super(data, card);
+		}
+		
+		/**
+		 * 设置卡牌参数 
+		 * @param data
+		 * 
+		 */		
+		public override function initConfig(data:SkillData):void
+		{
+			// 设置公共信息
+			super.initConfig(data);
 			
-			registerCard(card);
+			defence = data.param1;
 		}
 		
 		/**
@@ -36,7 +47,7 @@ package centaur.logic.skills
 			
 			if (card != null)
 			{
-				card.addEventListener(CardEvent.ON_PRE_HURT, onPreHurt);
+				card.addEventListener(CardEvent.ON_PRE_HURT, onPreHurt, false, _priority);
 			}
 		}
 		

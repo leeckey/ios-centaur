@@ -26,6 +26,7 @@ package
 			// 技能配置表
 			SkillDataList.loadStrData(load("SkillData.txt"));
 			
+			// 初始化技能参数
 			SkillManager.init();
 		}
 		

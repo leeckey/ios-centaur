@@ -1,5 +1,6 @@
 package centaur.logic.skills
 {
+	import centaur.data.skill.SkillData;
 	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
@@ -29,14 +30,24 @@ package centaur.logic.skills
 		private var tempAttack:int;
 		
 		
-		public function Skill_201(card:BaseCardObj)
+		public function Skill_201(data:SkillData, card:BaseCardObj)
 		{
-			rate = 0.5;
-			attackUp = 1;
-			tempAttack = 0;
-			_skillID = 201;
+			super(data, card);
+		}
+		
+		/**
+		 * 设置卡牌参数 
+		 * @param data
+		 * 
+		 */		
+		public override function initConfig(data:SkillData):void
+		{
+			// 设置公共信息
+			super.initConfig(data);
 			
-			registerCard(card);
+			rate = data.param1;
+			attackUp = data.param2;
+			tempAttack = 0;
 		}
 		
 		/**
@@ -50,8 +61,8 @@ package centaur.logic.skills
 			
 			if (card != null)
 			{
-				card.addEventListener(CardEvent.ON_PRE_ATTACK, onPreAttack);
-				card.addEventListener(CardEvent.ON_AFTER_ATTACK, onAfterAttack);
+				card.addEventListener(CardEvent.ON_PRE_ATTACK, onPreAttack, false, _priority);
+				card.addEventListener(CardEvent.ON_AFTER_ATTACK, onAfterAttack, false, _priority);
 			}
 		}
 		
@@ -85,7 +96,7 @@ package centaur.logic.skills
 			if (Math.random() < rate)
 			{
 				// 暴击判定成功
-				tempAttack = card.attack * attackUp;
+				tempAttack = card.attack * attackUp / 100;
 				if (tempAttack > 0)
 				{
 					CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));

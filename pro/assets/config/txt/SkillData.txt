@@ -1,9 +1,9 @@
-id	name	effectPath	discription	skillType	priority	param1	param2	param3
-模板ID	名称	资源路径	描述	技能类型	优先级	技能参数1	技能参数2	技能参数3
-100	攻击	hello	普通攻击	1	0	0	0	0
-101	阻击	hello	造成HP最少的卡牌100点伤害	1	0	100	0	0
-102	火球	hello	对对方随机一张卡牌造成100-300点伤害	1	0	100	300	0
-200	横扫	hello	普通攻击时同时攻击对面左右三个目标	2	1	0	0	0
-201	暴击	hello	攻击时有50%概率提升100%攻击力	2	0	50	100	0
-201	格挡	hello	受到普通攻击时,减少30点伤害	2	0	30	0	0
-203	反射	hello	魔法伤害无效,并对攻击方造成100点伤害	2	0	100	0	0
+id	templateID	name	effectPath	discription	skillType	priority	selectTargetType	param1	param2	param3
+技能ID	模板ID	名称	资源路径	描述	技能类型	优先级	技能选择类型	技能参数1	技能参数2	技能参数3
+1	100	攻击	hello	普通攻击	1	0	1	0	0	0
+2	101	阻击	hello	造成HP最少的卡牌100点伤害	1	0	5	100	0	0
+3	102	火球	hello	对对方随机一张卡牌造成100-300点伤害	1	0	3	100	300	0
+4	200	横扫	hello	普通攻击时同时攻击对面左右三个目标	2	1	2	0	0	0
+5	201	暴击	hello	攻击时有50%概率提升100%攻击力	2	0	0	50	100	0
+6	201	格挡	hello	受到普通攻击时,减少30点伤害	2	0	0	30	0	0
+7	203	反射	hello	魔法伤害无效,并对攻击方造成100点伤害	2	0	0	100	0	0
