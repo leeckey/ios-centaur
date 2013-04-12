@@ -1,0 +1,3 @@
+templateID	headPicID	maxHP	cardList	name	lv	needMobility
+模板ID	头像资源ID	最大血量	卡组	名称	等级	消耗行动力
+1		219	1_0,2_1,1_1	赤壁之战	1	2

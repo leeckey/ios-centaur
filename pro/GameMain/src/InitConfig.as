@@ -32,13 +32,7 @@ package
 		private static function load(fileName:String):String
 		{
 			var path:String = GlobalAPI.pathManager.getConfigPath(fileName);
-			var file:File = File.applicationDirectory.resolvePath(path);
-			var fileStream:FileStream = new FileStream();
-			fileStream.open(file, FileMode.READ);
-			var str:String = fileStream.readMultiByte(fileStream.bytesAvailable, "gbk");
-			fileStream.close();
-			
-			return str;
+			return GlobalAPI.loaderManager.loadGBKString(path);
 		}
 		
 	}

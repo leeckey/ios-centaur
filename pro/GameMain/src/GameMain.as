@@ -1,21 +1,25 @@
 package
 {
+	import centaur.data.GameConstant;
 	import centaur.data.GlobalAPI;
 	import centaur.data.GlobalData;
 	import centaur.data.act.HeroData;
 	import centaur.data.act.InsMapData;
 	import centaur.data.card.CardData;
-	import centaur.display.GameBase;
-	import centaur.display.ui.login.LoginPanel;
-	import centaur.loader.LoaderManager;
+	import centaur.data.combat.CombatResultData;
+	import centaur.display.ui.combat.CombatPanel;
+	import centaur.display.ui.combat.handler.ActionHandlerManager;
+	import centaur.effects.EffectManager;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.combat.CombatScene;
+	import centaur.manager.EmbedAssetManager;
+	import centaur.manager.LayerManager;
 	import centaur.manager.PathManager;
 	import centaur.manager.TickManager;
-	import centaur.movies.FanmMovieClip;
 	
 	import flash.desktop.NativeApplication;
 	import flash.desktop.SystemIdleMode;
+	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageOrientation;
@@ -25,7 +29,7 @@ package
 	
 	import net.hires.debug.Stats;
 	
-	public class GameMain extends GameBase
+	public class GameMain extends Sprite
 	{
 		public function GameMain()
 		{
@@ -35,51 +39,44 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
+			init();
 			setup();
 		}
 		
-		override protected function init():void
+		protected function init():void
 		{
 			setupGlobals();
 			
 			// 初始化配置表
 			InitConfig.initConfig();
-			
-			super.init();
 		}
 		
 		protected function setupGlobals():void
 		{
-			GlobalData.asite = "D:/Card/assets/";	// 配置资源总路径
+			GlobalData.asite = "";	// 配置资源总路径
 			GlobalAPI.pathManager = new PathManager;
 			GlobalAPI.tickManager = new TickManager(stage);
-			GlobalAPI.loaderManager = new LoaderManager;
+			GlobalAPI.loaderManager = new AirLoadManager;
+			GlobalAPI.actionHandlerManager = new ActionHandlerManager;
+			GlobalAPI.effectManager = new EffectManager;
+			GlobalAPI.layerManager = new LayerManager(this);
+			
+			EmbedAssetManager.setup();
 		}
 		
 		protected function setup():void
 		{
-			////----wangq
-			var loginPanel:LoginPanel = new LoginPanel();
-			//this.addChild(loginPanel);
-			
-			////----wangq movie test
-/*			var famMovie:FanmMovieClip = new FanmMovieClip(null);
-			famMovie.setPath("fortest");
-			famMovie.setLoop(3);
-			famMovie.play();
-			famMovie.x = famMovie.y = 150;
-			addChild(famMovie);*/
-			
-			autoSize();
-			
 			// 初始化事件
 			initEvents();
 			
+			autoSize();
+			
 			// 调试帧频显示
-			//addChild(new Stats());
+			addChild(new Stats());
 			
 			////----wangq
 			forTest();
+//			forLoadSWFTest();
 		}
 		
 		/**
@@ -87,17 +84,17 @@ package
 		 */ 
 		protected function autoSize():void
 		{
-			var factorX:Number = stage.stageWidth / GlobalData.GAME_WIDTH;
-			var factorY:Number = stage.stageHeight / GlobalData.GAME_HEIGHT;
+			var factorX:Number = stage.stageWidth / GameConstant.STAGE_WIDTH;
+			var factorY:Number = stage.stageHeight / GameConstant.STAGE_HEIGHT;
 			if (factorX > factorY)
 			{
 				this.scaleX = this.scaleY = factorY;
-				this.x = (stage.stageWidth - GlobalData.GAME_WIDTH * factorY) * 0.5;
+				this.x = (stage.stageWidth - GameConstant.STAGE_WIDTH * factorY) * 0.5;
 			}
 			else
 			{
 				this.scaleX = this.scaleY = factorX;
-				this.y = (stage.stageHeight - GlobalData.GAME_HEIGHT * factorX) * 0.5;
+				this.y = (stage.stageHeight - GameConstant.STAGE_HEIGHT * factorX) * 0.5;
 			}
 			
 		}
@@ -167,32 +164,58 @@ package
 		private function forTest():void
 		{
 			var actDataA:HeroData = new HeroData();	// 角色卡组
-			var cardData:CardData;
-			actDataA.cardList = [];
-			actDataA.maxHP = 2000;
-			for (var i:int = 0; i < 3; i++)
-			{
-				cardData = new CardData();
-				cardData.templateID = 1;
-				cardData.update();
-				actDataA.cardList.push(cardData);
-			}
-			
+			var cardData:CardData = new CardData();
+			cardData.templateID = 1;
+			cardData.update();
+			actDataA.cardList = [cardData];
+			actDataA.maxHP = 236;
 			var actA:BaseActObj = new BaseActObj(actDataA);
 			
 			var actDataB:InsMapData = new InsMapData();
-			actDataB.cardList = [];
-			actDataB.maxHP = 2000;
-			for (var j:int = 0; j < 3; j++)
-			{
-				cardData = new CardData();
-				cardData.templateID = 2;
-				cardData.update();
-				actDataB.cardList.push(cardData);
-			}
+			var cardDataB:CardData = new CardData();
+			cardDataB.templateID = 2;
+			cardDataB.update();
+			actDataB.cardList = [cardDataB];
+			actDataB.maxHP = 186;
 			var actB:BaseActObj = new BaseActObj(actDataB);
 			
-			var logicData:Object = new CombatScene(actA, actB).start();
+			var logicData:CombatResultData = new CombatScene(actA, actB).start();
+			
+			////---- 处理战斗显示部分
+			CombatPanel.instance.startPlay(logicData);
+			GlobalAPI.layerManager.getPopLayer().addChild(CombatPanel.instance);
 		}
+		
+//		private function forLoadSWFTest():void
+//		{
+//			var loaderContext:LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
+//			var loader:Loader = new Loader();
+//			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onSWFComplete);
+//			loader.load(new URLRequest("assets/effects/11.swf")/*, loaderContext*/);
+//			loader.x = 480;
+//			loader.y = 320;
+//			GlobalAPI.layerManager.getTopLayer().addChild(loader);
+//		}
+//		private function onSWFComplete(e:Event):void
+//		{
+//			////----wangq
+//			var famMovie:IMovieClip = MovieClipFactory.getAvailableMovie();
+//			famMovie.setPath("assets/effects/jgjf01.fam");
+//			famMovie.play();
+//			famMovie.setLoop(3);
+//			famMovie.x = 200;
+//			famMovie.y = 200;
+//			famMovie.addEventListener(Event.COMPLETE, onFamComplete);
+//			GlobalAPI.layerManager.getTipLayer().addChild(famMovie as DisplayObject);
+//			
+//			forTest();
+//		}
+//		
+//		private function onFamComplete(e:Event):void
+//		{
+//			var fam:FanmMovieClip = e.currentTarget as FanmMovieClip;
+//			MovieClipFactory.recycleMovie(fam);
+//		}
+		
 	}
 }

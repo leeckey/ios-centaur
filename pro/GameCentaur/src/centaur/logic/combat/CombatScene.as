@@ -1,5 +1,6 @@
 package centaur.logic.combat
 {
+	import centaur.data.combat.CombatResultData;
 	import centaur.logic.act.BaseActObj;
 
 	public final class CombatScene
@@ -15,13 +16,13 @@ package centaur.logic.combat
 			logic = new CombatLogic();
 		}
 		
-		public function start():Object
+		public function start():CombatResultData
 		{
 			if (!selfAct || !targetAct)
 				return null;
 			
 			selfAct.scene = targetAct.scene = this;
-			var res:Object = logic.combat(selfAct, targetAct);
+			var res:CombatResultData = logic.combat(selfAct, targetAct);
 			selfAct.scene = targetAct.scene = null;
 			return res;
 		}

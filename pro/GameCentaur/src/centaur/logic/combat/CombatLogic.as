@@ -1,6 +1,7 @@
 package centaur.logic.combat
 {
 	import centaur.data.act.ActData;
+	import centaur.data.combat.CombatResultData;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.action.ActionBase;
 	import centaur.logic.action.RoundEndAction;
@@ -19,7 +20,7 @@ package centaur.logic.combat
 		/**
 		 *   计算两组卡牌数据
 		 */ 
-		public function combat(selfAct:BaseActObj, targetAct:BaseActObj):Object
+		public function combat(selfAct:BaseActObj, targetAct:BaseActObj):CombatResultData
 		{
 			_selfAct = selfAct;
 			_selfAct.enemyActObj = targetAct;
@@ -58,7 +59,12 @@ package centaur.logic.combat
 				combatList.push(RoundEndAction.getAction(round));
 			}
 			
-			return {combatResult : combatResult, combatList : combatList};
+			var resultData:CombatResultData = new CombatResultData();
+			resultData.selfAct = selfAct;
+			resultData.targetAct = targetAct;
+			resultData.result = combatResult;
+			resultData.combatActionList = combatList;
+			return resultData;
 		}
 		
 		/**

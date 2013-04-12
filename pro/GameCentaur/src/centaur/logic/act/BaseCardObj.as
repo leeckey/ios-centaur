@@ -26,6 +26,11 @@ package centaur.logic.act
 	 */ 
 	public class BaseCardObj extends EventDispatcher
 	{
+		public static const SKIN_HEAD_TYPE:int = 0;
+		public static const SKIN_NORMAL_TYPE:int = 1;
+		public static const SKIN_DETAILS_TYPE:int = 2;
+		public static const SKIN_HEAD_DEAD_TYPE:int = 3;
+		
 		public var objID:uint;
 		
 		public var owner:BaseActObj;          // 卡牌所有者
@@ -149,6 +154,16 @@ package centaur.logic.act
 				return new skill(this);
 			
 			return null;
+		}
+		
+		/**
+		 *   更新卡牌的显示模型，分为头像，卡牌主体，放大的卡牌细节
+		 */ 
+		public function updateRender(skinType:int = SKIN_HEAD_TYPE):void
+		{
+			if (!render)
+				render = new BaseCardRender(this);
+			render.updateRenderByType(skinType);
 		}
 		
 		public function resetCombatData():void

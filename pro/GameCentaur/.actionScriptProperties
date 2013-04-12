@@ -10,8 +10,9 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="3" linkType="1" path="${GAME_BASE}/GhostCat/bin/GhostCat.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="${GAME_BASE}/assets/ui/uicommon.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="1" linkType="1" path="${GAME_BASE}/libs"/>
+      <libraryPathEntry kind="3" linkType="1" path="${GAME_BASE}/assets/ui/common.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="${GAME_BASE}/assets/ui/uicommon.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

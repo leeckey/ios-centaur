@@ -100,13 +100,14 @@ package centaur.logic.act
 		 * @return 
 		 * 
 		 */		
-		public function deductHp(num:int):int
+		public function deductHp(num:int, pushAction:Boolean = true):int
 		{
 			var temp:int = hp;
 			hp = hp - num;
 			if (hp < 0) hp = 0;
 			temp = temp - hp;
-			CombatLogic.combatList.push(DamageNotifyAction.getAction(temp, this.objID));
+			if (pushAction)
+				CombatLogic.combatList.push(DamageNotifyAction.getAction(temp, this.objID));
 			
 			trace(objID + "当前生命值为:" + hp);
 			return temp;

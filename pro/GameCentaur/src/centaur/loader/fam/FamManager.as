@@ -1,5 +1,8 @@
 package centaur.loader.fam
 {
+	import centaur.data.GlobalAPI;
+	import centaur.manager.EmbedAssetManager;
+	
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 
@@ -8,21 +11,11 @@ package centaur.loader.fam
 	 */ 
 	public final class FamManager
 	{
-		[Embed(source="E:/Game/pro/assets/effects/jgjf01.fam",mimeType="application/octet-stream")]
-		public static var FamTestBytes:Class;
-		
 		private var _famBytesDic:Dictionary = new Dictionary();
 		private var _famInfoDic:Dictionary = new Dictionary();
 		
 		public function FamManager()
 		{
-			////----wangq 测试用
-			setupData(new FamTestBytes());
-		}
-		
-		public function setupData(bytes:ByteArray):void
-		{
-			_famBytesDic["fortest"] = bytes;
 		}
 		
 		public function getFamFile(path:String, callback:Function):void
@@ -32,7 +25,7 @@ package centaur.loader.fam
 			{
 				var bytes:ByteArray = _famBytesDic[path];
 				if (!bytes)
-					return;
+					bytes = GlobalAPI.loaderManager.loadByteArray(path);
 				
 				var famLoader:FamLoader = new FamLoader(path, callback);
 				famLoader.load(bytes, onLoadComplete);

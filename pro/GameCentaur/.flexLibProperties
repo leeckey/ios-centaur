@@ -25,7 +25,6 @@
     <classEntry path="centaur.logic.action.SelectCardToCombatAreaAction"/>
     <classEntry path="centaur.logic.action.AttackEffectAction"/>
     <classEntry path="centaur.data.GlobalData"/>
-    <classEntry path="centaur.logic.action.SkillEffectAction"/>
     <classEntry path="centaur.logic.action.RoundEndAction"/>
     <classEntry path="centaur.logic.action.SelectCardToCemeteryArea"/>
     <classEntry path="centaur.display.GameBase"/>
@@ -37,17 +36,12 @@
     <classEntry path="centaur.display.ui.login.LoginPanel"/>
     <classEntry path="centaur.data.skill.SkillEnumDefines"/>
     <classEntry path="centaur.logic.action.DamageNotifyAction"/>
-    <classEntry path="centaur.logic.skill.SkillLogic"/>
     <classEntry path="centaur.data.buff.BuffData"/>
     <classEntry path="centaur.logic.action.BuffNotifyAction"/>
     <classEntry path="centaur.logic.combat.BuffLogic"/>
-    <classEntry path="centaur.logic.skill.SkillHandlerBase"/>
     <classEntry path="centaur.logic.skill.MagicSkillHandler"/>
-    <classEntry path="centaur.logic.skill.AttackSkillHandler"/>
-    <classEntry path="centaur.logic.skill.MagicDefenseSkillHandler"/>
     <classEntry path="centaur.logic.skill.SpecSkillHandler"/>
     <classEntry path="centaur.logic.skill.SkillScriptRegister"/>
-    <classEntry path="centaur.logic.skill.AttackDefenseSkillHandler"/>
     <classEntry path="centaur.logic.skill.SpecDefenseSkillHandler"/>
     <classEntry path="centaur.logic.combat.CombatScene"/>
     <classEntry path="centaur.manager.TickManager"/>
@@ -56,6 +50,36 @@
     <classEntry path="centaur.logic.events.CardEvent"/>
     <classEntry path="centaur.loader.fam.FamManager"/>
     <classEntry path="centaur.loader.fam.FamLoader"/>
+    <classEntry path="centaur.loader.BitmapDataManager"/>
+    <classEntry path="centaur.data.combat.CombatResultData"/>
+    <classEntry path="centaur.display.ui.combat.CombatPanel"/>
+    <classEntry path="centaur.display.ui.combat.CombatActPanel"/>
+    <classEntry path="centaur.display.ui.combat.handler.ActionHandler"/>
+    <classEntry path="centaur.display.ui.combat.handler.ActionHandlerManager"/>
+    <classEntry path="centaur.display.ui.combat.handler.ActionHandlerFactory"/>
+    <classEntry path="centaur.display.ui.combat.handler.types.CardToWaitAreaHandler"/>
+    <classEntry path="centaur.display.ui.combat.handler.types.CardToCombatAreaHandler"/>
+    <classEntry path="centaur.display.ui.combat.handler.types.CardToCemeteryAreaHandler"/>
+    <classEntry path="centaur.display.ui.combat.handler.types.RoundStartHandler"/>
+    <classEntry path="centaur.display.ui.combat.handler.types.RoundEndHandler"/>
+    <classEntry path="centaur.display.ui.combat.handler.types.DamageNotifyHandler"/>
+    <classEntry path="centaur.display.ui.combat.handler.types.AttackEffectHandler"/>
+    <classEntry path="centaur.display.ui.combat.handler.types.SkillStartHandler"/>
+    <classEntry path="centaur.effects.NumberEffect"/>
+    <classEntry path="centaur.effects.EffectManager"/>
+    <classEntry path="centaur.effects.RenderEffectBase"/>
+    <classEntry path="centaur.data.effects.EffectData"/>
+    <classEntry path="centaur.manager.EmbedAssetManager"/>
+    <classEntry path="centaur.data.GameConstant"/>
+    <classEntry path="centaur.display.ui.combat.WaitItemPanel"/>
+    <classEntry path="centaur.display.ui.combat.CombatItemPanel"/>
+    <classEntry path="centaur.manager.LayerManager"/>
+    <classEntry path="centaur.display.ui.combat.CemeteryItemPanel"/>
+    <classEntry path="centaur.display.ui.combat.card.CardCombatAttribPanel"/>
+    <classEntry path="centaur.interfaces.combat.IHPEffect"/>
+    <classEntry path="centaur.display.control.GCProgressBar"/>
+    <classEntry path="centaur.loader.LoadUtils"/>
+    <classEntry path="centaur.display.ui.combat.handler.types.SkillEndHandler"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
