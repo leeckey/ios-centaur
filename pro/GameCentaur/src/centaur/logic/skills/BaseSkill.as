@@ -90,6 +90,26 @@ package centaur.logic.skills
 		}
 		
 		/**
+		 * 返回卡牌对象ID组成的Array 
+		 * @param target
+		 * @return 
+		 * 
+		 */		
+		public function makeIDArray(target:Array):Array
+		{
+			var result:Array;
+			
+			for (var i:int = 0; i < target.length; i++)
+			{
+				var card:BaseCardObj = target[i] as BaseCardObj;
+				if (card != null)
+					result.push(card.objID);
+			}
+			
+			return result;
+		}
+		
+		/**
 		 * 获得技能释放的目标 
 		 * @return 
 		 * 

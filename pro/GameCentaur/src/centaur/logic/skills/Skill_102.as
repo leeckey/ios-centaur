@@ -9,7 +9,7 @@ package centaur.logic.skills
 	import centaur.logic.combat.CombatLogic;
 	
 	/**
-	 * 火球,对随机对方一人造成100-300点伤害 
+	 * 火球,对随机对方一人或多人造成100-300点伤害 
 	 * @author liq
 	 * 
 	 */	
@@ -56,10 +56,17 @@ package centaur.logic.skills
 			
 			// 计算伤害
 			var hurt:int = min + (max - min) * Math.random();
-			var targetCard:BaseCardObj = target[0] as BaseCardObj;
-			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [targetCard.objID]));
+			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, makeIDArray(target)));
 			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
-			targetCard.onSkillHurt(card, hurt);
+			
+			var targetCard:BaseCardObj;
+			for (var i:int = 0; i < target.length; i++)
+			{
+				targetCard = target[i] as BaseCardObj;
+				if (targetCard != null)
+					targetCard.onSkillHurt(this, hurt);
+			}
+			
 			
 		}
 	}

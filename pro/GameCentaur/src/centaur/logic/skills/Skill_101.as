@@ -50,9 +50,15 @@ package centaur.logic.skills
 			if (target == null || target.length == 0)
 				return;
 			
-			var targetCard:BaseCardObj = target[0] as BaseCardObj;
-			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [targetCard.objID]));
-			targetCard.onHurt(damage);
+			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, makeIDArray(target)));
+			var targetCard:BaseCardObj;
+			for (var i:int = 0; i < target.length; i++)
+			{
+				targetCard = target[i] as BaseCardObj;
+				if (targetCard != null)
+					targetCard.onHurt(damage);
+			}
+			
 			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 		}
 	}
