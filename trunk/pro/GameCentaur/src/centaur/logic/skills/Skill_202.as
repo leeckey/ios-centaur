@@ -73,10 +73,9 @@ package centaur.logic.skills
 		public function onPreHurt(event:CardEvent):void
 		{
 			if (card.lastBeAttackVal > 0)
-			{
-				card.lastBeAttackVal -= defence;
-				
+			{				
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
+				card.lastBeAttackVal -= defence;
 				trace("伤害减少了:" + defence + ",剩余伤害:" + card.lastBeAttackVal);
 				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 			}
