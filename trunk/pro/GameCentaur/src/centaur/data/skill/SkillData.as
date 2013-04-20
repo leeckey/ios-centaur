@@ -17,6 +17,7 @@ package centaur.data.skill
 		public var param1:int;                 // 技能参数1
 		public var param2:int;                 // 技能参数2
 		public var param3:int;                 // 技能参数3
+		public var buffID:int;                 // buffID
 		
 		public function SkillData()
 		{

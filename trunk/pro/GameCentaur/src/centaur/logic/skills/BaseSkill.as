@@ -5,6 +5,7 @@ package centaur.logic.skills
 	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
+	import centaur.logic.buff.BaseBuff;
 
 	/**
 	 * 技能基类 
@@ -32,6 +33,11 @@ package centaur.logic.skills
 		 * 技能所有者 
 		 */	
 		public var card:BaseCardObj;
+		
+		/**
+		 * 技能buff
+		 */		
+		public var buff:Class;
 		
 		
 		public function get skillID():int

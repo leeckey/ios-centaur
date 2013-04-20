@@ -5,27 +5,28 @@ package centaur.logic.buff
 	import centaur.logic.events.CardEvent;
 	
 	/**
-	 * 冰冻buff 
+	 * 闪电buff 
 	 * @author liq
 	 * 
 	 */	
-	public class Buff_100 extends BaseBuff
+	public class Buff_101 extends BaseBuff
 	{
-		public function Buff_100(card:BaseCardObj)
+		
+		public function Buff_101(card:BaseCardObj)
 		{
-			id = 100;
+			id = 101;
 			round = 1;
 			super(card);
 		}
 		
 		/**
-		 * 设置卡牌停止行动一回合 
+		 * 设置卡牌普通攻击一回合 
 		 * 
 		 */		
 		public override function addBuff():void
 		{
 			card.addEventListener(CardEvent.ON_ROUND_END, onRoundEnd);
-			card.isActive = false;
+			card.canAttack = false;
 			BuffNotifyAction.getAction(id, card.objID);
 		}
 		
@@ -36,7 +37,7 @@ package centaur.logic.buff
 		public override function deBuff():void
 		{
 			card.removeEventListener(CardEvent.ON_ROUND_END, onRoundEnd);
-			card.isActive = true;
+			card.canAttack = true;
 			BuffNotifyAction.getAction(id, card.objID, BuffNotifyAction.BUFF_REMOVE_ACTION);
 		}
 		

@@ -9,18 +9,16 @@ package centaur.logic.skills
 	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.events.CardEvent;
 	
+	import flash.utils.getDefinitionByName;
+	
 	/**
 	 * 冰弹：使一张或者多张卡牌受到100点伤害，30%概率下一回合无法行动 
+	 * 闪电也一样,只是buffID配置不同
 	 * @author liq
 	 * 
 	 */	
 	public class Skill_103 extends BaseSkill
-	{
-		/**
-		 * buff类型 
-		 */		
-		private var buffClass:Buff_100;
-		
+	{		
 		/**
 		 * 伤害值 
 		 */		
@@ -49,6 +47,7 @@ package centaur.logic.skills
 			
 			damage = data.param1;
 			rate = data.param2 / 100;
+			buff = getDefinitionByName("centaur.logic.buff.Buff_" + data.buffID) as Class;
 		}
 		
 		public override function doSkill():void
@@ -72,8 +71,7 @@ package centaur.logic.skills
 					targetCard.onSkillHurt(this, damage);
 					if (!targetCard.isDead && Math.random() < rate)
 					{
-						trace("卡牌" + targetCard.objID + "被冻结");
-						new Buff_100(targetCard);
+						new buff(targetCard);
 					}
 				}
 			}

@@ -53,7 +53,9 @@ package centaur.logic.act
 		public var isDead:Boolean;             // 是否已经死亡
 		public var attackSkill:BaseSkill;      // 普通攻击技能
 		
+		
 		public var isActive:Boolean = true;   // 是否可行动
+		public var canAttack:Boolean = true;
 		
 		public function get attack():int
 		{
@@ -290,7 +292,7 @@ package centaur.logic.act
 		 */ 
 		public function onAttack():Boolean
 		{
-			if (!isActive)
+			if (!isActive || !canAttack)
 				return false;
 			
 			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_PRE_ATTACK, this));
