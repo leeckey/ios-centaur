@@ -6,9 +6,9 @@ package centaur.logic.action
 	public final class BuffNotifyAction extends ActionBase
 	{
 		public static const BUFF_ADD_ACTION:int = 0;
-		public static const BUFF_REMOE_ACTION:int = 1;
+		public static const BUFF_REMOVE_ACTION:int = 1;
 		
-		public var buffData:BuffData;
+		public var buffID:int;
 		public var actionType:int;
 		
 		public function BuffNotifyAction()
@@ -16,10 +16,10 @@ package centaur.logic.action
 			type = ACTION_BUFF_NOTIFY;
 		}
 		
-		public static function getAction(buffData:BuffData, targetID:uint, actionType:int = BUFF_ADD_ACTION):BuffNotifyAction
+		public static function getAction(buffID:int, targetID:uint, actionType:int = BUFF_ADD_ACTION):BuffNotifyAction
 		{
 			var action:BuffNotifyAction = new BuffNotifyAction();
-			action.buffData = buffData;
+			action.buffID = buffID;
 			action.targetObj = targetID;
 			action.actionType = actionType;
 			
@@ -29,7 +29,10 @@ package centaur.logic.action
 		
 		public override function toString():String
 		{
-			return "增加了一个buff";
+			if (actionType == BUFF_ADD_ACTION)
+				return "卡牌" + targetObj  + "的buffID" + buffID + "增加了";
+			else
+				return  "卡牌" + targetObj + "的buffID" + buffID + "消失了" ;
 		}
 	}
 }

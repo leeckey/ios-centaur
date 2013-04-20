@@ -55,7 +55,7 @@ package centaur.logic.skills
 				return;
 			
 			// 计算伤害
-			var hurt:int = min + (max - min) * Math.random();
+			var damage:int = min + (max - min) * Math.random();
 			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, makeIDArray(target)));
 			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 			
@@ -64,10 +64,9 @@ package centaur.logic.skills
 			{
 				targetCard = target[i] as BaseCardObj;
 				if (targetCard != null)
-					targetCard.onSkillHurt(this, hurt);
+					targetCard.onSkillHurt(this, damage);
 			}
-			
-			
+
 		}
 	}
 }
