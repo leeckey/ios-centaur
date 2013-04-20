@@ -120,7 +120,8 @@ package centaur.logic.skills
 				return null;
 
 			var idx:int;
-			var target:BaseCardObj
+			var target:BaseCardObj;
+			var targets:Array = [];
 			var targetAct:BaseActObj = card.owner.enemyActObj;
 			switch(_selectTargetType)
 			{
@@ -143,7 +144,6 @@ package centaur.logic.skills
 					if (!ftTarget)
 						return null;
 					
-					var targets:Array = [];
 					targets.push(ftTarget);
 					var leftTarget:BaseCardObj = targetAct.combatData.selfCombatArea[idx - 1];
 					if (leftTarget) targets.push(leftTarget);
@@ -161,6 +161,8 @@ package centaur.logic.skills
 					if (!randomTarget)
 						randomTarget = targetAct.combatData.getCardFromCombatArea();
 					return randomTarget ? [randomTarget] : null;
+				case SkillEnumDefines.TARGET_RANDOM3_TYPE:
+					return targetAct.combatData.getCardFromCombatAreaRandom3();
 			}
 			
 			return null;
