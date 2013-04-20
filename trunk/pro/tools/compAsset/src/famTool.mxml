@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   width="850"
+					   height="550"
+					   fontSize="12"
+					   creationComplete="onCreate();" 
+					   backgroundColor="#808080" 
+					   
+					   frameRate="25">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	
+	<fx:Script source="Main.as"/>
+		
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<mx:TabNavigator id="tabMain" left="5" right="-39" top="13" bottom="19" creationPolicy="all">
+		<s:NavigatorContent id="pnlCreate" width="100%" height="100%" label="创建">
+			<mx:Label text="fam动画文件打包工具" fontFamily="微软雅黑" fontWeight="bold" fontSize="16" x="13" y="2" height="30" />
+			<mx:Button id="selectFiles" x="371" y="50" label="选择目录"
+					   click="selectFilesClick(event);"/>
+			<mx:Label x="99" y="27" text="" id="tips"/>
+			<mx:CheckBox x="17" y="74" label="使用文件夹取名" id="getnametype" />
+			<mx:CheckBox x="144" y="76" label="文件夹递归处理" id="fileResurveBox" change="fileResurveBoxSelectChanged(event)"/>
+			<mx:Label x="17" y="174" text="注册点：" />
+			<mx:TextInput id="ox" x="67" y="172" width="50" text="100" textAlign="center"/>
+			<mx:TextInput id="oy" x="125" y="172" width="50" text="100" textAlign="center"/>
+			<mx:Label x="17" y="106" text="保存目录：" />
+			<mx:Label x="17" y="29" text="源PNG目录：" />
+			<mx:TextInput x="17" y="128" width="350" id="reviseSavePath" text="C:\Users\Administrator\Desktop"  />
+			<mx:Button x="372" y="128" label="选择目录" click="compSelectPathClick(event);" />
+			<mx:Label x="17" y="216" text="帧频：" />
+			<mx:ComboBox x="66" y="213" selectedIndex="2" id="frameType" dataProvider="{[{label:'1拍1',data:1},{label:'1拍2',data:2},{label:'1拍3',data:3},{label:'1拍4',data:4},{label:'1拍5',data:5},{label:'1拍6',data:6},{label:'1拍7',data:7},{label:'1拍8',data:8}]}"> </mx:ComboBox>
+			<mx:Label x="17" y="246" text="压缩：" />
+			<mx:ComboBox x="66" y="245" dataProvider="{[{label:'jpegAlpha',data:1},{label:'png8',data:2}]}" id="comptype" change="compTypeChange(event);"></mx:ComboBox>
+			<mx:TextInput  x="230" y="244" width="158" textAlign="center" id="quality" text="80" />
+			<mx:Button x="352" y="277" width="100" height="28" label="开始打包" id="startRevise" enabled="false" click="compBtnClick(event);"  />
+			<mx:Canvas id="barCan" width="100%" height="100%" visible="false">
+				<mx:ProgressBar y="200" id="bar" labelPlacement="bottom" minimum="0"  maximum="100" label="进度条" direction="right" mode="manual" width="100%"/>
+			</mx:Canvas>
+			<mx:TextInput id="pngSrcPath" x="17" y="49" width="350"/>
+			<s:CheckBox id="clipCheck" x="204" y="174" label="不裁剪图片"/>
+			<s:CheckBox id="containAlpha" x="295" y="174" label="不保存alpha通道(jpeg模式)" selected="false"/>
+			<s:CheckBox id="direct5CreateBox" x="244" y="214" label="5方向"/>
+			<s:CheckBox id="compressCheckBox" x="385" y="213" label="开启压缩"
+						change="onCreateCompressSelectChanged(event)" selected="true"/>
+			<s:TextInput id="frameRateCreateText" x="343" y="213" width="26" text="10" change="onFrameRateChanged(event)"/>
+			<mx:Label x="306" y="213" width="41" text="帧率："/>
+			<s:Label id="createFanmText" x="469" y="159" width="403" height="35"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent id="pnlOpen" width="100%" height="100%" label="打开">
+			<mx:Button id="openFile" x="425" y="3" label="打开文件"
+					   click="openFileClick(event);"/>
+			<mx:Button id="pauseDisplay" x="498" y="31" width="27" label=">"
+					   click="pausePlayClick(event);"/>
+			<mx:Label x="3" y="31" text="注册点:" />
+			<mx:TextInput id="famOx" x="47" y="30" width="39" change="famOxy_changeHandler(event);"
+						  text="100" textAlign="center"/>
+			<mx:TextInput id="famScale" x="454" y="30" width="39" change="famScale_changeHandler(event);"
+						  text="1.0" textAlign="center"/>
+			<mx:TextInput id="famOy" x="91" y="30" width="39" change="famOxy_changeHandler(event);" text="100" textAlign="center"/>
+			<mx:Label x="3" y="2" text="fam文件:" />
+			<mx:Label x="135" y="31" width="41" text="帧频："/>
+			<mx:ComboBox id="famFrameType" x="169" y="31" width="68"
+						 dataProvider="{[{label:'1拍1',data:1},{label:'1拍2',data:2},{label:'1拍3',data:3},{label:'1拍4',data:4},{label:'1拍5',data:5},{label:'1拍6',data:6},{label:'1拍7',data:7},{label:'1拍8',data:8}]}"
+						 selectedIndex="2"  change="famFrameTypeChange(event);" > </mx:ComboBox>
+			<mx:Label x="307" y="30" text="压缩：" />
+			<mx:ComboBox id="famComptype" x="340" y="31" width="76" change="compTypeChange(event);"
+						 dataProvider="{[{label:'jpegAlpha',data:1},{label:'png8',data:2}]}"
+						 editable="false" enabled="false"></mx:ComboBox>
+			<mx:Label id="famFileName" left="64" top="2" width="358" text=""/>
+			<mx:Canvas id="famShowPanel" visible="true" y="61" width="100%" height="307"
+					   borderColor="#106368">
+				<s:BorderContainer x="550" y="25" width="291" height="257">
+					<s:TextInput id="frameInputText" x="10" y="23" width="227" change="inputTextChanged(event)"/>
+					<s:TextInput id="frameOutputText" x="9" y="64" width="228" change="outputTextChanged(event)"/>
+					<s:Label x="3" y="7" text="输入目录："/>
+					<s:Label x="0" y="49" text="输出目录："/>
+					<s:Button id="frameInputBtn" x="240" y="23" width="48" label="选择" click="onFrameInputBtnClick(event)"/>
+					<s:Button id="frameOutputBtn" x="239" y="64" width="48" label="选择" click="onFrameOutputBtnClick(event)"/>
+					<s:Button id="frameImplBtn" x="16" y="200" width="88" height="48" label="应    用"
+							  click="onFrameBatImplClick(event)"/>
+					<s:Label x="4" y="94" text="文件名过滤表："/>
+					<s:List id="frameFilterList" x="8" y="116" width="108" height="72"></s:List>
+					<s:TextInput id="frameFilterText" x="87" y="91" width="101" height="20"/>
+					<s:Button id="frameFilterAddBtn" x="196" y="90" width="45" label="添加" click="onFrameFilterAddBtnClick(event)"/>
+					<s:Button id="frameFilterRemoveBtn" x="238" y="90" width="45" label="删除" click="onFrameFilterRemoveBtnClick(event)"/>
+					<s:CheckBox id="list5DirectBox" x="121" y="186" width="77" height="18"
+								label="列出5方向" change="onList5DirectChanged(event)"/>
+					<s:CheckBox id="justUpdateFamBox" x="114" y="214" width="169" height="27"
+								label="只是更新Fam到最新版本" change="onList5DirectChanged(event)"/>
+					<s:CheckBox id="listNot5DirectBox" x="197" y="186" width="93" height="18"
+								label="列出非5方向" selected="true" change="onListNot5DirectChanged(event)"/>
+					<s:TextArea id="frameListTextArea" x="123" y="117" width="159" height="71"
+								color="#F80606"/>
+				</s:BorderContainer>
+				<s:Label x="569" y="8" width="260" chromeColor="#336985" color="#3C6DA0"
+						 fontSize="15" text="帧频帧率批量应用(或更新Fam版本)"/>
+			</mx:Canvas>
+			<mx:Button id="saveAsFam" x="498" y="3" label="保存修改" click="famSaveAsClick(event);"
+					   enabled="false"/>
+			<mx:Button id="playOnceDisplay" x="530" y="31" width="32" label="1&gt;"
+					   click="playOnceClick(event);"/>
+			<s:TextInput id="frameRateText" x="274" y="31" width="26" text="25" change="onFrameRateChanged(event)"/>
+			<mx:Label x="239" y="30" width="41" text="帧率："/>
+			<mx:Label x="421" y="31" width="41" text="缩放："/>
+			<s:HScrollBar id="timeLineScrollBar" x="344" y="446" width="176" change="onTimeLineScrollChanged(event)"/>
+			<s:Button id="addFrameBtn" x="274" y="446" width="28" height="15" label="+" click="addFrameBtnClick(event)"/>
+			<s:Button id="removeFrameBtn" x="312" y="446" width="28" height="15" label="-" click="removeFrameBtnClick(event)"/>
+			<s:CheckBox id="direct5CheckBox" x="588" y="36" label="5方向" change="onDirect5CheckBoxChanged(event)"/>
+			<s:CheckBox id="openCompressCB" x="651" y="35" label="开启压缩"
+						change="onOpenCompressSelectChanged(event)" selected="true"/>
+			<s:CheckBox id="openShowShadow" x="729" y="35" label="显示阴影"
+						change="onopenShowShadowSelectChanged(event)" selected="false"/>
+			<s:Label x="686" y="10" width="108" height="17" text="工具当前最新版本:"/>
+			<s:Label x="574" y="11" width="77" height="17" text="Fam当前版本:"/>
+			<s:TextInput id="FamRevisionText" x="652" y="5" width="26" enabled="false"/>
+			<s:TextInput id="ToolRevisionText" x="802" y="5" width="34" enabled="false" text="7"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="单帧批量区">
+			<mx:ComboBox id="singleComptype" x="66" y="245" change="compTypeChange(event);"
+						 dataProvider="{[{label:'jpegAlpha',data:1},{label:'png8',data:2}]}"
+						 enabled="false"></mx:ComboBox>
+			<mx:TextInput  x="230" y="244" width="158" textAlign="center" id="singleQuality" text="80" />
+			<s:CheckBox id="singleCompressCheckBox" x="342" y="205" label="开启压缩"
+						change="onCreateCompressSelectChanged(event)" selected="true"/>
+			<s:TextInput id="singleInputFileText" x="74" y="53" width="267" height="19" selectable="true" editable="false"/>
+			<s:Button x="239" y="301" width="88" height="34" label="开始打包" fontSize="14" click="startSinglePackage(event)"/>
+			<s:Label x="12" y="54" width="63" height="21" text="输入文件："/>
+			<s:Button id="singleFileBtn" x="349" y="53" label="选择文件"
+					  click="selectSingleMultiFileHandler(event)"/>
+			<s:TextInput id="singleOutputText" x="75" y="130" width="267" height="19" editable="false"/>
+			<s:Label x="13" y="133" width="63" height="15" text="输出目录："/>
+			<s:Button x="350" y="130" label="选择目录" click="selectSingleOutputDictionary(event)"/>
+			<mx:Label x="17" y="246" text="压缩：" />
+			<s:TextInput id="singleInputDicText" x="75" y="80" width="267" height="19" editable="false"/>
+			<s:Label x="13" y="83" width="63" height="15" text="输出目录："/>
+			<s:Button id="singleDicBtn" x="350" y="80" label="选择目录"
+					  click="selectSingleInputDictionary(event)" enabled="false"/>
+			<s:RadioButton id="singleFileRadio" x="435" y="55" label="文件模式" selected="true" click="singleFileRadioClick(event)"/>
+			<s:RadioButton id="singleDictionaryRadio" x="436" y="80" label="文件夹模式" click="singleDicRadioClick(event)"/>
+			<mx:Label x="17" y="174" text="注册点：" />
+			<mx:TextInput id="singleox" x="67" y="172" width="50" text="0" textAlign="center"/>
+			<mx:TextInput id="singleoy" x="125" y="172" width="50" text="0" textAlign="center"/>
+			<s:CheckBox id="singleclipCheck" x="204" y="174" label="不裁剪图片"/>
+			<s:CheckBox id="singlecontainAlpha" x="295" y="174" label="不保存alpha通道(jpeg模式)" selected="false"/>
+		</s:NavigatorContent>
+	</mx:TabNavigator>
+</s:WindowedApplication>
