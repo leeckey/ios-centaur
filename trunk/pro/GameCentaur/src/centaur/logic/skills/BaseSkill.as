@@ -97,7 +97,7 @@ package centaur.logic.skills
 		 */		
 		public function makeIDArray(target:Array):Array
 		{
-			var result:Array;
+			var result:Array = [];
 			
 			for (var i:int = 0; i < target.length; i++)
 			{

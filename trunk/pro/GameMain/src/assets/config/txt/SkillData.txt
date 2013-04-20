@@ -7,3 +7,4 @@ id	templateID	name	effectPath	discription	skillType	priority	selectTargetType	pa
 5	201	暴击	hello	攻击时有50%概率提升100%攻击力	2	0	0	50	100	0
 6	202	格挡	hello	受到普通攻击时,减少30点伤害	2	0	0	30	0	0
 7	203	反射	hello	魔法伤害无效,并对攻击方造成100点伤害	2	0	0	100	0	0
+8	103	冰弹	hello	对对方随机一张卡牌造成100点伤害，30%概率下一回合无法行动	1	0	3	100	30	0
