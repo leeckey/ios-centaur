@@ -15,6 +15,7 @@ package centaur.logic.action
 		public static const ACTION_DAMAGE_NOTIFY:int = 9;			    // 专门处理伤害的操作类型
 		public static const ACTION_BUFF_NOTIFY:int = 10;			    // BUFF操作类型
 		public static const ACTION_ATTACK_CHANGE:int = 11;			// 攻击力变化操作
+		public static const ACTION_CURE_NOTIFY:int = 12;			    // 血量增加
 		
 		/**
 		 * 类型 
