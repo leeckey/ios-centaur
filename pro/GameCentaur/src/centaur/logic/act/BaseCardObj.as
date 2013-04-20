@@ -124,7 +124,7 @@ package centaur.logic.act
 			
 			skills = [];
 			// 普通攻击
-			attackSkill = new Skill_100(null, this);
+			// attackSkill = new Skill_100(null, this);
 			var cardTemplateData:CardTemplateData = CardTemplateDataList.getCardData(cardData.templateID);
 			if (cardTemplateData)
 			{
@@ -356,6 +356,9 @@ package centaur.logic.act
 		 */		
 		public function deductHP(num:int):int
 		{
+			if (isDead)
+				return 0;
+			
 			var temp:int = _hp;
 			_hp = _hp - num;
 			if (_hp <= 0) _hp = 0;
@@ -368,6 +371,27 @@ package centaur.logic.act
 			return temp;
 		}
 		
+		/**
+		 * 增加HP 
+		 * @param num
+		 * @return 
+		 * 
+		 */		
+		public function addHP(num:int):int
+		{
+			if ( _hp == cardData.maxHP)
+				return 0;
+			
+			var temp:int = _hp;
+			_hp = _hp + num;
+			if (_hp > cardData.maxHP) _hp = cardData.maxHP;
+			temp = _hp - temp;
+			
+			CombatLogic.combatList.push(CureNotifyAction.getAction(temp, this.objID));
+			
+			trace(objID + "当前生命值为:" + _hp);
+			return temp;
+		}
 		
 		/**
 		 *   处于濒临死亡时

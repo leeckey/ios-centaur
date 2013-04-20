@@ -134,6 +134,9 @@ package centaur.logic.skills
 					target = targetAct.combatData.selfCombatArea[idx];
 					return target ? [target] : null;
 					
+				case SkillEnumDefines.TARGET_SELF_TYPE:
+					return [card];
+					
 				case SkillEnumDefines.TARGET_SELF_FRONT3_TYPE:
 					// 目标英雄相邻3卡牌，根据isAffectSelf决定是
 					idx = card.owner.combatData.selfCombatArea.indexOf(card);
