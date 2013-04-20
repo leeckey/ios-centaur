@@ -70,7 +70,7 @@ package centaur.logic.skills
 				if (targetCard != null)
 				{
 					targetCard.onSkillHurt(this, damage);
-					if (Math.random() < rate)
+					if (!targetCard.isDead && Math.random() < rate)
 					{
 						trace("卡牌" + targetCard.objID + "被冻结");
 						new Buff_100(targetCard);
