@@ -6,33 +6,15 @@ package centaur.logic.skills
 	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.action.*;
 	
-	public class Skill_205 extends BaseSkill
+	public class Skill_207 extends BaseSkill
 	{
-		/**
-		 * 最大承受伤害 
-		 */		
-		public var maxDamage:int;
-		
-		public function Skill_205(data:SkillData, card:BaseCardObj)
+		public function Skill_207(data:SkillData, card:BaseCardObj)
 		{
 			super(data, card);
 		}
 		
 		/**
-		 * 设置卡牌参数 
-		 * @param data
-		 * 
-		 */		
-		public override function initConfig(data:SkillData):void
-		{
-			// 设置公共信息
-			super.initConfig(data);
-			
-			maxDamage = data.param1;
-		}
-		
-		/**
-		 * 监听被普通攻击事件
+		 * 监听受到技能伤害事件 
 		 * @param card
 		 * 
 		 */		
@@ -42,7 +24,7 @@ package centaur.logic.skills
 			
 			if (card != null)
 			{
-				card.addEventListener(CardEvent.ON_PRE_HURT, onPreHurt, false, _priority);
+				card.addEventListener(CardEvent.ON_PRE_SKILL_HURT, onPreSkillHurt, false, _priority);
 			}
 		}
 		
@@ -54,24 +36,24 @@ package centaur.logic.skills
 		{
 			if (card != null)
 			{
-				card.removeEventListener(CardEvent.ON_PRE_HURT, onPreHurt);
+				card.removeEventListener(CardEvent.ON_PRE_SKILL_HURT, onPreSkillHurt);
 			}
 			
 			super.removeCard();
 		}
 		
 		/**
-		 * 减少受到的普通攻击伤害 
+		 * 免疫技能伤害
 		 * @param event
 		 * 
 		 */		
-		public function onPreHurt(event:CardEvent):void
+		public function onPreSkillHurt(event:CardEvent):void
 		{
 			if (card.lastBeAttackVal > 0)
 			{				
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
-				card.lastBeAttackVal = Math.min(card.lastBeAttackVal, maxDamage);
-				trace("最高受到" + maxDamage + "伤害");
+				card.lastBeAttackVal = 0;
+				trace(card.objID + "免疫了技能伤害");
 				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 			}
 		}
