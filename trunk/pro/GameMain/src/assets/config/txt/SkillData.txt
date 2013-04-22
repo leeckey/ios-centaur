@@ -16,3 +16,4 @@ id	templateID	name	effectPath	discription	skillType	priority	selectTargetType	pa
 14	103	群体削弱	hello	降低对方所有卡牌10点攻击力	1	0	7	10	0	0	0
 15	104	治疗	hello	恢复我方一张卡牌100点生命值	1	0	9	100	0	0	0
 16	104	甘霖	hello	恢复我方全体卡牌100点生命值	1	0	10	100	0	0	0
+17	204	闪避	hello	受攻击时50%概率闪避	2	0	0	50	0	0	0

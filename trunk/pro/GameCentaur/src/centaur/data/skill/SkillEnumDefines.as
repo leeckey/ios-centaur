@@ -3,13 +3,9 @@ package centaur.data.skill
 	public final class SkillEnumDefines
 	{
 		// 技能类型
-		public static const SKILL_MAGIC_TYPE:int = 1;		// 法术技能类型,主动攻击时触发
-		public static const SKILL_ATTACK_TYPE:int = 2;		// 物理攻击技能类型，物理攻击时触发
-		public static const SKILL_MAGIC_DEFENSE_TYPE:int = 3;		// 防御技能类型，受技能攻击时触发
-		public static const	SKILL_ATTACK_DEFENSE_TYPE:int = 4;		// 防御技能类型，受物理攻击时触发
-		public static const SKILL_DEATH_TYPE:int = 5;				// 死契技能
-		public static const SKILL_PRESENT_TYPE:int = 6;				// 降临技能
-		public static const SKILL_SPEC_DEFENSE_TYPE:int = 7;		// 特殊技能的防御类型,如送还,摧毁
+		public static const SKILL_ACTIVE_TYPE:int = 1;		    // 主动技能
+		public static const SKILL_PASSIVE_TYPE:int = 2;		    // 被动技能
+
 		
 		public static const SKILL2STR:Array = [
 			"",

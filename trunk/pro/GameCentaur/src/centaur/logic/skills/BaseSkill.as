@@ -17,14 +17,19 @@ package centaur.logic.skills
 	public class BaseSkill
 	{	
 		/**
-		 * 技能攻击目标类型 
-		 */		
-		public var _selectTargetType:int;
-		
-		/**
 		 * 技能ID 
 		 */		
 		protected var _skillID:int;
+		
+		/**
+		 * 技能类型 
+		 */		
+		private var _skillType:int;
+		
+		/**
+		 * 技能攻击目标类型 
+		 */		
+		private var _selectTargetType:int;
 		
 		/**
 		 * 技能触发优先级 
@@ -47,6 +52,11 @@ package centaur.logic.skills
 			return _skillID;
 		}
 		
+		public function get skillType():int
+		{
+			return _skillType;
+		}
+		
 		public function BaseSkill(data:SkillData, card:BaseCardObj)
 		{
 			if (data != null)
@@ -66,6 +76,7 @@ package centaur.logic.skills
 			_skillID = data.id;
 			_priority = data.priority;
 			_selectTargetType = data.selectTargetType;
+			_skillType = data.skillType;
 		}
 		
 		/**
