@@ -5,28 +5,32 @@ package centaur.logic.buff
 	import centaur.logic.events.CardEvent;
 	
 	/**
-	 * 闪电buff 
+	 * 毒雾：行动结束后受到50点伤害 
 	 * @author liq
 	 * 
 	 */	
-	public class Buff_101 extends BaseBuff
+	public class Buff_102 extends BaseBuff
 	{
+		/**
+		 * 造成的伤害值 
+		 */		
+		public var damage:int;
 		
-		public function Buff_101(card:BaseCardObj)
+		public function Buff_102(card:BaseCardObj)
 		{
-			id = 101;
+			id = 102;
 			round = 1;
+			damage = 50;
 			super(card);
 		}
 		
 		/**
-		 * 禁止卡牌普通攻击一回合 
+		 * 设置回合结束时受到50点伤害 
 		 * 
 		 */		
 		public override function addBuff():void
 		{
 			card.addEventListener(CardEvent.ON_ROUND_END, onRoundEnd);
-			card.canAttack = false;
 			BuffNotifyAction.getAction(id, card.objID);
 		}
 		
@@ -47,6 +51,7 @@ package centaur.logic.buff
 		 */		
 		private function onRoundEnd(event:CardEvent):void
 		{
+			card.onHurt(damage);
 			if (--round <= 0)
 			{
 				deBuff();

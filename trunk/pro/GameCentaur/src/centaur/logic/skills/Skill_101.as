@@ -1,23 +1,24 @@
 package centaur.logic.skills
 {
-	import centaur.data.card.CardData;
 	import centaur.data.skill.SkillData;
-	import centaur.data.skill.SkillEnumDefines;
-	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
-	import centaur.logic.action.*;
-	import centaur.logic.combat.CombatLogic;
-	import centaur.logic.events.CardEvent;
 	
 	/**
-	 * 阻击:给HP最少的卡牌100点伤害 
-	 * @author minnie
+	 * 火球,对随机对方一人或多人造成100-300点伤害 
+	 * @author liq
 	 * 
 	 */	
 	public class Skill_101 extends BaseSkill
 	{
-		// 造成的伤害值
-		public var damage:int;
+		/**
+		 * 最小攻击力 
+		 */		
+		public var min:int
+		
+		/**
+		 * 最大攻击力 
+		 */		
+		public var max:int;
 		
 		public function Skill_101(data:SkillData, card:BaseCardObj)
 		{
@@ -34,32 +35,17 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			damage = data.param1;
+			min = data.param1;
+			max = data.param2;
 		}
 		
-		/**
-		 * 施放技能 
-		 * 
-		 */		
-		public override function doSkill():void
+		protected override function _doSkill(targetCard:BaseCardObj):void
 		{
-			if (!card || card.isDead)
+			if (targetCard == null)
 				return;
 			
-			var target:Array = getTarget();
-			if (target == null || target.length == 0)
-				return;
-			
-			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, makeIDArray(target)));
-			var targetCard:BaseCardObj;
-			for (var i:int = 0; i < target.length; i++)
-			{
-				targetCard = target[i] as BaseCardObj;
-				if (targetCard != null)
-					targetCard.onHurt(damage);
-			}
-			
-			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
+			var damage:int = min + (max - min) * Math.random();
+			targetCard.onSkillHurt(this, damage);
 		}
 	}
 }
