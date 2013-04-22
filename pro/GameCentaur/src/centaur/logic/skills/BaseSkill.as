@@ -5,7 +5,9 @@ package centaur.logic.skills
 	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
+	import centaur.logic.action.*;
 	import centaur.logic.buff.BaseBuff;
+	import centaur.logic.combat.CombatLogic;
 
 	/**
 	 * 技能基类 
@@ -92,7 +94,31 @@ package centaur.logic.skills
 		 */		
 		public function doSkill():void
 		{
+			if (!card || card.isDead)
+				return;
 			
+			var target:Array = getTarget();
+			if (target == null || target.length == 0)
+				return;
+			
+			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, makeIDArray(target)));
+			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
+			
+			var targetCard:BaseCardObj;
+			for (var i:int = 0; i < target.length; i++)
+			{
+				targetCard = target[i] as BaseCardObj;
+				if (targetCard != null)
+				{
+					targetCard = target[i] as BaseCardObj;
+					_doSkill(targetCard);
+				}
+			}
+		}
+		
+		protected function _doSkill(targetCard:BaseCardObj):void
+		{
+	
 		}
 		
 		/**
@@ -131,20 +157,21 @@ package centaur.logic.skills
 			var targetAct:BaseActObj = card.owner.enemyActObj;
 			switch(_selectTargetType)
 			{
+				// 攻击正对面的卡牌
 				case SkillEnumDefines.TARGET_SELF_FRONT_TYPE:
 				default:
-					// 攻击正对面的卡牌
 					idx = card.owner.combatData.selfCombatArea.indexOf(card);
 					if (idx < 0)
 						return null;
 					target = targetAct.combatData.selfCombatArea[idx];
 					return target ? [target] : null;
 					
+				// 对自己释放
 				case SkillEnumDefines.TARGET_SELF_TYPE:
 					return [card];
 					
+				// 目标英雄相邻3卡牌，根据isAffectSelf决定是
 				case SkillEnumDefines.TARGET_SELF_FRONT3_TYPE:
-					// 目标英雄相邻3卡牌，根据isAffectSelf决定是
 					idx = card.owner.combatData.selfCombatArea.indexOf(card);
 					if (idx < 0)
 						return null;
@@ -159,19 +186,27 @@ package centaur.logic.skills
 					var rightTarget:BaseCardObj = targetAct.combatData.selfCombatArea[idx + 1];
 					if (rightTarget) targets.push(rightTarget);
 					return targets;
+					
+				// HP最低的卡牌
 				case SkillEnumDefines.TARGET_MIN_HP_TYPE:
-					// HP最低的卡牌
 					target = targetAct.combatData.getCardFromCombatAreaMinHP();
 					return target ? [target] : null;
+					
+				// 随机一个目标
 				case SkillEnumDefines.TARGET_RANDOM_TYPE:
-					// 随机一个目标
 					var randomIdx:int = Math.random() * targetAct.combatData.selfCombatArea.length;
 					var randomTarget:BaseCardObj = targetAct.combatData.selfCombatArea[randomIdx];
 					if (!randomTarget)
 						randomTarget = targetAct.combatData.getCardFromCombatArea();
 					return randomTarget ? [randomTarget] : null;
+					
+				// 随机3个目标
 				case SkillEnumDefines.TARGET_RANDOM3_TYPE:
 					return targetAct.combatData.getCardFromCombatAreaRandom3();
+					
+				// 敌方所有目标
+				case SkillEnumDefines.TARGET_ALL_TYPE:
+					return targetAct.combatData.selfCombatArea.concat();
 			}
 			
 			return null;

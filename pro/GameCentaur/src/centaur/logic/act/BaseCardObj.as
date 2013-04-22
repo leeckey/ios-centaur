@@ -252,7 +252,7 @@ package centaur.logic.act
 		/**
 		 * 被技能攻击 
 		 * @param attacker
-		 * @param hurt
+		 * @param damage
 		 * 
 		 */		
 		public function onSkillHurt(attacker:BaseSkill, damage:int):int
