@@ -43,6 +43,11 @@ package centaur.data.combat
 			return null;
 		}
 		
+		/**
+		 * 随机三张卡牌 
+		 * @return 
+		 * 
+		 */		
 		public function getCardFromCombatAreaRandom3():Array
 		{
 			var res:Array = [];
@@ -66,6 +71,11 @@ package centaur.data.combat
 			return res;
 		}
 		
+		/**
+		 * 血量最少的卡牌 
+		 * @return 
+		 * 
+		 */		
 		public function getCardFromCombatAreaMinHP():BaseCardObj
 		{
 			var minHP:int = int.MAX_VALUE;
@@ -83,6 +93,11 @@ package centaur.data.combat
 			return res;
 		}
 		
+		/**
+		 * 失血最多的卡牌 
+		 * @return 
+		 * 
+		 */		
 		public function getCardFromCombatAreaMaxLoseHP():BaseCardObj
 		{
 			var max:int = 0;
@@ -100,5 +115,25 @@ package centaur.data.combat
 			return res;
 		}
 		
+		/**
+		 * 获得所有可以治疗的卡牌 
+		 * @return 
+		 * 
+		 */		
+		public function getCardFromCombatAreaCanCure():Array
+		{
+			var res:Array = [];
+			
+			for (var i:int = 0; i < selfCombatArea.length; ++i)
+			{
+				var target:BaseCardObj = selfCombatArea[i];
+				if (target && (target.cardData.maxHP != target.hp))
+				{
+					res.push(target);
+				}
+			}
+			
+			return res;
+		}
 	}
 }

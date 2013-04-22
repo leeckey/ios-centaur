@@ -194,11 +194,11 @@ package centaur.logic.skills
 					
 				// 随机一个目标
 				case SkillEnumDefines.TARGET_RANDOM_TYPE:
-					var randomIdx:int = Math.random() * targetAct.combatData.selfCombatArea.length;
-					var randomTarget:BaseCardObj = targetAct.combatData.selfCombatArea[randomIdx];
-					if (!randomTarget)
-						randomTarget = targetAct.combatData.getCardFromCombatArea();
-					return randomTarget ? [randomTarget] : null;
+					idx = Math.random() * targetAct.combatData.selfCombatArea.length;
+					target = targetAct.combatData.selfCombatArea[idx];
+					if (!target)
+						target = targetAct.combatData.getCardFromCombatArea();
+					return target ? [target] : null;
 					
 				// 随机3个目标
 				case SkillEnumDefines.TARGET_RANDOM3_TYPE:
@@ -207,6 +207,18 @@ package centaur.logic.skills
 				// 敌方所有目标
 				case SkillEnumDefines.TARGET_ALL_TYPE:
 					return targetAct.combatData.selfCombatArea.concat();
+				
+				// 随机一个可以治疗的目标
+				case SkillEnumDefines.TARGET_RANDOM_CURE:
+					idx = Math.random() * card.owner.combatData.getCardFromCombatAreaCanCure().length;
+					if (idx == 0)
+						return null;
+					target = targetAct.combatData.selfCombatArea[idx];
+					return target ? [target] : null;
+						
+				// 所有可以治疗的目标
+				case SkillEnumDefines.TARGET_ALL_CURE:
+					return card.owner.combatData.getCardFromCombatAreaCanCure();
 			}
 			
 			return null;
