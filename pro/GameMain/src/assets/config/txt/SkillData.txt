@@ -17,4 +17,5 @@ id	templateID	name	effectPath	discription	skillType	priority	selectTargetType	pa
 15	104	治疗	hello	恢复我方一张卡牌100点生命值	1	0	9	100	0	0	0
 16	104	甘霖	hello	恢复我方全体卡牌100点生命值	1	0	10	100	0	0	0
 17	204	闪避	hello	受攻击时50%概率闪避	2	0	0	50	0	0	0
-18	205	冰甲	hello	受到物理攻击时，最多承受50点伤害	2	0	0	50	0	0	0
+18	205	冰甲	hello	受到物理攻击时，最多受到50点伤害	2	0	0	50	0	0	0
+19	206	魔甲	hello	受到技能攻击时，最多受到50点伤害	2	0	0	50	0	0	0
