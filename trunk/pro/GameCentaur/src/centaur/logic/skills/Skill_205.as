@@ -1,26 +1,19 @@
 package centaur.logic.skills
 {
 	import centaur.data.skill.SkillData;
-	import centaur.data.skill.SkillEnumDefines;
-	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
-	import centaur.logic.action.*;
-	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.events.CardEvent;
+	import centaur.logic.combat.CombatLogic;
+	import centaur.logic.action.*;
 	
-	/**
-	 * 受攻击时50%概率闪避
-	 * @author liq
-	 * 
-	 */	
-	public class Skill_204 extends BaseSkill
+	public class Skill_205 extends BaseSkill
 	{
 		/**
-		 * 闪避的概率
+		 * 最大承受伤害 
 		 */		
-		public var rate:Number;
+		public var maxDamage:int;
 		
-		public function Skill_204(data:SkillData, card:BaseCardObj)
+		public function Skill_205(data:SkillData, card:BaseCardObj)
 		{
 			super(data, card);
 		}
@@ -35,7 +28,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			rate = data.param1 / 100;
+			maxDamage = data.param1;
 		}
 		
 		/**
@@ -68,17 +61,17 @@ package centaur.logic.skills
 		}
 		
 		/**
-		 * 概率闪避攻击
+		 * 减少受到的普通攻击伤害 
 		 * @param event
 		 * 
 		 */		
 		public function onPreHurt(event:CardEvent):void
 		{
-			if (card.lastBeAttackVal > 0 && Math.random() < rate)
+			if (card.lastBeAttackVal > 0)
 			{				
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
-				card.lastBeAttackVal = 0;
-				trace(card.objID + "闪避了攻击");
+				card.lastBeAttackVal = Math.min(card.lastBeAttackVal, maxDamage);
+				trace("最高受到" + maxDamage + "伤害");
 				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 			}
 		}
