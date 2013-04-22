@@ -242,7 +242,8 @@ package centaur.logic.act
 			for (var i:int = 0; i < skills.length; ++i)
 			{
 				var skill:BaseSkill = skills[i] as BaseSkill;
-				skill.doSkill();
+				if (skill != null && skill.skillType == SkillEnumDefines.SKILL_ACTIVE_TYPE)
+					skill.doSkill();
 			}
 			
 			return isDead;
