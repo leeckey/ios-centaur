@@ -50,8 +50,8 @@ package centaur.logic.skills
 			if (targetCard == null)
 				return;
 
-			targetCard.onSkillHurt(this, damage);
-			if (buff != null && !targetCard.isDead && Math.random() < rate)
+			var hurt:int = targetCard.onSkillHurt(this, damage);
+			if (hurt > 0 && buff != null && !targetCard.isDead && Math.random() < rate)
 			{
 				new buff(targetCard);
 			}

@@ -37,7 +37,7 @@ package centaur.logic.skills
 		}
 		
 		/**
-		 * 监听攻击开始和结束的事件 
+		 * 监听被普通攻击事件
 		 * @param card
 		 * 
 		 */		

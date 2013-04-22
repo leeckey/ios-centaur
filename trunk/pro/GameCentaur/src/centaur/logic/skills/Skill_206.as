@@ -32,7 +32,7 @@ package centaur.logic.skills
 		}
 		
 		/**
-		 * 监听攻击开始和结束的事件 
+		 * 监听受到技能伤害事件 
 		 * @param card
 		 * 
 		 */		
