@@ -121,7 +121,6 @@ package centaur.logic.skills
 				targetCard = target[i] as BaseCardObj;
 				if (targetCard != null)
 				{
-					targetCard = target[i] as BaseCardObj;
 					_doSkill(targetCard);
 				}
 			}
@@ -230,6 +229,17 @@ package centaur.logic.skills
 				// 所有可以治疗的目标
 				case SkillEnumDefines.TARGET_ALL_CURE:
 					return card.owner.combatData.getCardFromCombatAreaCanCure();
+					
+				// 相同国家的卡牌
+				case SkillEnumDefines.TARGET_SAME_COUNTRY:
+					var cards:Array = card.owner.combatData.selfCombatArea;
+					for (var i:int = 0; i < cards.length; i++)
+					{
+						target = cards[i];
+						if (target != null && target.objID != card.objID && target.cardData.country == card.cardData.country)
+							targets.push(target);
+					}
+					return targets;
 			}
 			
 			return null;

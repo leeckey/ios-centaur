@@ -1,4 +1,4 @@
-templateID	name	maxHP	attack	defense	maxWaitRound	skillList	starLv
-模板ID	名称	最大血量	攻击	防御	等待回合	技能列表	卡牌星级
-1	刘备	800	100	0	2	1,3,5,18	5
-2	曹操	1000	80	0	2	1,2,6,19	5
+templateID	name	maxHP	attack	defense	maxWaitRound	skillList	starLv	country
+模板ID	名称	最大血量	攻击	防御	等待回合	技能列表	卡牌星级	势力
+1	刘备	800	100	0	2	1,3,5,30	5	2
+2	曹操	1000	80	0	2	1,2,6,31	5	1

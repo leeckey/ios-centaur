@@ -35,6 +35,9 @@ package centaur.logic.act
 			
 			init();
 		}
+		
+		// 等待区最大数量
+		private const MAX_WAIT_NUM:int = 5;
 
 		/**
 		 * 角色初始化 
@@ -183,13 +186,48 @@ package centaur.logic.act
 		}
 		
 		/**
+		 * 卡牌复活处理 
+		 * @param cardObj
+		 * 
+		 */		
+		public function cardRevive(cardObj:BaseCardObj):void
+		{
+			if (cardObj == null || combatData.selfCemeteryArea.indexOf(cardObj) == -1)
+				return;
+			
+			// 从墓地中移除
+			var idx:int = combatData.selfCemeteryArea.indexOf(cardObj);
+			if (idx > -1)
+				combatData.selfCemeteryArea.splice(idx, 1);
+			
+			if (combatData.selfWaitArea.length < MAX_WAIT_NUM)
+			{
+				// 等待区不满,进入等待区
+				if (combatData.selfWaitArea.indexOf(cardObj) == -1)
+					combatData.selfWaitArea.push(cardObj);
+				
+				// 添加相应操作
+				CombatLogic.combatList.push(SelectCardToWaitAreaAction.getAction(this.objID, cardObj.objID));
+			}
+			else
+			{
+				// 等待区已满,进入卡堆
+				if (combatData.selfCardArea.indexOf(cardObj) == -1)
+					combatData.selfCardArea.push(cardObj);
+				
+				// 添加相应操作
+				CombatLogic.combatList.push(SelectCardToCardAreaAction.getAction(this.objID, cardObj.objID));
+			}
+		}
+		
+		/**
 		 *  从卡堆随机一张到等待区域
 		 */ 
 		public function selectCardToWaitArea():void
 		{
 			// 随机从卡堆挑选一个进入等待区域
 			var len:int = combatData.selfCardArea.length;
-			if (len <= 0)
+			if (len <= 0 || combatData.selfWaitArea.length >= MAX_WAIT_NUM)
 				return;
 			
 			var ranIdx:int = len * Math.random();
@@ -211,7 +249,7 @@ package centaur.logic.act
 			while (combatData.selfWaitArea.length > 0)
 			{
 				var cardObj:BaseCardObj = combatData.selfWaitArea[0];
-				if (cardObj.cardData.waitRound > 0)
+				if (cardObj.waitRound > 0)
 					break;
 				
 				// 从等待队列挑选一个进入战斗区域
@@ -236,9 +274,9 @@ package centaur.logic.act
 			for (var i:int = 0; i < len; ++i)
 			{
 				var cardObj:BaseCardObj = combatData.selfWaitArea[i];
-				cardObj.cardData.waitRound--;
-				if (cardObj.cardData.waitRound < 0)
-					cardObj.cardData.waitRound = 0;
+				cardObj.waitRound--;
+				if (cardObj.waitRound < 0)
+					cardObj.waitRound = 0;
 			}
 			
 			// 自身战斗区卡牌的顺序更新

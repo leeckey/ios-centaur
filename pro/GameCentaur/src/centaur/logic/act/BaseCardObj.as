@@ -407,10 +407,15 @@ package centaur.logic.act
 			isDead = true;
 			
 			// 派发事件
-			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_DEAD, this));
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_PRE_DEAD, this));
+			
+			resetCombatData();
 			
 			if (owner)
 				owner.cardToCemeteryArea(this);
+			
+			// 派发事件
+			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_AFTER_DEAD, this));
 		}
 		
 		/**

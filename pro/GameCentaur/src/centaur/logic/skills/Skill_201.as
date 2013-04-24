@@ -62,7 +62,7 @@ package centaur.logic.skills
 			if (card != null)
 			{
 				card.addEventListener(CardEvent.ON_PRE_ATTACK, onPreAttack, false, _priority);
-				card.addEventListener(CardEvent.ON_AFTER_ATTACK, onAfterAttack, false, _priority);
+				
 			}
 		}
 		
@@ -75,7 +75,6 @@ package centaur.logic.skills
 			if (card != null)
 			{
 				card.removeEventListener(CardEvent.ON_PRE_ATTACK, onPreAttack);
-				card.removeEventListener(CardEvent.ON_AFTER_ATTACK, onAfterAttack);
 			}
 			
 			super.removeCard();
@@ -99,6 +98,7 @@ package centaur.logic.skills
 				tempAttack = card.attack * attackUp / 100;
 				if (tempAttack > 0)
 				{
+					card.addEventListener(CardEvent.ON_AFTER_ATTACK, onAfterAttack, false, _priority);
 					CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
 					tempAttack = card.addAttack(tempAttack);
 					CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
@@ -116,6 +116,7 @@ package centaur.logic.skills
 			// 还原攻击力
 			if (tempAttack > 0)
 			{
+				card.removeEventListener(CardEvent.ON_AFTER_ATTACK, onAfterAttack);
 				card.deductAttack(tempAttack);
 				tempAttack = 0;
 			}
