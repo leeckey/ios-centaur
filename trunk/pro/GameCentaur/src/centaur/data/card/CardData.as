@@ -11,6 +11,7 @@ package centaur.data.card
 		public var attack:uint;				// 基础攻击
 		public var defense:uint;			    // 基础防御
 		public var waitRound:uint;			    // 等待区时的等待轮数
+		public var country:int;                // 卡牌所属势力
 		
 		public function CardData()
 		{
@@ -28,6 +29,7 @@ package centaur.data.card
 			this.attack = templateData.attack;
 			this.defense = templateData.defense;
 			this.waitRound = templateData.maxWaitRound;
+			this.country = templateData.country;
 		}
 	}
 }

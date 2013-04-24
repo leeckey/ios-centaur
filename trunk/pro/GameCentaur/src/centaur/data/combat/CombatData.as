@@ -15,6 +15,8 @@ package centaur.data.combat
 		public var selfCombatArea:Array;		// 战斗区
 		public var selfCemeteryArea:Array;		// 墓地区
 		
+		public var allCardArea:Array;          // 所有卡牌
+		
 		public function CombatData(owner:BaseActObj)
 		{
 			this.owner = owner;
@@ -22,10 +24,29 @@ package centaur.data.combat
 		
 		public function reset(cardObjList:Array):void
 		{
+			allCardArea = cardObjList ? cardObjList.concat() : [];
 			selfCardArea = cardObjList ? cardObjList.concat() : [];
 			selfWaitArea = [];
 			selfCombatArea = [];
 			selfCemeteryArea = [];
+		}
+		
+		/**
+		 * 获得某一国家的全部卡牌 
+		 * @param country
+		 * 
+		 */		
+		public function getCardByCountry(country:int):Array
+		{
+			var res:Array = [];
+			var target:BaseCardObj;
+			for (var i:int = 0; i < allCardArea.length; i++)
+			{
+				target = allCardArea[i] as BaseCardObj;
+				if (target != null && target.cardData.country == country)
+					res.push(target);
+			}
+			return res;
 		}
 		
 		/**

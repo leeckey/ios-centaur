@@ -6,6 +6,11 @@ package centaur.logic.skills
 	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.action.*;
 	
+	/**
+	 * 免疫技能 
+	 * @author liq
+	 * 
+	 */	
 	public class Skill_207 extends BaseSkill
 	{
 		public function Skill_207(data:SkillData, card:BaseCardObj)

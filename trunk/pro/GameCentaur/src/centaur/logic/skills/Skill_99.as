@@ -70,7 +70,7 @@ package centaur.logic.skills
 				var targetCard:BaseCardObj = target[0] as BaseCardObj;
 				
 				CombatLogic.combatList.push(AttackEffectAction.getAction(card.objID, targetCard.objID));
-				
+				card.target = targetCard;
 				card.lastDamageValue = targetCard.onAttackHurt(card, card.attack);
 				
 				if (!card.isDead && card.lastDamageValue > 0)

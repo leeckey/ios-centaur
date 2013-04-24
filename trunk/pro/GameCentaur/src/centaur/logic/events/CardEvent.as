@@ -29,9 +29,14 @@ package centaur.logic.events
 		public static const ON_PRESENT:String = "onPresent";
 		
 		/**
-		 * 死亡事件 
+		 * 死亡之前事件 
 		 */		
-		public static const ON_DEAD:String = "onDead";
+		public static const ON_PRE_DEAD:String = "onPreDead";
+		
+		/**
+		 * 死亡之后事件 
+		 */		
+		public static const ON_AFTER_DEAD:String = "onAfterDead";
 		
 		/**
 		 * 回合开始事件 

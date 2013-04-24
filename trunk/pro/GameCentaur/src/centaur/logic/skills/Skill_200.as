@@ -85,6 +85,7 @@ package centaur.logic.skills
 				
 				// 攻击对面的卡牌
 				targetCard = targets[0] as BaseCardObj;
+				card.target = targetCard;
 				card.lastDamageValue = targetCard.onAttackHurt(card, card.attack);
 				if (!card.isDead && card.lastDamageValue > 0)
 					card.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_ATTACK_SUCC, card));
@@ -99,6 +100,7 @@ package centaur.logic.skills
 				for (var j:int = 1; j < targets.length; j++)
 				{
 					targetCard = targets[j] as BaseCardObj;
+					card.target = targetCard;
 					card.lastDamageValue = targetCard.onAttackHurt(card, tempAttack);
 					if (!card.isDead && card.lastDamageValue > 0)
 						card.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_ATTACK_SUCC, card));
