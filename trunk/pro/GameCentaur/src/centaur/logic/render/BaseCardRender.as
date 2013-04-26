@@ -4,25 +4,68 @@ package centaur.logic.render
 	
 	import flash.display.Sprite;
 	import flash.text.TextField;
+	
+	import org.osmf.net.SwitchingRuleBase;
 
+	/**
+	 *   卡片的显示对象
+	 */ 
 	public class BaseCardRender extends Sprite
 	{
 		public var cardObj:BaseCardObj;
 		
-		private var _text:TextField;	// 暂时调试测试显示用
+		private var _subRender:SubCardRender;
+		private var _skinType:int = -1;
 		
 		public function BaseCardRender(data:BaseCardObj)
 		{
 			this.cardObj = data;
-			
-			////----wangq 
-			_text = new TextField();
-			addChild(_text);
 		}
 		
 		public function updateRenderByType(skinType:int = BaseCardObj.SKIN_HEAD_TYPE):void
 		{
-			_text.text = "卡牌ID" + cardObj.objID + "--" + skinType;
+			if (_skinType == skinType)
+				return;
+			
+			if (_subRender)
+				_subRender.destory();
+			
+			switch (skinType)
+			{
+				case BaseCardObj.SKIN_HEAD_TYPE:
+				{
+					_subRender = new CardHeadRender(cardObj);
+				}break;
+				case BaseCardObj.SKIN_NORMAL_TYPE:
+				{
+					_subRender = new CardMediumRender(cardObj);
+				}break;
+				case BaseCardObj.SKIN_HEAD_DEAD_TYPE:
+				{
+					_subRender = new CardHeadDeadRender(cardObj);
+				}break;
+			}
+			
+			if (_subRender)
+				addChild(_subRender);
+		}
+		
+		public function handleHPChange(damage:int):void
+		{
+			if (_subRender)
+				_subRender.handleHPChange(damage);
+		}
+		
+		public function handleAttackChange(attack:int):void
+		{
+			if (_subRender)
+				_subRender.handleAttackChange(attack);
+		}
+		
+		public function handleWaitRoundChange(round:int):void
+		{
+			if (_subRender)
+				_subRender.handleWaitRoundChange(round);
 		}
 	}
 }

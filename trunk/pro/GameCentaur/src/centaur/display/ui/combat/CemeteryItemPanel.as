@@ -11,8 +11,8 @@ package centaur.display.ui.combat
 	 */ 
 	public final class CemeteryItemPanel
 	{
-		public var cemeteryItem:GBase;
-		public var cemeteryCardList:Array;
+		public var cemeteryItem:GBase;		// 墓地区格子
+		public var cemeteryCardList:Array;	// 墓地区卡牌数据
 		
 		private var _lastShowItem:DisplayObject;
 		

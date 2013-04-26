@@ -22,7 +22,7 @@ package centaur.display.ui.combat.handler.types
 			if (!actionData)
 				return;
 			
-			CombatPanel.instance.onRoundStart(actionData.round);
+			CombatPanel.instance.onRoundEnd(actionData.round);
 		}
 	}
 }

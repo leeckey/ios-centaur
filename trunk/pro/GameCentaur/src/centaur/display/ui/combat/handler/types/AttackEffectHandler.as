@@ -34,33 +34,17 @@ package centaur.display.ui.combat.handler.types
 			if (!actionData)
 				return;
 			
-			////----wangq 定好格式后再写
-//			var targetList:Array = actionData.targetList;
-//			var len:int = targetList ? targetList.length : 0;
-//			if (len > 0)
-//			{
-//				for (var i:int = 0; i < len; ++i)
-//				{
-//					var cardObj:BaseCardObj = UniqueNameFactory.UniqueObjDic[targetList[i]];
-//					if (cardObj)
-//						handleEffect(actionData.atkSkillID, cardObj);
-//				}
-//			}
-//			else
-//			{
-//				var target:* = UniqueNameFactory.UniqueObjDic[actionData.targetObj];
-//				handleEffect(actionData.atkSkillID, target);
-//			}
+			// 普攻默认技能ID为1，直接处理
+			var target:* = UniqueNameFactory.UniqueObjDic[actionData.targetObj];
+			if (target)
+				handleEffect(1, target);
 		}
 		
 		private function handleEffect(skillID:uint, target:*):void
 		{
-			if (!target)
-				return;
-			
 			var skillData:SkillData = SkillDataList.getSkillData(skillID);
 			if (!skillData)
-				skillData = null;	// 默认普通攻击
+				skillData = SkillDataList.getSkillData(1);	// 默认普通攻击
 			
 			var parentObj:Sprite;
 			if (target is BaseCardObj)

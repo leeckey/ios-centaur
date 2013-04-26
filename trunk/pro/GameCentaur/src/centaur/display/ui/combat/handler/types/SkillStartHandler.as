@@ -6,6 +6,7 @@ package centaur.display.ui.combat.handler.types
 	import centaur.display.ui.combat.CombatActPanel;
 	import centaur.display.ui.combat.CombatPanel;
 	import centaur.display.ui.combat.handler.ActionHandler;
+	import centaur.effects.CombatActionEffect;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.action.ActionBase;
@@ -31,6 +32,18 @@ package centaur.display.ui.combat.handler.types
 			if (!actionData)
 				return;
 			
+			var selfCardObj:BaseCardObj = UniqueNameFactory.UniqueObjDic[actionData.srcObj];
+			if (!selfCardObj)
+				return;
+			
+			// 释放技能时，处理回合行动效果
+			if (selfCardObj.render)
+			{
+				var offsetY:Number = CombatPanel.instance.isSelfCard(selfCardObj) ? -5 : 5;
+				CombatActionEffect.addActionEffect(selfCardObj.render, offsetY);
+			}
+			
+			// 处理技能效果
 			var targetList:Array = actionData.targets;
 			var len:int = targetList ? targetList.length : 0;
 			if (len > 0)
