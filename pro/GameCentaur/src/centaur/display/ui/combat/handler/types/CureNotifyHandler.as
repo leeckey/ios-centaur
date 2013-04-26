@@ -7,7 +7,7 @@ package centaur.display.ui.combat.handler.types
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.action.ActionBase;
-	import centaur.logic.action.DamageNotifyAction;
+	import centaur.logic.action.CureNotifyAction;
 	import centaur.logic.render.BaseCardRender;
 	import centaur.utils.NumberType;
 	import centaur.utils.UniqueNameFactory;
@@ -15,19 +15,19 @@ package centaur.display.ui.combat.handler.types
 	import flash.display.Sprite;
 
 	/**
-	 *   处理发生血量变更的操作
-	 *   @author wangq 2013.04.12
+	 *   处理治疗操作
+	 *   @author wangq 2013.04.26
 	 */ 
-	public final class DamageNotifyHandler extends ActionHandler
+	public final class CureNotifyHandler extends ActionHandler
 	{
-		public function DamageNotifyHandler(action:ActionBase)
+		public function CureNotifyHandler(action:ActionBase)
 		{
 			super(action);
 		}
 		
 		override public function doHandler():void
 		{
-			var actionData:DamageNotifyAction = action as DamageNotifyAction;
+			var actionData:CureNotifyAction = action as CureNotifyAction;
 			if (!actionData)
 				return;
 			
@@ -37,7 +37,7 @@ package centaur.display.ui.combat.handler.types
 			{
 				var cardRender:BaseCardRender = (damageObj as BaseCardObj).render;
 				parentObj = cardRender;
-				cardRender.handleHPChange(actionData.damage);
+				cardRender.handleHPChange(-actionData.cure);
 			}
 			else if (damageObj is BaseActObj)
 			{
@@ -46,11 +46,11 @@ package centaur.display.ui.combat.handler.types
 				if (actPanel)
 				{
 					parentObj = actPanel.actHPBar;
-					actPanel.onActDamageNotify(actionData.damage);
+					actPanel.onActDamageNotify(-actionData.cure);
 				}
 			}
 			
-			new NumberEffect().addNumberEffect(-actionData.damage, NumberType.PERSONCHOP, parentObj);
+			new NumberEffect().addNumberEffect(actionData.cure, NumberType.PERSONCHOP, parentObj);
 		}
 	}
 }

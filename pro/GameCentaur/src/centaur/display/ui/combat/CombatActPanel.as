@@ -18,7 +18,7 @@ package centaur.display.ui.combat
 		public var cemeteryItemPanel:CemeteryItemPanel;	// 墓地区
 		public var cemeteryItemSample:GBase;			// 墓地区样式位置
 		
-		private var _actObj:BaseActObj;
+		private var _actObj:BaseActObj;					// 面板对应Act数据
 		
 		public function CombatActPanel(skin:* = null, replace:Boolean = true)
 		{
@@ -105,7 +105,13 @@ package centaur.display.ui.combat
 		
 		public function onRoundEnd():void
 		{
+			// 回合结束时刷新战斗区，左对齐
+			if (combatItemPanel)
+				combatItemPanel.onRoundEnd();
 			
+			// 等待区左对齐,并且刷新等待回合数
+			if (waitItemPanel)
+				waitItemPanel.onRoundEnd();
 		}
 		
 	}

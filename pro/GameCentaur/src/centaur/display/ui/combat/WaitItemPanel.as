@@ -7,9 +7,13 @@ package centaur.display.ui.combat
 	import ghostcat.display.GBase;
 	import ghostcat.ui.controls.GBuilderBase;
 
+	/**
+	 *   等待区面板
+	 *   @author wangq 2013.04.12
+	 */ 
 	public final class WaitItemPanel extends GBuilderBase
 	{
-		public var waitItem1:GBase;
+		public var waitItem1:GBase;			// 等待区的5个格子
 		public var waitItem2:GBase;
 		public var waitItem3:GBase;
 		public var waitItem4:GBase;
@@ -49,12 +53,27 @@ package centaur.display.ui.combat
 				waitCardList.splice(idx, 1);
 				if (cardObj.render && cardObj.render.parent)
 					cardObj.render.parent.removeChild(cardObj.render);
-				updateWaitList();
 			}
 		}
 		
-		private function updateWaitList():void
+		public function onRoundEnd():void
 		{
+			updateWaitList(true);
+		}
+		
+		private function updateWaitList(updateRoundCount:Boolean = false):void
+		{
+			var len:int = waitCardList.length;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var cardObj:BaseCardObj = waitCardList[i];
+				if (!cardObj)
+					continue;
+				
+				var parentContent:Sprite = waitItemList[i] as Sprite;
+				if (cardObj.render && parentContent && parentContent != cardObj.render.parent)
+					parentContent.addChild(cardObj.render);
+			}
 		}
 	}
 }

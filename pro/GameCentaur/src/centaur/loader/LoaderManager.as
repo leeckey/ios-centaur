@@ -50,9 +50,9 @@ package centaur.loader
 			return null;
 		}
 		
-		public function getBitmapInstance(path:String):BitmapData
+		public function getBitmapInstance(path:String, callback:Function):void
 		{
-			return _bitmapManager.getBitmapData(path);
+			_bitmapManager.getBitmapData(path, callback);
 		}
 
 		public function loadGBKString(path:String):String

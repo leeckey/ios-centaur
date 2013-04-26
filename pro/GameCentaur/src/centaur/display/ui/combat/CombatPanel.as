@@ -16,15 +16,20 @@ package centaur.display.ui.combat
 	import ghostcat.ui.controls.GBuilderBase;
 	import ghostcat.ui.controls.GText;
 
+	/**
+	 *   整个战斗面板
+	 *   @author wangq 2013.04.13
+	 */ 
 	public final class CombatPanel extends GBuilderBase implements ITick
 	{
-		public var roundNum:GText;
-		public var selfPanel:CombatActPanel;
-		public var targetPanel:CombatActPanel;
-		private var _panelDic:Dictionary;
+		public var roundNum:GText;				// 回合信息
+		public var selfPanel:CombatActPanel;	// 己方面板
+		public var targetPanel:CombatActPanel;	// 敌方面板
+		private var _panelDic:Dictionary;		// 面板的映射
+		public var resultData:CombatResultData;	// 战斗数据
 		
-		public var resultData:CombatResultData;
-		private var _handlerIdx:int;
+		// 处理操作相关参数
+		private var _handlerIdx:int;			
 		private var _lagTime:int;
 		private var _startTime:int;
 		
@@ -57,6 +62,11 @@ package centaur.display.ui.combat
 			_handlerIdx = -1;
 			_startTime = getTimer();
 			GlobalAPI.tickManager.addTick(this);
+		}
+		
+		public function isSelfCard(cardObj:BaseCardObj):Boolean
+		{
+			return (resultData && cardObj.owner) ? (resultData.selfAct.objID == cardObj.owner.objID) : false;
 		}
 		
 		public function getActPanelByID(id:uint):CombatActPanel
@@ -114,8 +124,8 @@ package centaur.display.ui.combat
 		
 		public function onRoundEnd(round:int):void
 		{
-			selfPanel.onRoundEnd();
 			targetPanel.onRoundEnd();
+			selfPanel.onRoundEnd();
 		}
 		
 		public function addCardToWaitArea(srcID:uint, cardObj:BaseCardObj):void
