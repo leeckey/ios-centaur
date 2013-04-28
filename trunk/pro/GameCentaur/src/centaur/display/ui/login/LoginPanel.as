@@ -16,7 +16,7 @@ package centaur.display.ui.login
 		
 		public function LoginPanel()
 		{
-			super(LoginAsset);
+			// super(LoginAsset);
 			
 			loginBtn.addEventListener(MouseEvent.CLICK, onMouseClick);
 		}
