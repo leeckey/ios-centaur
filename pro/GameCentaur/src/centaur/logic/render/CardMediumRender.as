@@ -1,11 +1,10 @@
 package centaur.logic.render
 {
-	import card.cardMediumRenderSkin;
+	import assetcard.cardMediumRenderSkin;
 	
 	import centaur.data.GlobalAPI;
 	import centaur.logic.act.BaseCardObj;
 	
-	import ghostcat.ui.controls.GBuilderBase;
 	import ghostcat.ui.controls.GText;
 
 	/**
