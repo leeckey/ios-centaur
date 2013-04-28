@@ -3,6 +3,7 @@ package centaur.data.skill
 	public final class SkillEnumDefines
 	{
 		// 技能类型
+		public static const SKILL_ATTACK_TYPE:int = 0;		    // 普通攻击技能
 		public static const SKILL_ACTIVE_TYPE:int = 1;		    // 主动技能
 		public static const SKILL_PASSIVE_TYPE:int = 2;		    // 被动技能
 
