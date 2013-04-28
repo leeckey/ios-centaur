@@ -29,7 +29,7 @@ package centaur.data.skill
 		public static const TARGET_MAX_LOSE_HP_TYPE:int = 6;	    // 掉血最多的一个
 		public static const TARGET_ALL_TYPE:int = 7;			    // 对方所有
 		public static const TARGET_ATTACKER_TYPE:int = 8;		    // 攻击我的那个
-		public static const TARGET_RANDOM_CURE:int = 9;           // 随机一个治疗目标,必须是HP不满的卡牌
+		public static const TARGET_RANDOM_CURE:int = 9;           // 己方血量最低的卡牌
 		public static const TARGET_ALL_CURE:int = 10;             // 所有HP不满的卡牌
 		public static const TARGET_SAME_COUNTRY:int = 11;         // 除自己外相同国家的卡牌
 		
