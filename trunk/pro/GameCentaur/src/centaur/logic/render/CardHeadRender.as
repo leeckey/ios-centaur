@@ -1,6 +1,6 @@
 package centaur.logic.render
 {
-	import card.CardHeadRenderSkin;
+	import assetcard.CardHeadRenderSkin;
 	
 	import centaur.data.GlobalAPI;
 	import centaur.logic.act.BaseCardObj;
