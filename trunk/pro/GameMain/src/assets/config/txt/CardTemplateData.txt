@@ -9,4 +9,4 @@ templateID	name	maxHP	attack	defense	maxWaitRound	skillList	starLv	country
 7	¹ØÓğ	1280	560	0	4	1	5	2
 8	ÕÅ·É	1350	520	0	2	1	5	2
 9	Öî¸ğÁÁ	1080	385	0	4	1	5	2
-10	ÕÔÔÆ	1270	480	0	2	1	5	2
+10	»ÆÔÂÓ¢	1070	360	0	2	1	5	2
