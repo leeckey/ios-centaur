@@ -166,11 +166,11 @@ package
 			var actDataA:HeroData = new HeroData();	// 角色卡组
 			var cardData:CardData;
 			actDataA.cardList = [];
-			actDataA.maxHP = 2000;
-			for (var i:int = 0; i < 3; i++)
+			actDataA.maxHP = 6000;
+			for (var i:int = 6; i <= 10; i++)
 			{
 				cardData = new CardData();
-				cardData.templateID = 1;
+				cardData.templateID = i;
 				cardData.update();
 				actDataA.cardList.push(cardData);
 			}
@@ -179,11 +179,11 @@ package
 			
 			var actDataB:InsMapData = new InsMapData();
 			actDataB.cardList = [];
-			actDataB.maxHP = 2000;
-			for (var j:int = 0; j < 3; j++)
+			actDataB.maxHP = 6000;
+			for (var j:int = 1; j <= 5; j++)
 			{
 				cardData = new CardData();
-				cardData.templateID = 2;
+				cardData.templateID = j;
 				cardData.update();
 				actDataB.cardList.push(cardData);
 			}
