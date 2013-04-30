@@ -36,13 +36,16 @@ package centaur.loader
 		}
 		
 		
-		public static function getClassByPathAndDomain(path:String, dm:ApplicationDomain = null):Class
+		public static function getClassByPathAndDomain(path:*, dm:ApplicationDomain = null):Class
 		{
 			try
 			{
 				if (!dm)
 					dm = ApplicationDomain.currentDomain;
-				return dm.getDefinition(path) as Class;
+				if (path is String)
+					path = dm.getDefinition(path) as Class;
+				if (path is Class)
+					return path as Class;
 			}
 			catch (e:Error)
 			{
@@ -53,6 +56,11 @@ package centaur.loader
 		public function getBitmapInstance(path:String, callback:Function):void
 		{
 			_bitmapManager.getBitmapData(path, callback);
+		}
+		
+		public function getBitmapByClass(cls:*):BitmapData
+		{
+			return _bitmapManager.getBitmapByClass(cls);
 		}
 
 		public function loadGBKString(path:String):String

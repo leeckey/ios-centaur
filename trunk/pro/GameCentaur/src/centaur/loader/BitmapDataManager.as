@@ -1,5 +1,7 @@
 package centaur.loader
 {
+	import centaur.data.GlobalAPI;
+	
 	import flash.display.BitmapData;
 	import flash.utils.Dictionary;
 
@@ -24,6 +26,25 @@ package centaur.loader
 			}
 			else
 				data.addCallback(callback);
+		}
+		
+		public function getBitmapByClass(cls:*):BitmapData
+		{
+			if (!cls)
+				return null;
+			
+			var data:BitmapDataCounter = _dataDic[cls] as BitmapDataCounter;
+			if (!data)
+			{
+				var cls:Class = LoaderManager.getClassByPathAndDomain(cls);
+				if (!cls)
+					return null;
+				
+				data = _dataDic[cls] = new BitmapDataCounter();
+				data.bitmapData = new cls() as BitmapData;
+			}
+			
+			return data.bitmapData;
 		}
 		
 		public function removeBitmapData(path:String):void

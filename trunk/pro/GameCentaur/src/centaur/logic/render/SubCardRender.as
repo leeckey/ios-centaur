@@ -44,7 +44,7 @@ package centaur.logic.render
 			return null;
 		}
 		
-		private function onBitmapLoadComplete(bitmapData:BitmapData):void
+		protected function onBitmapLoadComplete(bitmapData:BitmapData):void
 		{
 			if (!_bitmap)
 			{

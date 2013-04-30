@@ -2,11 +2,13 @@ package centaur.display.ui.combat
 {
 	import centaur.data.GlobalAPI;
 	import centaur.data.combat.CombatResultData;
+	import centaur.display.control.GBitmapNumberText;
 	import centaur.display.ui.combat.handler.ActionHandler;
 	import centaur.display.ui.combat.handler.ActionHandlerManager;
 	import centaur.interfaces.ITick;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.action.ActionBase;
+	import centaur.utils.NumberType;
 	
 	import combat.CombatPanelAsset;
 	
@@ -22,7 +24,7 @@ package centaur.display.ui.combat
 	 */ 
 	public final class CombatPanel extends GBuilderBase implements ITick
 	{
-		public var roundNum:GText;				// 回合信息
+		public var roundNum:GBitmapNumberText;				// 回合信息
 		public var selfPanel:CombatActPanel;	// 己方面板
 		public var targetPanel:CombatActPanel;	// 敌方面板
 		private var _panelDic:Dictionary;		// 面板的映射
@@ -119,7 +121,8 @@ package centaur.display.ui.combat
 		
 		public function onRoundStart(round:int):void
 		{
-			roundNum.text = "回合:" + round;
+			if (roundNum)
+				roundNum.setNumber(round, NumberType.MIDDLE_WHITE_NUMBER);
 		}
 		
 		public function onRoundEnd(round:int):void
