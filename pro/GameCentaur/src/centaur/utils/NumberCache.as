@@ -1,5 +1,7 @@
 package centaur.utils
 {
+	import asset.number.*;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
@@ -40,6 +42,31 @@ package centaur.utils
 			new BlackNumber7Asset(),
 			new BlackNumber8Asset(),
 			new BlackNumber9Asset()
+		];
+		private static var _smallNumberSource:Array = [
+			new SmallNum0(),
+			new SmallNum1(),
+			new SmallNum2(),
+			new SmallNum3(),
+			new SmallNum4(),
+			new SmallNum5(),
+			new SmallNum6(),
+			new SmallNum7(),
+			new SmallNum8(),
+			new SmallNum9()
+		];
+		
+		private static var _middleNumberSource:Array = [
+			new MiddleNum0(),
+			new MiddleNum1(),
+			new MiddleNum2(),
+			new MiddleNum3(),
+			new MiddleNum4(),
+			new MiddleNum5(),
+			new MiddleNum6(),
+			new MiddleNum7(),
+			new MiddleNum8(),
+			new MiddleNum9()
 		];
 		
 		public static var _fightPowerWordAsset:BitmapData = null;		// 战斗力		
@@ -109,52 +136,54 @@ package centaur.utils
 		public static function getNumber(value:int,type:int,color:String = ""):Sprite
 		{
 			var t:String = value.toString();
-			if(type != NumberType.FIGHT_CHANGE_CUR && type != NumberType.PERSONCHOP)			// 战斗力不加		人斩也不加
-			{
-				if(value > 0)t = "+" + t;
-				else if(value == 0)
-				{
-					if(type == NumberType.FIGHT_CHAGNE_MINUS || type == NumberType.FIGHT_CHANGE_PLUS)
-						t = "0";
-					else
-						t = "";
-				}
-			}
+//			if(type != NumberType.FIGHT_CHANGE_CUR && type != NumberType.PERSONCHOP)			// 战斗力不加		人斩也不加
+//			{
+//				if(value > 0)t = "+" + t;
+//				else if(value == 0)
+//				{
+//					if(type == NumberType.FIGHT_CHAGNE_MINUS || type == NumberType.FIGHT_CHANGE_PLUS)
+//						t = "0";
+//					else
+//						t = "";
+//				}
+//			}
 			// 这边做下延迟处理
 			var bDelay:Boolean = false;
 			
 			var sp:Sprite = getSprite();
 			var bmp:Bitmap;
+			var lastBmp:Bitmap;
 			
-			if(type == NumberType.CRITICAL_SKILL || type == NumberType.CRITICAL_SKILL_ME)	// 橙色暴击
-			{
-				bmp = getBitmap(_orangeCriticalHitAsset);
-			}
-			else if(type == NumberType.CRITICAL_PHY)	// 白色暴击
-			{
-				bmp = getBitmap(_whiteCriticalHitAsset);
-			}
-			else if(type == NumberType.BLOCK_SKILL || type == NumberType.BLOCK_SKILL_ME)	// 黄色格挡
-			{
-				bmp = getBitmap(_yellowBlockAsset);
-			}
-			else if(type == NumberType.BLOCK)		// 白色格挡
-			{
-				bmp = getBitmap(_whiteBlockAsset);
-			}
-			else if(type == NumberType.EXP)		// 经验蓝色
-			{
-				bmp = getBitmap(_blueExpAsset);
-			}
-			else if (type == NumberType.SELF_RESIST)	// 自身抵抗
-			{
-				bmp = getBitmap(_selfResist);
-			}
-			else if (type == NumberType.OTHER_RESIST)	// 其他人抵抗
-			{
-				bmp = getBitmap(_resist);
-			}
-			else if(t == "")
+//			if(type == NumberType.CRITICAL_SKILL || type == NumberType.CRITICAL_SKILL_ME)	// 橙色暴击
+//			{
+//				bmp = getBitmap(_orangeCriticalHitAsset);
+//			}
+//			else if(type == NumberType.CRITICAL_PHY)	// 白色暴击
+//			{
+//				bmp = getBitmap(_whiteCriticalHitAsset);
+//			}
+//			else if(type == NumberType.BLOCK_SKILL || type == NumberType.BLOCK_SKILL_ME)	// 黄色格挡
+//			{
+//				bmp = getBitmap(_yellowBlockAsset);
+//			}
+//			else if(type == NumberType.BLOCK)		// 白色格挡
+//			{
+//				bmp = getBitmap(_whiteBlockAsset);
+//			}
+//			else if(type == NumberType.EXP)		// 经验蓝色
+//			{
+//				bmp = getBitmap(_blueExpAsset);
+//			}
+//			else if (type == NumberType.SELF_RESIST)	// 自身抵抗
+//			{
+//				bmp = getBitmap(_selfResist);
+//			}
+//			else if (type == NumberType.OTHER_RESIST)	// 其他人抵抗
+//			{
+//				bmp = getBitmap(_resist);
+//			}
+//			else 
+			if(t == "")
 			{
 				recycle(sp);
 				return null;
@@ -183,8 +212,9 @@ package centaur.utils
 				
 				if(bmp)
 				{
-					bmp.x = sp.width;
+					bmp.x = lastBmp ? (lastBmp.x + lastBmp.width * 0.8) : 0;//sp.width - 20;
 					sp.addChild(bmp);
+					lastBmp = bmp;
 				}
 				else			// 没有数字资源
 				{
@@ -204,98 +234,98 @@ package centaur.utils
 		/**获取bitmapData数据*/
 		private static function getBD(type:int , num:String = "" , color:String = ""):Boolean
 		{
-			var path:String = "assets/img/num/";
-			if(num != "")			// 有数字的
-			{
-				switch(type)
-				{
-					case NumberType.NORMAL_PHY_ME:
-					case NumberType.NORMAL_SKILL_ME:
-						path += "red/";
-						break;
-					case NumberType.ADDBLOOD:
-					case NumberType.CHOP:
-						path += "green/";
-						break;
-					case NumberType.BLOCK_SKILL:
-					case NumberType.BLOCK_SKILL_ME:
-					case NumberType.NORMAL_SKILL:
-						path += "yellow/";
-						break;
-					case NumberType.BUFF_DAMAGE:
-						path += "purple/"
-						break;
-					case NumberType.CRITICAL_PHY:
-					case NumberType.BLOCK:
-					case NumberType.NORMAL_PHY:
-						path += "white/";
-						break;
-					case NumberType.CRITICAL_SKILL:
-					case NumberType.CRITICAL_SKILL_ME:
-						path += "critical/";
-						break;
-					case NumberType.EXP:
-						path += "exp/";
-						break;
-					case NumberType.FIGHT_CHANGE_CUR:
-						path += "glod/";
-						break;
-					case NumberType.FIGHT_CHANGE_PLUS:
-						path += "fgreen/";
-						break;
-					case NumberType.FIGHT_CHAGNE_MINUS:
-						path += "fred/";
-						break;
-					case NumberType.PERSONCHOP:
-						path += "black/";
-						return false;
-						break;
-					case NumberType.HIT:
-						if(color == "yellow")
-							path += "yellow/";
-						else
-							path += "red/";
-						break;
-					default:
-						return false;
-				}
-				path += num + ".png";
-			}
-			else
-			{
-				switch(type)
-				{
-					case NumberType.CRITICAL_SKILL:
-					case NumberType.CRITICAL_SKILL_ME:
-						path += "orange_ctri";
-						break;
-					case NumberType.CRITICAL_PHY:
-						path += "white_ctri";
-						break;
-					case NumberType.BLOCK_SKILL:
-					case NumberType.BLOCK_SKILL_ME:	
-						path += "yellow_block";
-						break;
-					case NumberType.BLOCK:
-						path += "white_block"
-						break;
-					case NumberType.EXP:
-						path += "self_resist";		// 代替经验先
-						break;
-					case NumberType.SELF_RESIST:
-						path += "self_resist";
-						break;
-					case NumberType.OTHER_RESIST:
-						path += "resist";
-						break;
-					default:
-						return false;
-				}
-				path += ".png";
-			}
+//			var path:String = "assets/img/num/";
+//			if(num != "")			// 有数字的
+//			{
+//				switch(type)
+//				{
+//					case NumberType.NORMAL_PHY_ME:
+//					case NumberType.NORMAL_SKILL_ME:
+//						path += "red/";
+//						break;
+//					case NumberType.ADDBLOOD:
+//					case NumberType.CHOP:
+//						path += "green/";
+//						break;
+//					case NumberType.BLOCK_SKILL:
+//					case NumberType.BLOCK_SKILL_ME:
+//					case NumberType.NORMAL_SKILL:
+//						path += "yellow/";
+//						break;
+//					case NumberType.BUFF_DAMAGE:
+//						path += "purple/"
+//						break;
+//					case NumberType.CRITICAL_PHY:
+//					case NumberType.BLOCK:
+//					case NumberType.NORMAL_PHY:
+//						path += "white/";
+//						break;
+//					case NumberType.CRITICAL_SKILL:
+//					case NumberType.CRITICAL_SKILL_ME:
+//						path += "critical/";
+//						break;
+//					case NumberType.EXP:
+//						path += "exp/";
+//						break;
+//					case NumberType.FIGHT_CHANGE_CUR:
+//						path += "glod/";
+//						break;
+//					case NumberType.FIGHT_CHANGE_PLUS:
+//						path += "fgreen/";
+//						break;
+//					case NumberType.FIGHT_CHAGNE_MINUS:
+//						path += "fred/";
+//						break;
+//					case NumberType.PERSONCHOP:
+//						path += "black/";
+//						return false;
+//						break;
+//					case NumberType.HIT:
+//						if(color == "yellow")
+//							path += "yellow/";
+//						else
+//							path += "red/";
+//						break;
+//					default:
+//						return false;
+//				}
+//				path += num + ".png";
+//			}
+//			else
+//			{
+//				switch(type)
+//				{
+//					case NumberType.CRITICAL_SKILL:
+//					case NumberType.CRITICAL_SKILL_ME:
+//						path += "orange_ctri";
+//						break;
+//					case NumberType.CRITICAL_PHY:
+//						path += "white_ctri";
+//						break;
+//					case NumberType.BLOCK_SKILL:
+//					case NumberType.BLOCK_SKILL_ME:	
+//						path += "yellow_block";
+//						break;
+//					case NumberType.BLOCK:
+//						path += "white_block"
+//						break;
+//					case NumberType.EXP:
+//						path += "self_resist";		// 代替经验先
+//						break;
+//					case NumberType.SELF_RESIST:
+//						path += "self_resist";
+//						break;
+//					case NumberType.OTHER_RESIST:
+//						path += "resist";
+//						break;
+//					default:
+//						return false;
+//				}
+//				path += ".png";
+//			}
 			// 加载图片
 //			GlobalAPI.loaderAPI.getPicFile(GlobalAPI.pathManager.site + path , loadComplete , SourceClearType.NEVER , int.MAX_VALUE , LoaderTeamType.FRONT);
-			return true;
+			return false;
 		}
 //		/**图片加载完成*/
 //		private static function loadComplete(bd:BitmapData , loader:ILoader):void
@@ -430,6 +460,10 @@ package centaur.utils
 					return _greenNumberSource;
 				case NumberType.PERSONCHOP:	// 人斩
 					return _blackNumberSource;
+				case NumberType.SMALL_WHITE_NUMBER:	// 白色小数字
+					return _smallNumberSource;	
+				case NumberType.MIDDLE_WHITE_NUMBER:	// 白色中等数字
+					return _middleNumberSource;	
 				case NumberType.FIGHT_CHANGE_CUR:			// 金色
 					return _glodNumberSource;
 				case NumberType.FIGHT_CHANGE_PLUS:			// 绿色

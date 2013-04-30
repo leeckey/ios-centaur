@@ -1,8 +1,10 @@
 package centaur.display.ui.combat
 {
+	import centaur.display.control.GBitmapNumberText;
 	import centaur.display.control.GCProgressBar;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
+	import centaur.utils.NumberType;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.ui.controls.GBuilderBase;
@@ -13,6 +15,7 @@ package centaur.display.ui.combat
 	public final class CombatActPanel extends GBuilderBase
 	{
 		public var actHPBar:GCProgressBar;				// 角色血条
+		public var actHPText:GBitmapNumberText;			// 角色血量显示
 		public var waitItemPanel:WaitItemPanel;			// 等待区
 		public var combatItemPanel:CombatItemPanel;		// 战斗区
 		public var cemeteryItemPanel:CemeteryItemPanel;	// 墓地区
@@ -50,8 +53,10 @@ package centaur.display.ui.combat
 				_actObj.resetCombatData();
 				
 				// 更新血条显示
-				actHPBar.setMaxValue(_actObj.actData.maxHP);
-				actHPBar.setCurrValue(_actObj.actData.maxHP);
+				var maxHP:int = _actObj.actData.maxHP;
+				actHPBar.setMaxValue(maxHP);
+				actHPBar.setCurrValue(maxHP);
+				actHPText.setNumber(maxHP, NumberType.SMALL_WHITE_NUMBER);
 			}
 		}
 		
@@ -62,6 +67,7 @@ package centaur.display.ui.combat
 				// 角色受伤害，处理血量变更
 				_actObj.deductHp(damage, false);
 				actHPBar.setCurrValue(_actObj.hp);
+				actHPText.setNumber(_actObj.hp, NumberType.SMALL_WHITE_NUMBER, true);
 			}
 		}
 		

@@ -17,6 +17,11 @@ package centaur.data.card
 		{
 		}
 		
+		public function getTemplateData():CardTemplateData
+		{
+			return CardTemplateDataList.getCardData(templateID);
+		}
+		
 		public function update():void
 		{
 			// 根据等级以及配置表，刷新当前数据

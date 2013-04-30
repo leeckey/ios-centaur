@@ -49,5 +49,8 @@ package centaur.utils
 		public static const FIGHT_CHAGNE_MINUS:uint = 32;		// 红色
 		/**加经验 */		
 		public static const EXP:uint = 1000;
+		
+		public static const SMALL_WHITE_NUMBER:uint = 1001;
+		public static const MIDDLE_WHITE_NUMBER:uint = 1002;
 	}
 }

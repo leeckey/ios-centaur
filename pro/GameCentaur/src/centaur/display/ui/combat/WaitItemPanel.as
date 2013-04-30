@@ -73,6 +73,9 @@ package centaur.display.ui.combat
 				var parentContent:Sprite = waitItemList[i] as Sprite;
 				if (cardObj.render && parentContent && parentContent != cardObj.render.parent)
 					parentContent.addChild(cardObj.render);
+				
+				if (updateRoundCount)
+					cardObj.render.handleWaitRoundChange(1);
 			}
 		}
 	}
