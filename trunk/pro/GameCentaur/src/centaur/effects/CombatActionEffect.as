@@ -1,8 +1,10 @@
 package centaur.effects
 {
+	import centaur.data.GlobalAPI;
 	import centaur.interfaces.IMovieClip;
 	import centaur.movies.MovieClipFactory;
 	
+	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.filters.DisplacementMapFilter;
@@ -58,9 +60,10 @@ package centaur.effects
 			_target.y += _offsetY;
 			
 			_movieClip = MovieClipFactory.getAvailableMovie();
-			_movieClip.setPath("");
+			_movieClip.setPath(GlobalAPI.pathManager.getRoundActionEffectPath());
 			_movieClip.setLoop(-1);
 			_movieClip.play();
+			_movieClip.blendMode = BlendMode.SCREEN;
 			if (_target is DisplayObjectContainer)
 				(_target as DisplayObjectContainer).addChild(_movieClip as DisplayObject);
 		}

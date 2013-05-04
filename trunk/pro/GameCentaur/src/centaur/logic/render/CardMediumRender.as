@@ -7,6 +7,7 @@ package centaur.logic.render
 	import centaur.data.GlobalAPI;
 	import centaur.data.card.CardTemplateData;
 	import centaur.display.control.GBitmapNumberText;
+	import centaur.effects.ShakeEffect;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.manager.EmbedAssetManager;
 	import centaur.utils.NumberType;
@@ -14,6 +15,7 @@ package centaur.logic.render
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
+	import flash.utils.Timer;
 	
 	import ghostcat.ui.controls.GText;
 
@@ -28,7 +30,8 @@ package centaur.logic.render
 		public var hpText:GBitmapNumberText;		// 血量信息
 		public var lvText:GText;					// 等级信息
 		
-		private var _raceBitmap:Bitmap;
+		private var _raceBitmap:Bitmap;				// 种族背景图片
+		private var _damageHightTimer:Timer;		// 受创时高亮效果的定时器	
 		
 		private var _attack:int;
 		private var _hp:int;
@@ -111,6 +114,28 @@ package centaur.logic.render
 			
 			if (hpText)
 				hpText.setNumber(_hp, NumberType.SMALL_WHITE_NUMBER, true);
+			
+			// 处理受创效果
+			renderDamageEffect();
+		}
+		
+		/**
+		 *   处理受创效果
+		 */ 
+		private function renderDamageEffect():void
+		{
+			// 自身短暂高亮显示
+			GlobalAPI.timerManager.stopDelayCall(_damageHightTimer, setDamageFilters);
+			setDamageFilters(damageLightFilters);
+			_damageHightTimer = GlobalAPI.timerManager.startDelayCall(200, setDamageFilters, 1, [emptyFilters]);
+			
+			// 自身轻微震动
+			new ShakeEffect(this, "x", "y", null, 300, 3).startEffect();
+		}
+		
+		private function setDamageFilters(filter:Array):void
+		{
+			this.filters = filter;
 		}
 		
 		override public function destory():void

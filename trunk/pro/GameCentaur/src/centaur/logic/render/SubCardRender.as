@@ -5,6 +5,7 @@ package centaur.logic.render
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.filters.ColorMatrixFilter;
 	
 	import ghostcat.ui.controls.GBuilderBase;
 
@@ -14,6 +15,14 @@ package centaur.logic.render
 	 */ 
 	public class SubCardRender extends GBuilderBase
 	{
+		// 受创时的高亮滤镜
+		public static const n:Number = 100;
+		public static const damageLightFilters:Array = [new ColorMatrixFilter([1,    0,    0,    0,    n,
+			0,    1,    0,    0,    n,
+			0,    0,    1,    0,    n,
+			0,    0,    0,    1,    0])];
+		public static const emptyFilters:Array = [];
+		
 		protected var _cardObj:BaseCardObj;	// 卡牌数据对象
 		protected var _bitmap:Bitmap;		// 卡牌的位图
 		
