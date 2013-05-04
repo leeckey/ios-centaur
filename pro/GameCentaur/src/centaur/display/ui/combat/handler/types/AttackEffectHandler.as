@@ -6,6 +6,7 @@ package centaur.display.ui.combat.handler.types
 	import centaur.display.ui.combat.CombatActPanel;
 	import centaur.display.ui.combat.CombatPanel;
 	import centaur.display.ui.combat.handler.ActionHandler;
+	import centaur.effects.CombatActionEffect;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.action.ActionBase;

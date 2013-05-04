@@ -12,6 +12,7 @@ package
 	import centaur.effects.EffectManager;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.combat.CombatScene;
+	import centaur.manager.DelayCallTimerManager;
 	import centaur.manager.EmbedAssetManager;
 	import centaur.manager.LayerManager;
 	import centaur.manager.PathManager;
@@ -60,6 +61,7 @@ package
 			GlobalAPI.actionHandlerManager = new ActionHandlerManager;
 			GlobalAPI.effectManager = new EffectManager;
 			GlobalAPI.layerManager = new LayerManager(this);
+			GlobalAPI.timerManager = new DelayCallTimerManager();
 			
 			EmbedAssetManager.setup();
 		}
@@ -118,7 +120,11 @@ package
 		private function onEnterFrame(e:Event):void
 		{
 			stage.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
-			stage.setOrientation(StageOrientation.ROTATED_RIGHT);
+			
+			if (stage.orientation == StageOrientation.ROTATED_LEFT || stage.orientation == StageOrientation.UPSIDE_DOWN)
+				stage.setOrientation(StageOrientation.ROTATED_LEFT);
+			else if (stage.orientation == StageOrientation.ROTATED_RIGHT || stage.orientation == StageOrientation.DEFAULT)
+				stage.setOrientation(StageOrientation.ROTATED_RIGHT);
 		}
 		
 		private function onStageOrientationChange(e:StageOrientationEvent):void

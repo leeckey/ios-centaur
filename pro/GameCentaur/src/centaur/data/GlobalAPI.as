@@ -2,6 +2,7 @@ package centaur.data
 {
 	import centaur.display.ui.combat.handler.ActionHandlerManager;
 	import centaur.effects.EffectManager;
+	import centaur.interfaces.ITimerManager;
 	import centaur.loader.LoaderManager;
 	import centaur.manager.LayerManager;
 	import centaur.manager.PathManager;
@@ -29,6 +30,9 @@ package centaur.data
 		
 		// 层次管理器
 		public static var layerManager:LayerManager;
+		
+		// 定时器管理器
+		public static var timerManager:ITimerManager;
 		
 		public function GlobalAPI()
 		{

@@ -19,5 +19,10 @@ package centaur.manager
 		{
 			return GlobalData.asite + "assets/ui/Card/" + id + ".png";
 		}
+		
+		public function getRoundActionEffectPath():String
+		{
+			return GlobalData.asite + "assets/effects/huihexg.fam";
+		}
 	}
 }
