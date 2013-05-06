@@ -279,10 +279,13 @@ package centaur.logic.act
 				return 0;
 			
 			// 扣除生命值
-			lastBeDamagedVal = deductHP(lastBeAttackVal);
+			lastBeDamagedVal = deductHP(lastBeAttackVal, false);
 			
 			// 发送攻击后事件
 			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_AFTER_SKILL_HURT, this));
+			
+			if (hp == 0)
+				onDead();
 			
 			// 返回造成的伤害值
 			return lastBeDamagedVal;
@@ -331,10 +334,13 @@ package centaur.logic.act
 				return 0;
 			
 			// 扣除生命值
-			lastBeDamagedVal = deductHP(lastBeAttackVal);
+			lastBeDamagedVal = deductHP(lastBeAttackVal, false);
 			
 			// 发送攻击后事件
 			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_AFTER_HURT, this));
+			
+			if (hp == 0)
+				onDead();
 			
 			// 返回造成的伤害值
 			return lastBeDamagedVal;
@@ -357,7 +363,7 @@ package centaur.logic.act
 		 * @return 
 		 * 
 		 */		
-		public function deductHP(num:int):int
+		public function deductHP(num:int, checkDead:Boolean = true):int
 		{
 			if (isDead)
 				return 0;
@@ -370,7 +376,7 @@ package centaur.logic.act
 			CombatLogic.combatList.push(DamageNotifyAction.getAction(temp, this.objID));
 			
 			trace(objID + "当前生命值为:" + _hp);
-			if (_hp == 0) onDead();
+			if (checkDead && _hp == 0) onDead();
 			return temp;
 		}
 		

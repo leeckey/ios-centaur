@@ -57,25 +57,33 @@ package centaur.logic.skills
 			// 寻找目标
 			var target:Array = getTarget();
 			
+			
+			
+			
 			// 发起攻击
 			if (target == null || target.length == 0)
 			{
 				// 攻击对方玩家
+				// CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.owner.enemyActObj.objID]));
 				CombatLogic.combatList.push(AttackEffectAction.getAction(card.objID, card.owner.enemyActObj.objID));
 				card.owner.enemyActObj.deductHp(card.attack);
 			}
 			else
 			{
 				// 攻击对面的卡牌
+				
 				var targetCard:BaseCardObj = target[0] as BaseCardObj;
 				
-				CombatLogic.combatList.push(AttackEffectAction.getAction(card.objID, targetCard.objID));
+				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [targetCard.objID]));
+				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
+				// CombatLogic.combatList.push(AttackEffectAction.getAction(card.objID, targetCard.objID));
 				card.target = targetCard;
 				card.lastDamageValue = targetCard.onAttackHurt(card, card.attack);
 				
 				if (!card.isDead && card.lastDamageValue > 0)
 					card.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_ATTACK_SUCC, card));
 			}
+			
 			
 		}
 	}
