@@ -73,6 +73,8 @@ package centaur.logic.skills
 		 */		
 		public function onAttackSucc(event:CardEvent):void
 		{
+			if (!card.isHurt)
+				return;
 			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
 			var hp:int = rate * card.lastDamageValue;
 			card.addHP(hp);

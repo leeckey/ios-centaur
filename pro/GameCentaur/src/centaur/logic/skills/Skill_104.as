@@ -39,7 +39,7 @@ package centaur.logic.skills
 		 */	
 		protected override function _doSkill(targetCard:BaseCardObj):void
 		{
-			if (targetCard == null)
+			if (targetCard == null || !targetCard.isHurt)
 				return;
 			
 			targetCard.addHP(cure);
