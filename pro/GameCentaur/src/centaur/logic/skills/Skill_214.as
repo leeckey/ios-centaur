@@ -75,7 +75,7 @@ package centaur.logic.skills
 		public function onPresent(event:CardEvent):void
 		{
 			card.addEventListener(CardEvent.ON_ROUND_END, onRoundEnd);
-			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.target.objID]));
+			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
 			card.addAttack(attack);
 			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 		}

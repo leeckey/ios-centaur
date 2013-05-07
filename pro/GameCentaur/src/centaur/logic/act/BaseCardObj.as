@@ -336,6 +336,10 @@ package centaur.logic.act
 			// 扣除生命值
 			lastBeDamagedVal = deductHP(lastBeAttackVal, false);
 			
+			//  攻击成功事件
+			if (lastBeDamagedVal > 0 && !attacker.isDead)
+				attacker.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_ATTACK_SUCC, attacker));
+			
 			// 发送攻击后事件
 			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_AFTER_HURT, this));
 			

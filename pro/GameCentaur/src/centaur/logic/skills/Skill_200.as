@@ -87,8 +87,6 @@ package centaur.logic.skills
 				targetCard = targets[0] as BaseCardObj;
 				card.target = targetCard;
 				card.lastDamageValue = targetCard.onAttackHurt(card, card.attack);
-				if (!card.isDead && card.lastDamageValue > 0)
-					card.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_ATTACK_SUCC, card));
 				
 				// 中间卡牌的防御技能会影响到旁边二张卡牌,获得计算防御效果后的伤害值
 				var tempAttack:int = targetCard.lastBeAttackVal;
@@ -102,8 +100,6 @@ package centaur.logic.skills
 					targetCard = targets[j] as BaseCardObj;
 					card.target = targetCard;
 					card.lastDamageValue = targetCard.onAttackHurt(card, tempAttack);
-					if (!card.isDead && card.lastDamageValue > 0)
-						card.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_ATTACK_SUCC, card));
 				}
 				
 			}

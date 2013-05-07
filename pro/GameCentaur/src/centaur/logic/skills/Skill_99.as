@@ -80,8 +80,6 @@ package centaur.logic.skills
 				card.target = targetCard;
 				card.lastDamageValue = targetCard.onAttackHurt(card, card.attack);
 				
-				if (!card.isDead && card.lastDamageValue > 0)
-					card.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_ATTACK_SUCC, card));
 			}
 			
 			
