@@ -77,7 +77,7 @@ package centaur.logic.skills
 			if (card.lastBeAttackVal > 0 && Math.random() < rate)
 			{				
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
-				card.lastBeAttackVal = 0;
+				card.lastBeAttackVal = -1;
 				trace(card.objID + "闪避了攻击");
 				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 			}

@@ -285,7 +285,7 @@ package centaur.logic.act
 			
 			// 如果攻击数值小于0,返回
 			if (lastBeAttackVal <= 0)
-				return 0;
+				return lastBeAttackVal;
 			
 			// 扣除生命值
 			lastBeDamagedVal = deductHP(lastBeAttackVal, false);
@@ -340,7 +340,7 @@ package centaur.logic.act
 			
 			// 如果攻击数值小于0,返回
 			if (lastBeAttackVal <= 0)
-				return 0;
+				return lastBeAttackVal;
 			
 			// 扣除生命值
 			lastBeDamagedVal = deductHP(lastBeAttackVal, false);

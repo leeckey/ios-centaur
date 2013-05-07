@@ -51,7 +51,7 @@ package centaur.logic.skills
 				return;
 
 			var hurt:int = targetCard.onSkillHurt(this, damage);
-			if (hurt > 0 && buff != null && !targetCard.isDead && Math.random() < rate)
+			if (hurt >= 0 && buff != null && !targetCard.isDead && Math.random() < rate)
 			{
 				new buff(targetCard);
 			}
