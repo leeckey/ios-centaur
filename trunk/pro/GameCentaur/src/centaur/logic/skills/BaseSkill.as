@@ -251,6 +251,11 @@ package centaur.logic.skills
 							targets.push(target);
 					}
 					return targets;
+				case SkillEnumDefines.TARGET_SELF_HURT_TYPE:
+					if (card.isHurt)
+						return [card];
+					else
+						return null;
 			}
 			
 			return null;

@@ -57,9 +57,6 @@ package centaur.logic.skills
 			// 寻找目标
 			var target:Array = getTarget();
 			
-			
-			
-			
 			// 发起攻击
 			if (target == null || target.length == 0)
 			{
@@ -78,8 +75,7 @@ package centaur.logic.skills
 				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 				// CombatLogic.combatList.push(AttackEffectAction.getAction(card.objID, targetCard.objID));
 				card.target = targetCard;
-				card.lastDamageValue = targetCard.onAttackHurt(card, card.attack);
-				
+				targetCard.onAttackHurt(card, card.attack);
 			}
 			
 			

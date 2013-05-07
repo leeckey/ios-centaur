@@ -35,6 +35,7 @@ package centaur.data.skill
 		public static const TARGET_RANDOM_CURE:int = 9;           // 己方血量最低的卡牌
 		public static const TARGET_ALL_CURE:int = 10;             // 所有HP不满的卡牌
 		public static const TARGET_SAME_COUNTRY:int = 11;         // 除自己外相同国家的卡牌
+		public static const TARGET_SELF_HURT_TYPE:int = 12;       // 自身受伤状态
 		
 		// 特殊技能的类型
 		public static const SPEC_COMBATTOCARD_TYPE:int = 1;			// 送还：将对面的卡牌送回卡组

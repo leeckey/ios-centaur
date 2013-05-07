@@ -62,6 +62,15 @@ package centaur.logic.act
 			return this._attack;
 		}
 
+		/**
+		 * 判断是否满血 
+		 * @return 
+		 * 
+		 */		
+		public function get isHurt():Boolean
+		{
+			return _hp < cardData.maxHP;
+		}
 		
 		/**
 		 * 只读属性,只能用ReductHP来修改 
@@ -338,7 +347,10 @@ package centaur.logic.act
 			
 			//  攻击成功事件
 			if (lastBeDamagedVal > 0 && !attacker.isDead)
+			{
+				attacker.lastDamageValue = lastBeDamagedVal;
 				attacker.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_ATTACK_SUCC, attacker));
+			}
 			
 			// 发送攻击后事件
 			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_AFTER_HURT, this));
@@ -392,7 +404,7 @@ package centaur.logic.act
 		 */		
 		public function addHP(num:int):int
 		{
-			if ( _hp == cardData.maxHP)
+			if (_hp >= cardData.maxHP)
 				return 0;
 			
 			var temp:int = _hp;
