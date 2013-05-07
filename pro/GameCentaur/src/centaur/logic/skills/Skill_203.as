@@ -61,7 +61,7 @@ package centaur.logic.skills
 			if (card.attackerSKill.magicType != SkillEnumDefines.SKILL_MAAGIC_TYPE)
 				return;
 			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
-			card.lastBeAttackVal = 0;
+			card.lastBeAttackVal = -1;
 			trace("法术伤害无效");
 			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 			

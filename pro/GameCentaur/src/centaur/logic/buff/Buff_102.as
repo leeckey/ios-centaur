@@ -20,7 +20,7 @@ package centaur.logic.buff
 		{
 			id = 102;
 			round = 1;
-			damage = 50;
+			damage = 80;
 			super(card);
 		}
 		

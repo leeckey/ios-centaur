@@ -76,6 +76,8 @@ package centaur.logic.skills
 			{				
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
 				card.lastBeAttackVal -= defence;
+				if (card.lastBeAttackVal < 0)
+					card.lastBeAttackVal = 0;
 				trace("伤害减少了:" + defence + ",剩余伤害:" + card.lastBeAttackVal);
 				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 			}

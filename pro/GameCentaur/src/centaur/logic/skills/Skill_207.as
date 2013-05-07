@@ -57,7 +57,7 @@ package centaur.logic.skills
 			if (card.lastBeAttackVal > 0)
 			{				
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
-				card.lastBeAttackVal = 0;
+				card.lastBeAttackVal = -1;
 				trace(card.objID + "免疫了技能伤害");
 				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 			}
