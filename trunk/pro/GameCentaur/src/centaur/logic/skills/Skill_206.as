@@ -1,6 +1,7 @@
 package centaur.logic.skills
 {
 	import centaur.data.skill.SkillData;
+	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.events.CardEvent;
 	import centaur.logic.combat.CombatLogic;
@@ -67,6 +68,10 @@ package centaur.logic.skills
 		 */		
 		public function onPreSkillHurt(event:CardEvent):void
 		{
+			// 只对魔法技能起作用
+			if (card.attackerSKill.magicType != SkillEnumDefines.SKILL_MAAGIC_TYPE)
+				return;
+			
 			if (card.lastBeAttackVal > 0)
 			{				
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));

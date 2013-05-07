@@ -7,6 +7,8 @@ package centaur.data.skill
 		public static const SKILL_ACTIVE_TYPE:int = 1;		    // 主动技能
 		public static const SKILL_PASSIVE_TYPE:int = 2;		    // 被动技能
 
+		public static const SKILL_PHYSICAL_TYPE:int = 0;          // 物理技能
+		public static const SKILL_MAAGIC_TYPE:int = 1;            // 法术技能
 		
 		public static const SKILL2STR:Array = [
 			"",

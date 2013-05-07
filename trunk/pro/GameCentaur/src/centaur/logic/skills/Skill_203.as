@@ -57,6 +57,9 @@ package centaur.logic.skills
 		 */		
 		public function onPreSkillHurt(event:CardEvent):void
 		{
+			// 只对魔法技能起作用
+			if (card.attackerSKill.magicType != SkillEnumDefines.SKILL_MAAGIC_TYPE)
+				return;
 			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
 			card.lastBeAttackVal = 0;
 			trace("法术伤害无效");
