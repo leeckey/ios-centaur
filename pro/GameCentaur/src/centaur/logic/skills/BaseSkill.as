@@ -27,6 +27,11 @@ package centaur.logic.skills
 		private var _skillType:int;
 		
 		/**
+		 * 法术类型 
+		 */		
+		private var _magicType:int;
+		
+		/**
 		 * 技能攻击目标类型 
 		 */		
 		private var _selectTargetType:int;
@@ -57,6 +62,11 @@ package centaur.logic.skills
 			return _skillType;
 		}
 		
+		public function get magicType():int
+		{
+			return _magicType;
+		}
+		
 		public function BaseSkill(data:SkillData, card:BaseCardObj)
 		{
 			if (data != null)
@@ -77,6 +87,7 @@ package centaur.logic.skills
 			_priority = data.priority;
 			_selectTargetType = data.selectTargetType;
 			_skillType = data.skillType;
+			_magicType = data.magicType;
 		}
 		
 		/**
@@ -223,7 +234,7 @@ package centaur.logic.skills
 					idx = Math.random() * card.owner.combatData.getCardFromCombatAreaCanCure().length;
 					if (idx == 0)
 						return null;
-					target = targetAct.combatData.selfCombatArea[idx];
+					target = card.owner.combatData.selfCombatArea[idx];
 					return target ? [target] : null;
 						
 				// 所有可以治疗的目标

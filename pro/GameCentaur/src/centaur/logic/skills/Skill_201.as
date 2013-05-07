@@ -89,7 +89,7 @@ package centaur.logic.skills
 		{
 			// 此技能只对卡牌有效
 			var targets:Array = getTarget();
-			if (targets == null)
+			if (targets == null || targets.length == 0)
 				return;
 			
 			if (Math.random() < rate)

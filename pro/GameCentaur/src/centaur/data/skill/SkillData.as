@@ -12,6 +12,7 @@ package centaur.data.skill
 		public var effectPath:String;		    // 技能效果资源
 		public var discription:String;		    // 技能描述
 		public var skillType:int;			    // 技能的类型，主动法术伤害（包括加血），物理伤害(包括吸血)，被动防御技能，特殊辅助技能,死契技能，降临技能
+		public var magicType:int;			    // 魔法类型,0:物理,1:法术
 		public var priority:int;	            // 技能优先级
 		public var selectTargetType:int;       // 技能攻击类型
 		public var param1:int;                 // 技能参数1

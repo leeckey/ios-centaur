@@ -44,7 +44,7 @@ package centaur.logic.act
 		public var lastBeAttackVal:int;        // 最近一次受到普通攻击的攻击力
 		public var lastBeDamagedVal:int;		// 最近一次受到的伤害值
 		public var attacker:BaseCardObj;		// 最近一次攻击我的卡牌
-		public var lastBeSkilled:BaseSkill;    // 最经一次被攻击的技能
+		public var attackerSKill:BaseSkill;    // 最经一次被攻击的技能
 		public var target:BaseCardObj;			// 攻击目标
 		
 		private var _attack:int;               // 卡牌的攻击力
@@ -266,7 +266,7 @@ package centaur.logic.act
 			this.attacker = attacker.card;
 			
 			// 保存攻击的技能
-			this.lastBeSkilled = attacker;
+			this.attackerSKill = attacker;
 			
 			// 设置攻击数值
 			lastBeAttackVal = damage;
