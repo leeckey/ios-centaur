@@ -244,6 +244,7 @@ package centaur.movies
 			_playDirect = -1;
 			_startFrameIndex = _endFrameIndex = 0;
 			_mirrorX = 1;
+			this.blendMode = BlendMode.NORMAL;
 		}
 		
 		public function setLoop(loop:int):void
