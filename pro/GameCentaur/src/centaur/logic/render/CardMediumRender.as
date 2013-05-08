@@ -37,9 +37,22 @@ package centaur.logic.render
 		private var _hp:int;
 		private var _name:String = "";
 		
+		private var _width:Number = 0.0;
+		private var _height:Number = 0.0;
+		
 		public function CardMediumRender(cardObj:BaseCardObj)
 		{
 			super(cardObj, cardMediumRenderSkin);
+		}
+		
+		override public function get height():Number
+		{
+			return _height;
+		}
+		
+		override public function get width():Number
+		{
+			return _width;	
 		}
 		
 		override protected function getBitmapPath():String
@@ -83,6 +96,9 @@ package centaur.logic.render
 				if (nameText)
 					nameText.text = _name;
 			}
+			
+			_width = _raceBitmap.width;
+			_height = _raceBitmap.height;
 		}
 		
 		override protected function onBitmapLoadComplete(bitmapData:BitmapData):void
@@ -116,7 +132,8 @@ package centaur.logic.render
 				hpText.setNumber(_hp, NumberType.SMALL_WHITE_NUMBER, true);
 			
 			// 处理受创效果
-			renderDamageEffect();
+			if (damage > 0)
+				renderDamageEffect();
 		}
 		
 		/**

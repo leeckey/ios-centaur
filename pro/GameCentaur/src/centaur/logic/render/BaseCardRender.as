@@ -50,6 +50,22 @@ package centaur.logic.render
 				addChild(_subRender);
 		}
 		
+		override public function get width():Number
+		{
+			if (_subRender)
+				return _subRender.width;
+			
+			return this.width;
+		}
+		
+		override public function get height():Number
+		{
+			if (_subRender)
+				return _subRender.height;
+			
+			return this.height;
+		}
+		
 		public function handleHPChange(damage:int):void
 		{
 			if (_subRender)

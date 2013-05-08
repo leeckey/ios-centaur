@@ -50,9 +50,9 @@ package centaur.display.ui.combat.handler.types
 			{
 				for (var i:int = 0; i < len; ++i)
 				{
-					var cardObj:BaseCardObj = UniqueNameFactory.UniqueObjDic[targetList[i]];
-					if (cardObj)
-						handleEffect(actionData.skillID, cardObj);
+					var target:* = UniqueNameFactory.UniqueObjDic[targetList[i]];
+					if (target)
+						handleEffect(actionData.skillID, target);
 				}
 			}
 			else
@@ -65,7 +65,7 @@ package centaur.display.ui.combat.handler.types
 		/**
 		 *   技能效果只对卡牌，不对角色
 		 */ 
-		private function handleEffect(skillID:uint, target:BaseCardObj):void
+		private function handleEffect(skillID:uint, target:*):void
 		{
 			if (!target)
 				return;
@@ -74,7 +74,17 @@ package centaur.display.ui.combat.handler.types
 			if (!skillData)
 				return;
 			
-			var parentObj:Sprite = target.render;
+			var parentObj:Sprite;
+			if (target is BaseCardObj)
+				parentObj = (target as BaseCardObj).render;
+			else if (target is BaseActObj)
+			{
+				// 血条掉血，parentObj为血条
+				var actPanel:CombatActPanel = CombatPanel.instance.getActPanelByID((target as BaseActObj).objID);
+				if (actPanel)
+					parentObj = actPanel.actHPBar;
+			}
+
 			if (skillData)
 				GlobalAPI.effectManager.renderEffectByPath(skillData.effectPath, parentObj);
 		}
