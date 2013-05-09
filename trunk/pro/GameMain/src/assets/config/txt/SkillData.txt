@@ -30,4 +30,4 @@ id	templateID	name	effectPath	discription	skillType	magicType	priority	selectTar
 28	215	自爆	assets/effects/自爆.fam	被消灭时，对对面以及相邻三张卡牌造成150点伤害	2	0	0	2	150	0	0	0
 29	216	王国之力	assets/effects/王国之力.fam	提升除自己之外所有王国卡牌150点攻击力	2	0	0	11	150	0	0	0
 30	217	王国守护	assets/effects/王国守护.fam	提升除自己之外所有王国卡牌300点生命值	2	0	0	11	300	0	0	0
-31	218	转生	assets/effects/重生.fam	死亡时有60%概率进入等待区	2	0	0	0	60	0	0	0
+31	218	转生	assets/effects/转生.fam	死亡时有60%概率进入等待区	2	0	0	0	60	0	0	0
