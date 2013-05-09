@@ -35,7 +35,7 @@ package centaur.logic.skills
 			if (targetCard == null)
 				return;
 			
-			var hurt:int = targetCard.onHurt(damage);
+			var hurt:int = targetCard.onSkillHurt(this, damage);
 			card.addHP(hurt);
 		}
 	}

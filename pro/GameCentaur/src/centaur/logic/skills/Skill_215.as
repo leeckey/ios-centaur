@@ -85,7 +85,8 @@ package centaur.logic.skills
 				targetCard = target[i] as BaseCardObj;
 				if (targetCard != null)
 				{
-					targetCard.onHurt(damage);
+					if (targetCard.onSkillHurt(this, 0) >= 0)
+						targetCard.onHurt(damage);
 				}
 			}
 		}

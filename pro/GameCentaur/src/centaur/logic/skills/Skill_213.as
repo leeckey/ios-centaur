@@ -74,9 +74,13 @@ package centaur.logic.skills
 		 */		
 		public function onAttackSucc(event:CardEvent):void
 		{
-			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.target.objID]));
-			card.target.deductAttack(attack);
-			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
+			if (card.target.onSkillHurt(this, 0) >= 0)
+			{
+				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.target.objID]));
+				
+				card.target.deductAttack(attack);
+				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
+			}
 		}
 	}
 }

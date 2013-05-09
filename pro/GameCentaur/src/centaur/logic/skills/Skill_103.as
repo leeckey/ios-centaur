@@ -38,7 +38,8 @@ package centaur.logic.skills
 			if (targetCard == null)
 				return;
 			
-			targetCard.deductAttack(deAttack);
+			if (targetCard.onSkillHurt(this, 0) >= 0)
+				targetCard.deductAttack(deAttack);
 		}
 	}
 }
