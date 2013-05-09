@@ -431,7 +431,7 @@ package centaur.logic.act
 			// 派发事件
 			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_PRE_DEAD, this));
 			
-			resetCombatData();
+			// resetCombatData();
 			
 			if (owner)
 				owner.cardToCemeteryArea(this);

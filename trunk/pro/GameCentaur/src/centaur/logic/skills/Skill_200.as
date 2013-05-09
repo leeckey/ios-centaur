@@ -53,8 +53,7 @@ package centaur.logic.skills
 		 */		
 		private function onAttack(event:CardEvent):void
 		{
-			// 屏蔽普通攻击的事件
-			event.stopImmediatePropagation();
+
 			
 			if (!card || card.isDead || card.attack <= 0)
 				return;
@@ -63,14 +62,11 @@ package centaur.logic.skills
 			var targets:Array = getTarget();
 			
 			// 发起攻击
-			if (targets == null || targets.length == 0)
+			if (targets != null && targets.length > 0)
 			{
-				// 攻击对方玩家
-				CombatLogic.combatList.push(AttackEffectAction.getAction(card.objID, card.owner.enemyActObj.objID));
-				card.owner.enemyActObj.deductHp(card.attack);
-			}
-			else
-			{
+				// 屏蔽普通攻击的事件
+				event.stopImmediatePropagation();
+				
 				// 攻击效果
 				var targetCard:BaseCardObj;
 				var targetID:Array = [];

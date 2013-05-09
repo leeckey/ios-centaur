@@ -47,6 +47,7 @@ package centaur.logic.action
 			{
 				temp += targets[i] + " ";
 			}
+
 			return srcObj + "给目标" + temp + "释放了"+ skillID + "技能";
 		}
 	}

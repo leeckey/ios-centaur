@@ -207,6 +207,7 @@ package centaur.logic.act
 					combatData.selfWaitArea.push(cardObj);
 				
 				// 添加相应操作
+				cardObj.resetCombatData();
 				CombatLogic.combatList.push(SelectCardToWaitAreaAction.getAction(this.objID, cardObj.objID));
 			}
 			else
@@ -237,6 +238,7 @@ package centaur.logic.act
 			combatData.selfWaitArea.sortOn("waitRound", Array.NUMERIC);
 			
 			// 添加相应操作
+			cardObj.resetCombatData();
 			CombatLogic.combatList.push(SelectCardToWaitAreaAction.getAction(this.objID, cardObj.objID));
 		}
 		

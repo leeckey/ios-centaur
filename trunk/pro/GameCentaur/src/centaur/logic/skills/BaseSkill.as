@@ -227,7 +227,7 @@ package centaur.logic.skills
 					
 				// 敌方所有目标
 				case SkillEnumDefines.TARGET_ALL_TYPE:
-					return targetAct.combatData.selfCombatArea.concat();
+					return targetAct.combatData.getAllCombatAreaCard();
 				
 				// 随机一个可以治疗的目标
 				case SkillEnumDefines.TARGET_RANDOM_CURE:

@@ -54,7 +54,7 @@ package centaur.logic.skills
 		 */		
 		public function onPreSkillHurt(event:CardEvent):void
 		{
-			if (card.lastBeAttackVal > 0)
+			if (card.lastBeAttackVal >= 0)
 			{				
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
 				card.lastBeAttackVal = -1;
