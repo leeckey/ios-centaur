@@ -51,6 +51,9 @@ package centaur.logic.buff
 		 */		
 		private function onRoundEnd(event:CardEvent):void
 		{
+			if (card.isDead)
+				return;
+			
 			card.onHurt(damage);
 			if (--round <= 0)
 			{
