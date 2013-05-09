@@ -235,7 +235,7 @@ package centaur.logic.act
 			var cardObj:BaseCardObj = combatData.selfCardArea[ranIdx];
 			combatData.selfCardArea.splice(ranIdx, 1);
 			combatData.selfWaitArea.push(cardObj);
-			combatData.selfWaitArea.sortOn("waitRound", Array.NUMERIC);
+			// combatData.selfWaitArea.sortOn("waitRound", Array.NUMERIC);
 			
 			// 添加相应操作
 			cardObj.resetCombatData();
@@ -248,14 +248,26 @@ package centaur.logic.act
 		public function selectCardToCombatArea():void
 		{
 			var len:int = combatData.selfWaitArea.length;
-			while (combatData.selfWaitArea.length > 0)
+			var cardList:Array = [];
+			var cardObj:BaseCardObj;
+			for (var i:int = 0; i < len; i++)
 			{
-				var cardObj:BaseCardObj = combatData.selfWaitArea[0];
+				cardObj = combatData.selfWaitArea[i];
 				if (cardObj.waitRound > 0)
-					break;
+					continue;
 				
-				// 从等待队列挑选一个进入战斗区域
-				combatData.selfWaitArea.splice(0, 1);
+				// 找到所有进入战斗区的卡牌
+				cardList.push(cardObj);
+			}
+			
+			len = cardList.length; 
+			for (var j:int = 0; j < len; j++)
+			{
+				cardObj = cardList[j];
+				
+				var index:int = combatData.selfWaitArea.indexOf(cardObj);
+				combatData.selfWaitArea.splice(index, 1);
+				
 				combatData.selfCombatArea.push(cardObj);
 				
 				// 添加相应操作
