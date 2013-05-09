@@ -65,6 +65,24 @@ package centaur.data.combat
 		}
 		
 		/**
+		 * 获得战斗区中的所有卡牌
+		 * @return 
+		 * 
+		 */		
+		public function getAllCombatAreaCard():Array
+		{
+			var res:Array = [];
+			for (var i:int = 0; i < selfCombatArea.length; ++i)
+			{
+				var target:BaseCardObj = selfCombatArea[i];
+				if (target)
+					res.push(target);
+			}
+			
+			return res;
+		}
+		
+		/**
 		 * 随机三张卡牌 
 		 * @return 
 		 * 
