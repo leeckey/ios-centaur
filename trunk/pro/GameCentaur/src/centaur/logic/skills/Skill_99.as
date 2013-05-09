@@ -61,9 +61,10 @@ package centaur.logic.skills
 			if (target == null || target.length == 0)
 			{
 				// 攻击对方玩家
-				// CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.owner.enemyActObj.objID]));
-				CombatLogic.combatList.push(AttackEffectAction.getAction(card.objID, card.owner.enemyActObj.objID));
+				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.owner.enemyActObj.objID]));
+				// CombatLogic.combatList.push(AttackEffectAction.getAction(card.objID, card.owner.enemyActObj.objID));
 				card.owner.enemyActObj.deductHp(card.attack);
+				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 			}
 			else
 			{
