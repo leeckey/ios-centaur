@@ -1,5 +1,6 @@
 package centaur.logic.buff
 {
+	import centaur.data.buff.BuffData;
 	import centaur.logic.act.BaseCardObj;
 
 	/**
@@ -25,9 +26,11 @@ package centaur.logic.buff
 		 */		
 		public var card:BaseCardObj;
 		
-		public function BaseBuff(card:BaseCardObj)
+		public function BaseBuff(card:BaseCardObj, data:BuffData)
 		{
 			this.card = card;
+			this.id = data.id;
+			this.round = data.round;
 			if (card != null)
 				card.addBuff(this);
 		}

@@ -1,5 +1,6 @@
 package centaur.logic.skills
 {
+	import centaur.data.buff.*;
 	import centaur.data.skill.SkillData;
 	import centaur.logic.act.BaseCardObj;
 	
@@ -23,6 +24,12 @@ package centaur.logic.skills
 		 */		
 		public var rate:Number;
 		
+		/**
+		 * BuffID 
+		 */		
+		public var buffID:int;
+		
+		private var buff:Class;
 		
 		public function Skill_100(data:SkillData, card:BaseCardObj)
 		{
@@ -42,7 +49,10 @@ package centaur.logic.skills
 			damage = data.param1;
 			rate = data.param2 / 100;
 			if (data.buffID != 0)
-				buff = getDefinitionByName("centaur.logic.buff.Buff_" + data.buffID) as Class;
+			{
+				buffID = data.buffID;
+				buff = getDefinitionByName("centaur.logic.buff.Buff_" + BuffDataList.getSkillData(buffID).templateID) as Class;
+			}
 		}
 				
 		protected override function _doSkill(targetCard:BaseCardObj):void
@@ -51,9 +61,10 @@ package centaur.logic.skills
 				return;
 
 			var hurt:int = targetCard.onSkillHurt(this, damage);
-			if (hurt >= 0 && buff != null && !targetCard.isDead && Math.random() < rate)
+			if (hurt >= 0 && buffID > 0 && !targetCard.isDead && Math.random() < rate)
 			{
-				new buff(targetCard);
+				var data:BuffData = BuffDataList.getSkillData(buffID);
+				new buff(targetCard, data);
 			}
 		}
 

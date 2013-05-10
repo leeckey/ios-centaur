@@ -1,5 +1,6 @@
 package centaur.logic.buff
 {
+	import centaur.data.buff.BuffData;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.action.BuffNotifyAction;
 	import centaur.logic.events.CardEvent;
@@ -12,11 +13,9 @@ package centaur.logic.buff
 	public class Buff_101 extends BaseBuff
 	{
 		
-		public function Buff_101(card:BaseCardObj)
+		public function Buff_101(card:BaseCardObj, data:BuffData)
 		{
-			id = 101;
-			round = 1;
-			super(card);
+			super(card, data);
 		}
 		
 		/**

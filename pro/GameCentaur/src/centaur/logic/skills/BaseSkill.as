@@ -46,11 +46,6 @@ package centaur.logic.skills
 		 */	
 		public var card:BaseCardObj;
 		
-		/**
-		 * 技能buff
-		 */		
-		public var buff:Class;
-		
 		
 		public function get skillID():int
 		{
