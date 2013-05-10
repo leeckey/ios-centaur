@@ -1,5 +1,6 @@
 package centaur.logic.buff
 {
+	import centaur.data.buff.BuffData;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.action.BuffNotifyAction;
 	import centaur.logic.events.CardEvent;
@@ -16,12 +17,10 @@ package centaur.logic.buff
 		 */		
 		public var damage:int;
 		
-		public function Buff_102(card:BaseCardObj)
+		public function Buff_102(card:BaseCardObj, data:BuffData)
 		{
-			id = 102;
-			round = 1;
-			damage = 80;
-			super(card);
+			damage = data.param1;
+			super(card, data);
 		}
 		
 		/**
