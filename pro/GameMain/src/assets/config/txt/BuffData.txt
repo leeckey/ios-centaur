@@ -3,4 +3,4 @@ id	templateID	name	effectPath	discription	param1	round
 1	100	冰冻	assets/effects/冰冻.fam	无法行动	0	1
 2	101	麻痹	assets/effects/麻痹.fam	无法普通攻击	0	1
 3	102	中毒	assets/effects/中毒.fam	行动结束后受到80点伤害	80	1
-4	100	陷阱	assets/effects/陷阱.fam	无法行动	0	1
+4	100	陷阱	assets/effects/锁定.fam	无法行动	0	1
