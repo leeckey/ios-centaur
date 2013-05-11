@@ -20,7 +20,7 @@ package centaur.data.buff
 			//
 		}
 		
-		public static function getSkillData(id:uint):BuffData
+		public static function getBuffData(id:uint):BuffData
 		{
 			return _buffDic[id];
 		}

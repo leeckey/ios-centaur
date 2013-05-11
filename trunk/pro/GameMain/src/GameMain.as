@@ -7,6 +7,7 @@ package
 	import centaur.data.act.InsMapData;
 	import centaur.data.card.CardData;
 	import centaur.data.combat.CombatResultData;
+	import centaur.display.control.GTextField;
 	import centaur.display.ui.combat.CombatPanel;
 	import centaur.display.ui.combat.handler.ActionHandlerManager;
 	import centaur.effects.EffectManager;
@@ -27,6 +28,7 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.StageOrientationEvent;
+	import flash.text.TextFormat;
 	
 	import net.hires.debug.Stats;
 	
@@ -79,6 +81,18 @@ package
 			////----wangq
 			forTest();
 //			forLoadSWFTest();
+//			
+//			var text:GTextField = new GTextField(GTextField.FONT_SAMPLE1);
+//			var textFormat:TextFormat = new TextFormat();
+//			textFormat.font = text.textField.defaultTextFormat.font;
+//			textFormat.size = text.textField.defaultTextFormat.size;
+//			textFormat.bold = true;
+//			textFormat.display = text.textField.defaultTextFormat.display;
+//			textFormat.color = text.textField.defaultTextFormat.color;
+//			text.textField.defaultTextFormat = textFormat;
+//			text.textField.textColor = 0xff0000;
+//			
+//			addChild(text);
 		}
 		
 		/**

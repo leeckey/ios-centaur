@@ -3,6 +3,7 @@ package centaur.logic.buff
 	import centaur.data.buff.BuffData;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.action.BuffNotifyAction;
+	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.events.CardEvent;
 	
 	/**
@@ -26,7 +27,7 @@ package centaur.logic.buff
 		{
 			card.addEventListener(CardEvent.ON_ROUND_END, onRoundEnd);
 			card.canAttack = false;
-			BuffNotifyAction.getAction(id, card.objID);
+			CombatLogic.combatList.push(BuffNotifyAction.getAction(id, card.objID));
 		}
 		
 		/**
@@ -37,7 +38,7 @@ package centaur.logic.buff
 		{
 			card.removeEventListener(CardEvent.ON_ROUND_END, onRoundEnd);
 			card.canAttack = true;
-			BuffNotifyAction.getAction(id, card.objID, BuffNotifyAction.BUFF_REMOVE_ACTION);
+			CombatLogic.combatList.push(BuffNotifyAction.getAction(id, card.objID, BuffNotifyAction.BUFF_REMOVE_ACTION));
 		}
 		
 		/**

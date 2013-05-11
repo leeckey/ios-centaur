@@ -2,6 +2,7 @@ package centaur.display.ui.combat.handler
 {
 	import centaur.display.ui.combat.handler.types.AttackChangeHandler;
 	import centaur.display.ui.combat.handler.types.AttackEffectHandler;
+	import centaur.display.ui.combat.handler.types.BuffNotifyHandler;
 	import centaur.display.ui.combat.handler.types.CardToCemeteryAreaHandler;
 	import centaur.display.ui.combat.handler.types.CardToCombatAreaHandler;
 	import centaur.display.ui.combat.handler.types.CardToWaitAreaHandler;
@@ -34,6 +35,7 @@ package centaur.display.ui.combat.handler
 		_actionDic[ActionBase.ACTION_SKILL_END] = new SkillEndHandler(null);
 		_actionDic[ActionBase.ACTION_CURE_NOTIFY] = new CureNotifyHandler(null);
 		_actionDic[ActionBase.ACTION_ATTACK_CHANGE] = new AttackChangeHandler(null);
+		_actionDic[ActionBase.ACTION_BUFF_NOTIFY] = new BuffNotifyHandler(null);
 		
 		public static function getInstance(actionBase:ActionBase):ActionHandler
 		{

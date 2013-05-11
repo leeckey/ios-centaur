@@ -5,16 +5,22 @@ package centaur.logic.render
 	import assetscard.images.CardRace1;
 	
 	import centaur.data.GlobalAPI;
+	import centaur.data.buff.BuffData;
+	import centaur.data.buff.BuffDataList;
 	import centaur.data.card.CardTemplateData;
 	import centaur.display.control.GBitmapNumberText;
 	import centaur.effects.ShakeEffect;
+	import centaur.interfaces.IMovieClip;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.manager.EmbedAssetManager;
+	import centaur.movies.MovieClipFactory;
 	import centaur.utils.NumberType;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 	
 	import ghostcat.ui.controls.GText;
@@ -39,6 +45,8 @@ package centaur.logic.render
 		
 		private var _width:Number = 0.0;
 		private var _height:Number = 0.0;
+		
+		private var _buffDic:Dictionary;
 		
 		public function CardMediumRender(cardObj:BaseCardObj)
 		{
@@ -68,6 +76,7 @@ package centaur.logic.render
 			
 			super.setup();
 			
+			_buffDic = new Dictionary();
 			if (nameText)
 				nameText.mouseChildren = nameText.mouseEnabled = false;
 			if (attackText)
@@ -99,6 +108,12 @@ package centaur.logic.render
 			
 			_width = _raceBitmap.width;
 			_height = _raceBitmap.height;
+			
+			if (_width == 0)
+			{
+				_width = 120;
+				_height = 175;
+			}
 		}
 		
 		override protected function onBitmapLoadComplete(bitmapData:BitmapData):void
@@ -114,7 +129,7 @@ package centaur.logic.render
 		
 		override public function handleAttackChange(attack:int):void
 		{
-			_attack += _attack;
+			_attack += attack;
 			if (_attack < 1)
 				_attack = 1;
 			
@@ -153,6 +168,48 @@ package centaur.logic.render
 		private function setDamageFilters(filter:Array):void
 		{
 			this.filters = filter;
+		}
+		
+		/**
+		 *   添加BUFF效果
+		 */ 
+		override public function addBuff(buffID:uint):void
+		{
+			if (!buffID)
+				return;
+			
+			var buffData:BuffData = BuffDataList.getBuffData(buffID);
+			if (!buffData)
+				return;
+			
+			var buffEffect:IMovieClip = _buffDic[buffID] as IMovieClip;
+			if (buffEffect)
+				return;
+			
+			buffEffect = _buffDic[buffID] = MovieClipFactory.getAvailableMovie();
+			buffEffect.setLoop(-1);
+			buffEffect.setPath(buffData.effectPath);
+			buffEffect.play();
+			
+			(buffEffect as DisplayObject).x = this.width * 0.5;
+			(buffEffect as DisplayObject).y = this.height * 0.5;
+			addChild(buffEffect as DisplayObject);
+		}
+		
+		/**
+		 *   移除BUFF效果
+		 */ 
+		override public function removeBuff(buffID:uint):void
+		{
+			if (!buffID)
+				return;
+			
+			var buffEffect:IMovieClip = _buffDic[buffID] as IMovieClip;
+			if (!buffEffect)
+				return;
+			
+			MovieClipFactory.recycleMovie(buffEffect);
+			delete _buffDic[buffID];
 		}
 		
 		override public function destory():void
