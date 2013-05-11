@@ -90,5 +90,13 @@ package centaur.logic.render
 		public function handleWaitRoundChange(round:int):void
 		{
 		}
+		
+		public function addBuff(buffID:uint):void
+		{
+		}
+		
+		public function removeBuff(buffID:uint):void
+		{
+		}
 	}
 }

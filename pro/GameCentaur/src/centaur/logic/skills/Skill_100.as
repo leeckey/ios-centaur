@@ -51,7 +51,7 @@ package centaur.logic.skills
 			if (data.buffID != 0)
 			{
 				buffID = data.buffID;
-				buff = getDefinitionByName("centaur.logic.buff.Buff_" + BuffDataList.getSkillData(buffID).templateID) as Class;
+				buff = getDefinitionByName("centaur.logic.buff.Buff_" + BuffDataList.getBuffData(buffID).templateID) as Class;
 			}
 		}
 				
@@ -63,7 +63,7 @@ package centaur.logic.skills
 			var hurt:int = targetCard.onSkillHurt(this, damage);
 			if (hurt >= 0 && buffID > 0 && !targetCard.isDead && Math.random() < rate)
 			{
-				var data:BuffData = BuffDataList.getSkillData(buffID);
+				var data:BuffData = BuffDataList.getBuffData(buffID);
 				new buff(targetCard, data);
 			}
 		}

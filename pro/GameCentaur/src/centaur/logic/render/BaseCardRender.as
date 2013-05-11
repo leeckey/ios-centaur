@@ -83,5 +83,17 @@ package centaur.logic.render
 			if (_subRender)
 				_subRender.handleWaitRoundChange(round);
 		}
+		
+		public function addBuff(buffID:uint):void
+		{
+			if (_subRender)
+				_subRender.addBuff(buffID);
+		}
+		
+		public function removeBuff(buffID:uint):void
+		{
+			if (_subRender)
+				_subRender.removeBuff(buffID);
+		}
 	}
 }

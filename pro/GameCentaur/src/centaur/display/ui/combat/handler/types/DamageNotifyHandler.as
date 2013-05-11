@@ -50,7 +50,7 @@ package centaur.display.ui.combat.handler.types
 				}
 			}
 			
-			new NumberEffect().addNumberEffect(-actionData.damage, NumberType.PERSONCHOP, parentObj);
+			new NumberEffect().addNumberEffect(-actionData.damage, NumberType.HIT, parentObj);
 		}
 	}
 }

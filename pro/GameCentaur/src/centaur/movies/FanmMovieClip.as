@@ -422,6 +422,8 @@ package centaur.movies
 			if (_frameRate <= 0)
 				_frameRate = 25;
 			_frameTime = 1000 / _frameRate;
+			if (_data.blendMode)
+				this.blendMode = _data.blendMode;
 			
 			// 初始化播放的帧区间
 			initPlayFrameSegment();

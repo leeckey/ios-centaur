@@ -1,10 +1,14 @@
 package centaur.effects
 {
 	import centaur.data.GlobalAPI;
+	import centaur.display.control.GTextField;
 	import centaur.utils.NumberCache;
+	import centaur.utils.NumberType;
 	
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	
+	import ghostcat.display.GBase;
 	
 	import gs.TweenLite;
 
@@ -25,12 +29,24 @@ package centaur.effects
 			if (!parentObj)
 				return;
 			
-			_damageSprite = NumberCache.getNumber(damage, type);
+			_damageSprite = new GTextField(GTextField.FONT_SAMPLE1);//NumberCache.getNumber(damage, type);
+			(_damageSprite as GTextField).textField.textColor = getColorbyType(type);
+			(_damageSprite as GTextField).text = ((damage > 0) ? "+" : "") + String(damage);
 			var gPoint:Point = parentObj.localToGlobal(new Point(parentObj.width * 0.5, parentObj.height * 0.8));
 			_damageSprite.x = gPoint.x;
 			_damageSprite.y = gPoint.y;
 			GlobalAPI.layerManager.getTipLayer().addChild(_damageSprite);
 			_tweenLite = TweenLite.to(_damageSprite, 0.6, {y : gPoint.y - 70, onComplete : onNumberEffectComplete});
+		}
+		
+		private function getColorbyType(type:int):uint
+		{
+			if (type == NumberType.ADDBLOOD)
+				return 0x00FF00;
+			else if (type == NumberType.HIT)
+				return 0xFF0000;
+		
+			return 0xFFFFFF;
 		}
 		
 		private function onNumberEffectComplete():void
@@ -43,7 +59,9 @@ package centaur.effects
 				if (_damageSprite.parent)
 					_damageSprite.parent.removeChild(_damageSprite);
 				
-				NumberCache.recycle(_damageSprite);
+//				NumberCache.recycle(_damageSprite);
+				if (_damageSprite is GBase)
+					(_damageSprite as GBase).destory();
 				_damageSprite = null;
 			}
 		}

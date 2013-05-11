@@ -1,5 +1,6 @@
 package centaur.loader.fam
 {
+	import flash.display.BlendMode;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	import flash.utils.Endian;
@@ -11,13 +12,13 @@ package centaur.loader.fam
 		
 		public static const PACKAGE_NAME:String = "a";	// 默认给个包名，后续可扩展
 		
-		public static const CURRENT_FILEVER:uint = 7;				// 当前文件版本
+		public static const CURRENT_FILEVER:uint = 8;				// 当前文件版本
 																	// 版本3:文件头 frameType 后多加了注册点 ox/oy
 																	// 版本4:文件头增加isContainAlpha,是否带透明通道数据
 																	// 版本5:保存帧序列，保存播放帧率
 																	// 版本6:增加是否为5方向的标识
 																	// 版本7:fam中的图片资源支持导入到swf，原生的解压性能更高
-		
+																	// 版本8:Fam可以配置混合模式
 		public function FanmFileInfo()
 		{
 			bitmapDatas = new Dictionary;
@@ -120,6 +121,9 @@ package centaur.loader.fam
 			else
 				isDirect5 = ((frames.length % 5) == 0);
 
+			if (fileVersion > 7)
+				this.blendMode = data.readBoolean() ? BlendMode.SCREEN : null;
+			
 			// 图片资源存储在swf中
 			if (fileVersion > 6)
 			{
@@ -243,5 +247,6 @@ package centaur.loader.fam
 		
 		public var path:String;
 		public var datasList:Array;
+		public var blendMode:String;
 	}
 }

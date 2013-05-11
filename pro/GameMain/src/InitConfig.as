@@ -2,6 +2,7 @@ package
 {
 	import centaur.data.GlobalAPI;
 	import centaur.data.act.InsMapDataList;
+	import centaur.data.buff.BuffDataList;
 	import centaur.data.card.CardTemplateDataList;
 	import centaur.data.skill.SkillDataList;
 	import centaur.logic.skills.SkillManager;
@@ -25,6 +26,9 @@ package
 			
 			// 技能配置表
 			SkillDataList.loadStrData(load("SkillData.txt"));
+			
+			// BUFF配置表
+			BuffDataList.loadStrData(load("BuffData.txt"));
 			
 			// 初始化技能参数
 			SkillManager.init();
