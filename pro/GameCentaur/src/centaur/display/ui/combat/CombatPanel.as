@@ -1,6 +1,7 @@
 package centaur.display.ui.combat
 {
 	import centaur.data.GlobalAPI;
+	import centaur.data.GlobalData;
 	import centaur.data.combat.CombatResultData;
 	import centaur.display.control.GBitmapNumberText;
 	import centaur.display.ui.combat.handler.ActionHandler;
@@ -110,7 +111,14 @@ package centaur.display.ui.combat
 		
 		private function onCombatComplete():void
 		{
-			
+			GlobalAPI.timerManager.startDelayCall(2000, backToMainPanel, 1);
+		}
+		
+		private function backToMainPanel():void
+		{
+			if (parent)
+				parent.removeChild(this);
+			GlobalAPI.layerManager.getPopLayer().addChild(GlobalData.mainPanel);
 		}
 		
 		public function dispose():void
