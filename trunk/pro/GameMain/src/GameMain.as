@@ -10,6 +10,7 @@ package
 	import centaur.display.control.GTextField;
 	import centaur.display.ui.combat.CombatPanel;
 	import centaur.display.ui.combat.handler.ActionHandlerManager;
+	import centaur.display.ui.mainui.MainPanel;
 	import centaur.effects.EffectManager;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.combat.CombatScene;
@@ -78,8 +79,12 @@ package
 			// 调试帧频显示
 			addChild(new Stats());
 			
+			if (!GlobalData.mainPanel)
+				GlobalData.mainPanel = new MainPanel();
+			GlobalAPI.layerManager.getPopLayer().addChild(GlobalData.mainPanel);
+			
 			////----wangq
-			forTest();
+//			forTest();
 //			forLoadSWFTest();
 //			
 //			var text:GTextField = new GTextField(GTextField.FONT_SAMPLE1);
@@ -181,7 +186,7 @@ package
 		}
 		
 		////----wangqing
-		private function forTest():void
+		public function forTestCombat():void
 		{
 			var actDataA:HeroData = new HeroData();	// 角色卡组
 			var cardData:CardData;

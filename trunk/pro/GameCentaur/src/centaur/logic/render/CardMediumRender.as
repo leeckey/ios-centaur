@@ -109,7 +109,7 @@ package centaur.logic.render
 			_width = _raceBitmap.width;
 			_height = _raceBitmap.height;
 			
-			if (_width == 0)
+			if (_width <= 10 || _height <= 10)
 			{
 				_width = 120;
 				_height = 175;
