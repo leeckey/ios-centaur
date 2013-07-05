@@ -2,6 +2,7 @@ package centaur.display.ui.combat
 {
 	import centaur.data.GlobalAPI;
 	import centaur.data.GlobalData;
+	import centaur.data.GlobalEventDispatcher;
 	import centaur.data.combat.CombatResultData;
 	import centaur.display.control.GBitmapNumberText;
 	import centaur.display.ui.combat.handler.ActionHandler;
@@ -13,6 +14,7 @@ package centaur.display.ui.combat
 	
 	import combat.CombatPanelAsset;
 	
+	import flash.events.Event;
 	import flash.utils.Dictionary;
 	import flash.utils.getTimer;
 	
@@ -35,6 +37,7 @@ package centaur.display.ui.combat
 		private var _handlerIdx:int;			
 		private var _lagTime:int;
 		private var _startTime:int;
+		private var _combatPaused:Boolean;
 		
 		private static var _instance:CombatPanel;
 		public static function get instance():CombatPanel
@@ -45,6 +48,38 @@ package centaur.display.ui.combat
 		public function CombatPanel()
 		{
 			super(CombatPanelAsset);
+			
+			setup();
+		}
+		
+		private function setup():void
+		{
+			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemoveToStage);
+		}
+		
+		private function onAddedToStage(e:Event):void
+		{
+			GlobalEventDispatcher.addEventListener(GlobalEventDispatcher.DETAIL_CARD_SHOW, onDetailShow);
+			GlobalEventDispatcher.addEventListener(GlobalEventDispatcher.DETAIL_CARD_HIDE, onDetailHide);
+		}
+		
+		private function onRemoveToStage(e:Event):void	
+		{
+			GlobalEventDispatcher.removeEventListener(GlobalEventDispatcher.DETAIL_CARD_SHOW, onDetailShow);
+			GlobalEventDispatcher.removeEventListener(GlobalEventDispatcher.DETAIL_CARD_HIDE, onDetailHide);
+		}
+		
+		private function onDetailShow(e:Event):void
+		{
+			this.visible = false;
+			_combatPaused = true;
+		}
+		
+		private function onDetailHide(e:Event):void
+		{
+			this.visible = true;
+			_combatPaused = false;
 		}
 		
 		public function startPlay(resultData:CombatResultData):void
@@ -84,6 +119,8 @@ package centaur.display.ui.combat
 				GlobalAPI.tickManager.removeTick(this);
 				return;
 			}
+			if (_combatPaused)
+				return;
 			
 			_startTime += delta;
 			if (_startTime < _lagTime)
