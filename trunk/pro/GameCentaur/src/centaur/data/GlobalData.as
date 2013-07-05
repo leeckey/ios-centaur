@@ -4,10 +4,14 @@ package centaur.data
 	import centaur.data.act.InsMapData;
 	import centaur.data.card.CardData;
 	import centaur.data.combat.CombatResultData;
+	import centaur.display.ui.card.CardDetailPanel;
 	import centaur.display.ui.combat.CombatPanel;
 	import centaur.display.ui.mainui.MainPanel;
 	import centaur.logic.act.BaseActObj;
+	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.combat.CombatScene;
+	
+	import flash.events.Event;
 	
 	public final class GlobalData
 	{
@@ -18,11 +22,33 @@ package centaur.data
 //		public static var GAME_HEIGHT:int = 640;
 //		
 		public static var mainPanel:MainPanel;
+		public static var detailCardPanel:CardDetailPanel;
 		
 		public static function onGameResize(stageWidth:int, stageHeight:int):void
 		{
 			
 			
+		}
+		
+		public static function popupCardDetailPanel(cardData:BaseCardObj):void
+		{
+			if (!detailCardPanel)
+				detailCardPanel = new CardDetailPanel();
+			
+			if (!detailCardPanel.parent)
+				GlobalAPI.layerManager.getPopLayer().addChild(detailCardPanel);
+			
+			detailCardPanel.cardData = cardData;
+			
+			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.DETAIL_CARD_SHOW));
+		}
+		
+		public static function hideCardDetailPanel():void
+		{
+			if (detailCardPanel && detailCardPanel.parent)
+				detailCardPanel.parent.removeChild(detailCardPanel);
+			
+			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.DETAIL_CARD_HIDE));
 		}
 		
 		public static function forTestCombat():void

@@ -74,6 +74,14 @@ package centaur.logic.render
 			_raceBitmap = new Bitmap(GlobalAPI.loaderManager.getBitmapByClass(EmbedAssetManager.getCardRace(Math.random() * 4)));
 			addChildAt(_raceBitmap, 0);
 			
+			_width = _raceBitmap.width;
+			_height = _raceBitmap.height;
+			if (_width <= 10 || _height <= 10)
+			{
+				_width = 120;
+				_height = 175;
+			}
+			
 			super.setup();
 			
 			_buffDic = new Dictionary();
@@ -104,15 +112,6 @@ package centaur.logic.render
 					lvText.text = "Lv:" + String(_cardObj.cardData.lv);
 				if (nameText)
 					nameText.text = _name;
-			}
-			
-			_width = _raceBitmap.width;
-			_height = _raceBitmap.height;
-			
-			if (_width <= 10 || _height <= 10)
-			{
-				_width = 120;
-				_height = 175;
 			}
 		}
 		

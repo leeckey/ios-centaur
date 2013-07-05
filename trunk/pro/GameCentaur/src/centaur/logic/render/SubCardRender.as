@@ -1,10 +1,12 @@
 package centaur.logic.render
 {
 	import centaur.data.GlobalAPI;
+	import centaur.data.GlobalData;
 	import centaur.logic.act.BaseCardObj;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.events.MouseEvent;
 	import flash.filters.ColorMatrixFilter;
 	
 	import ghostcat.ui.controls.GBuilderBase;
@@ -46,6 +48,19 @@ package centaur.logic.render
 			var bitmapPath:String = getBitmapPath();
 			if (bitmapPath)
 				GlobalAPI.loaderManager.getBitmapInstance(bitmapPath, onBitmapLoadComplete);
+			
+			addEvents();
+		}
+		
+		protected function addEvents():void
+		{
+			this.addEventListener(MouseEvent.CLICK, onCardClickHandler);
+		}
+		
+		protected function onCardClickHandler(e:MouseEvent):void
+		{
+			if (_cardObj)
+				GlobalData.popupCardDetailPanel(_cardObj);
 		}
 		
 		protected function getBitmapPath():String

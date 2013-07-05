@@ -33,9 +33,5 @@ package centaur.data
 		
 		// 定时器管理器
 		public static var timerManager:ITimerManager;
-		
-		public function GlobalAPI()
-		{
-		}
 	}
 }
