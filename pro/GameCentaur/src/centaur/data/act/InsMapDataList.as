@@ -41,6 +41,7 @@ package centaur.data.act
 				
 				var insMapData:InsMapData = new InsMapData();
 				Utils.initStrDataToObjectData(insMapData, dataStr, format);
+				insMapData.init();
 				
 				if (insMapData.templateID > 0)
 					_insMapDic[insMapData.templateID] = insMapData;

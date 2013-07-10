@@ -4,6 +4,7 @@ package
 	import centaur.data.act.InsMapDataList;
 	import centaur.data.buff.BuffDataList;
 	import centaur.data.card.CardTemplateDataList;
+	import centaur.data.map.MapDataList;
 	import centaur.data.skill.SkillDataList;
 	import centaur.logic.skills.SkillManager;
 	
@@ -29,6 +30,9 @@ package
 			
 			// BUFF配置表
 			BuffDataList.loadStrData(load("BuffData.txt"));
+			
+			// 地图配置表
+			MapDataList.loadStrData(load("MapData.txt"));
 			
 			// 初始化技能参数
 			SkillManager.init();
