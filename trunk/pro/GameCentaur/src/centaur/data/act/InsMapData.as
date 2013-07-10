@@ -1,5 +1,7 @@
 package centaur.data.act
 {
+	import centaur.data.card.CardData;
+
 	/**
 	 *   副本地图数据，有一些副本胜利条件数据
 	 */ 
@@ -16,6 +18,26 @@ package centaur.data.act
 		
 		public function InsMapData()
 		{
+		}
+		
+		public function init():void
+		{
+			var len:int = cardList.length;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var str:String = cardList[i];
+				var strArr:Array = str.split("_");
+				if (strArr.length == 2)
+				{
+					var cardData:CardData = new CardData;
+					cardData.templateID = strArr[0];
+					cardData.lv = strArr[1];
+					cardData.update();
+					cardList[i] = cardData;
+				}
+				else
+					cardList[i] = null;
+			}
 		}
 	}
 }

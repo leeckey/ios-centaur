@@ -11,7 +11,12 @@ package centaur.utils
 			
 			var len:int = arr.length;
 			for (var i:int = 0; i < len; ++i)
+			{
+				var str:String = arr[i] as String;
+				if (str.indexOf("_") != -1)
+					return;
 				arr[i] = uint(arr[i]);
+			}
 		}
 		
 		public static function initStrDataToObjectData(dataObj:Object, str:String, format:Array):void
