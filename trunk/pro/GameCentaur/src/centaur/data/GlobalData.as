@@ -11,6 +11,7 @@ package centaur.data
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.combat.CombatScene;
 	
+	import flash.display.Sprite;
 	import flash.events.Event;
 	
 	public final class GlobalData
@@ -21,6 +22,7 @@ package centaur.data
 //		public static var GAME_WIDTH:int = 960;
 //		public static var GAME_HEIGHT:int = 640;
 //		
+		public static var gameMain:Sprite;
 		public static var mainPanel:MainPanel;
 		public static var detailCardPanel:CardDetailPanel;
 		

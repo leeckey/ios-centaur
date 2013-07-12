@@ -1,6 +1,7 @@
 package centaur.effects
 {
 	import centaur.data.GlobalAPI;
+	import centaur.data.GlobalData;
 	import centaur.display.control.GTextField;
 	import centaur.utils.NumberCache;
 	import centaur.utils.NumberType;
@@ -9,6 +10,7 @@ package centaur.effects
 	import flash.geom.Point;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.util.display.Geom;
 	
 	import gs.TweenLite;
 
@@ -32,7 +34,7 @@ package centaur.effects
 			_damageSprite = new GTextField(GTextField.FONT_SAMPLE1);//NumberCache.getNumber(damage, type);
 			(_damageSprite as GTextField).textField.textColor = getColorbyType(type);
 			(_damageSprite as GTextField).text = ((damage > 0) ? "+" : "") + String(damage);
-			var gPoint:Point = parentObj.localToGlobal(new Point(parentObj.width * 0.5, parentObj.height * 0.8));
+			var gPoint:Point = Geom.localToContent(new Point(parentObj.width * 0.5, parentObj.height * 0.8), parentObj, GlobalData.gameMain);
 			_damageSprite.x = gPoint.x;
 			_damageSprite.y = gPoint.y;
 			GlobalAPI.layerManager.getTipLayer().addChild(_damageSprite);

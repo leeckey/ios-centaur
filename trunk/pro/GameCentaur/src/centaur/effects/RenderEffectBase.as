@@ -1,6 +1,7 @@
 package centaur.effects
 {
 	import centaur.data.GlobalAPI;
+	import centaur.data.GlobalData;
 	import centaur.data.effects.EffectData;
 	import centaur.interfaces.IMovieClip;
 	import centaur.movies.MovieClipFactory;
@@ -8,6 +9,8 @@ package centaur.effects
 	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.geom.Point;
+	
+	import ghostcat.util.display.Geom;
 
 	/**
 	 *  效果播放基类
@@ -34,7 +37,7 @@ package centaur.effects
 			_movieClip.play();
 			
 			// 默认居中显示到目标上
-			var gPoint:Point = _data.parentObj.localToGlobal(new Point(_data.parentObj.width * 0.5, _data.parentObj.height * 0.5));
+			var gPoint:Point = Geom.localToContent(new Point(_data.parentObj.width * 0.5, _data.parentObj.height * 0.5), _data.parentObj, GlobalData.gameMain);
 			(_movieClip as DisplayObject).x = gPoint.x;
 			(_movieClip as DisplayObject).y = gPoint.y;
 			GlobalAPI.layerManager.getTipLayer().addChild(_movieClip as DisplayObject);
