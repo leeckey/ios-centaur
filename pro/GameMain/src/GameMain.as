@@ -26,6 +26,7 @@ package
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageOrientation;
+	import flash.display.StageQuality;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.StageOrientationEvent;
@@ -42,6 +43,7 @@ package
 			// support autoOrients
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.quality = StageQuality.HIGH;
 			
 			init();
 			setup();
@@ -58,6 +60,7 @@ package
 		protected function setupGlobals():void
 		{
 			GlobalData.asite = "";	// 配置资源总路径
+			GlobalData.gameMain = this;
 			GlobalAPI.pathManager = new PathManager;
 			GlobalAPI.tickManager = new TickManager(stage);
 			GlobalAPI.loaderManager = new AirLoadManager;
@@ -111,10 +114,12 @@ package
 			{
 				this.scaleX = this.scaleY = factorY;
 				this.x = (stage.stageWidth - GameConstant.STAGE_WIDTH * factorY) * 0.5;
+				this.y = 0;
 			}
 			else
 			{
 				this.scaleX = this.scaleY = factorX;
+				this.x = 0;
 				this.y = (stage.stageHeight - GameConstant.STAGE_HEIGHT * factorX) * 0.5;
 			}
 			
