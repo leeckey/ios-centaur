@@ -1,6 +1,8 @@
 package centaur.display.ui.mainui
 {
+	import centaur.data.GlobalAPI;
 	import centaur.data.GlobalData;
+	import centaur.display.ui.map.MapPanel;
 	
 	import flash.events.MouseEvent;
 	
@@ -45,7 +47,12 @@ package centaur.display.ui.mainui
 			if (parent)
 				parent.removeChild(this);
 			
-			GlobalData.forTestCombat();
+//			GlobalData.forTestCombat();
+			if (!GlobalData.mapPanel)
+				GlobalData.mapPanel = new MapPanel();
+			GlobalData.mapPanel.mapID = 1;
+			GlobalAPI.layerManager.getPopLayer().addChild(GlobalData.mapPanel);
+			
 		}
 	}
 }
