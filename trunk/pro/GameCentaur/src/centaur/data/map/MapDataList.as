@@ -12,6 +12,11 @@ package centaur.data.map
 		{
 		}
 		
+		public static function getMapData(mapID:uint):MapData
+		{
+			return _mapList[mapID] as MapData;
+		}
+		
 		public static function loadStrData(str:String):void
 		{
 			if (!str)

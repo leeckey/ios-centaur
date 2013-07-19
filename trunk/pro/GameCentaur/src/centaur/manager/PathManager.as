@@ -24,5 +24,20 @@ package centaur.manager
 		{
 			return GlobalData.asite + "assets/effects/huihexg.fam";
 		}
+		
+		public function getMapBackgroundPath(mapID:uint):String
+		{
+			return GlobalData.asite + "assets/ui/map/" + mapID + "/back.png";	
+		}
+		
+		public function getMapItemPath(mapID:uint, itemIdx:uint):String
+		{
+			return GlobalData.asite + "assets/ui/map/" + mapID + "/item" + itemIdx + ".png";
+		}
+		
+		public function getMapItemNamePath(mapID:uint, itemIdx:uint):String
+		{
+			return GlobalData.asite + "assets/ui/map/" + mapID + "/itemname" + itemIdx + ".png";
+		}
 	}
 }

@@ -7,6 +7,7 @@ package centaur.data
 	import centaur.display.ui.card.CardDetailPanel;
 	import centaur.display.ui.combat.CombatPanel;
 	import centaur.display.ui.mainui.MainPanel;
+	import centaur.display.ui.map.MapPanel;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.combat.CombatScene;
@@ -25,6 +26,7 @@ package centaur.data
 		public static var gameMain:Sprite;
 		public static var mainPanel:MainPanel;
 		public static var detailCardPanel:CardDetailPanel;
+		public static var mapPanel:MapPanel;
 		
 		public static function onGameResize(stageWidth:int, stageHeight:int):void
 		{
