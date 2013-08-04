@@ -47,12 +47,10 @@ package centaur.display.ui.mainui
 			if (parent)
 				parent.removeChild(this);
 			
-//			GlobalData.forTestCombat();
 			if (!GlobalData.mapPanel)
 				GlobalData.mapPanel = new MapPanel();
 			GlobalData.mapPanel.mapID = 1;
-			GlobalAPI.layerManager.getPopLayer().addChild(GlobalData.mapPanel);
-			
+			GlobalAPI.layerManager.setModuleContent(GlobalData.mapPanel);
 		}
 	}
 }

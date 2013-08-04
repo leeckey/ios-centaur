@@ -7,6 +7,7 @@ package centaur.display.ui.combat
 	import centaur.display.control.GBitmapNumberText;
 	import centaur.display.ui.combat.handler.ActionHandler;
 	import centaur.display.ui.combat.handler.ActionHandlerManager;
+	import centaur.display.ui.map.InsCombatPanel;
 	import centaur.interfaces.ITick;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.action.ActionBase;
@@ -155,7 +156,7 @@ package centaur.display.ui.combat
 		{
 			if (parent)
 				parent.removeChild(this);
-			GlobalAPI.layerManager.getPopLayer().addChild(GlobalData.mainPanel);
+			GlobalAPI.layerManager.setModuleContent(InsCombatPanel.instance);
 		}
 		
 		public function dispose():void

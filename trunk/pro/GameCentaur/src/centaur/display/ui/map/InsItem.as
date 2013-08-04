@@ -1,11 +1,15 @@
 package centaur.display.ui.map
 {
 	import centaur.data.GlobalAPI;
+	import centaur.data.GlobalData;
+	import centaur.data.GlobalEventDispatcher;
 	import centaur.data.act.InsMapData;
 	import centaur.data.act.InsMapDataList;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.ui.controls.GBuilderBase;
@@ -33,10 +37,33 @@ package centaur.display.ui.map
 			setup();
 		}
 		
+		override public function destory():void
+		{
+			this.removeEventListener(MouseEvent.CLICK, onMouseClick);
+			super.destory();
+		}
+		
 		private function setup():void
 		{
 			_back = new Bitmap();
 			addChildAt(_back, 0);
+			this.addEventListener(MouseEvent.CLICK, onMouseClick);
+		}
+		
+		private function onMouseClick(e:MouseEvent):void
+		{
+			InsCombatPanel.instance.data = _insMapID;
+			InsCombatPanel.instance.mapID = this.mapID;
+			InsCombatPanel.instance.insIdx = this.insIdx;
+			GlobalAPI.layerManager.setModuleContent(InsCombatPanel.instance);
+			
+			GlobalEventDispatcher.addEventListener(GlobalEventDispatcher.INS_COMBAT_HIDE, onInsCombatHide);
+		}
+		
+		private function onInsCombatHide(e:Event):void
+		{
+			GlobalEventDispatcher.removeEventListener(GlobalEventDispatcher.INS_COMBAT_HIDE, onInsCombatHide);
+			GlobalAPI.layerManager.setModuleContent(GlobalData.mapPanel);
 		}
 		
 		override public function set data(v:*):void

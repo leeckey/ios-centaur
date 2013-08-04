@@ -39,6 +39,22 @@ package centaur.manager
 			_container.addChild(_mouseLayer);
 		}
 		
+		private var _moduleContent:Sprite;
+		public function setModuleContent(content:Sprite):void
+		{
+			if (_moduleContent != content)
+			{
+				if (_moduleContent && _moduleContent.parent)
+					_moduleContent.parent.removeChild(_moduleContent);
+				
+				_moduleContent = content;
+				
+				if (_moduleContent && _moduleContent.parent != _moduleLayer)
+					_moduleLayer.addChild(_moduleContent);
+				
+			}
+		}
+		
 		/**
 		 * 放置模块和模块过渡层
 		 * @return 

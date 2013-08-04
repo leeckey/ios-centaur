@@ -166,6 +166,7 @@ package centaur.logic.render
 		
 		private function setDamageFilters(filter:Array):void
 		{
+			_damageHightTimer = null;
 			this.filters = filter;
 		}
 		
