@@ -8,6 +8,8 @@ package centaur.data
 		public static const DETAIL_CARD_SHOW:String = "detailCardShow";
 		public static const DETAIL_CARD_HIDE:String = "detailCardHide";
 		
+		public static const INS_COMBAT_HIDE:String = "INS_COMBAT_HIDE";
+		
 		private static var _eventDispatcher:EventDispatcher = new EventDispatcher();
 		
 		public static function addEventListener(type:String, listener:Function):void

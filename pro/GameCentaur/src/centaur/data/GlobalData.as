@@ -40,7 +40,7 @@ package centaur.data
 				detailCardPanel = new CardDetailPanel();
 			
 			if (!detailCardPanel.parent)
-				GlobalAPI.layerManager.getPopLayer().addChild(detailCardPanel);
+				GlobalAPI.layerManager.setModuleContent(detailCardPanel);
 			
 			detailCardPanel.cardData = cardData;
 			
@@ -87,7 +87,7 @@ package centaur.data
 			
 			////---- 处理战斗显示部分
 			CombatPanel.instance.startPlay(logicData);
-			GlobalAPI.layerManager.getPopLayer().addChild(CombatPanel.instance);
+			GlobalAPI.layerManager.setModuleContent(CombatPanel.instance);
 		}
 	}
 }
