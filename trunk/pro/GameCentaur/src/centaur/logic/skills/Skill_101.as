@@ -35,8 +35,8 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			min = data.param1;
-			max = data.param2;
+			min = data.param1 * data.skillLevel;
+			max = data.param2 * data.skillLevel;
 		}
 		
 		protected override function _doSkill(targetCard:BaseCardObj):void

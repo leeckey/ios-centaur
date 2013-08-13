@@ -83,6 +83,28 @@ package centaur.data.combat
 		}
 		
 		/**
+		 * 获得某张卡牌以及左右相邻的卡牌 
+		 * @param card
+		 * @return 
+		 * 
+		 */		
+		public function getRoundCard(card:BaseCardObj):Array
+		{
+			var res:Array = [];	
+			var index:int = selfCombatArea.indexOf(card);
+			if (index < 0)
+				return res;
+			
+			res.push(card);
+			var leftTarget:BaseCardObj = selfCombatArea[index - 1];
+			if (leftTarget) res.push(leftTarget);
+			var rightTarget:BaseCardObj = selfCombatArea[index + 1];
+			if (rightTarget) res.push(rightTarget);
+			
+			return res;
+		}
+		
+		/**
 		 * 随机三张卡牌 
 		 * @return 
 		 * 
@@ -98,9 +120,37 @@ package centaur.data.combat
 				{
 					if (res.length >= 3)
 					{
-						var replaceIdx:int = Math.random() * 6;
+						var replaceIdx:int = Math.random() * 5;
 						if (replaceIdx <= 2)
-							res[replaceIdx]	 = target;	
+							res[replaceIdx]	 = target;
+					}
+					else
+						res.push(target);
+				}
+			}
+			
+			return res;
+		}
+		
+		/**
+		 * 随机二张卡牌 
+		 * @return 
+		 * 
+		 */		
+		public function getCardFromCombatAreaRandom2():Array
+		{
+			var res:Array = [];
+			var len:int = selfCombatArea.length;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var target:BaseCardObj = selfCombatArea[i];
+				if (target)
+				{
+					if (res.length >= 2)
+					{
+						var replaceIdx:int = Math.random() * 3;
+						if (replaceIdx <= 1)
+							res[replaceIdx]	 = target;
 					}
 					else
 						res.push(target);

@@ -8,18 +8,18 @@ package centaur.logic.skills
 	import centaur.logic.events.CardEvent;
 	
 	/**
-	 * 自爆：被消灭时，对对面以及相邻三张卡牌造成100点伤害 
+	 * 盾刺:当受到物理伤害时,立即反击攻击者及相邻卡牌并给予100点伤害 
 	 * @author liq
 	 * 
 	 */	
-	public class Skill_215 extends BaseSkill
+	public class Skill_219 extends BaseSkill
 	{
 		/**
-		 * 造成的伤害值 
+		 * 反击伤害值 
 		 */		
 		public var damage:int;
 		
-		public function Skill_215(data:SkillData, card:BaseCardObj)
+		public function Skill_219(data:SkillData, card:BaseCardObj)
 		{
 			super(data, card);
 		}
@@ -48,7 +48,7 @@ package centaur.logic.skills
 			
 			if (card != null)
 			{
-				card.addEventListener(CardEvent.ON_PRE_DEAD, onPreDead, false, _priority);
+				card.addEventListener(CardEvent.ON_AFTER_HURT, onAfterHurt, false, _priority);
 			}
 		}
 		
@@ -60,35 +60,39 @@ package centaur.logic.skills
 		{
 			if (card != null)
 			{
-				card.removeEventListener(CardEvent.ON_PRE_DEAD, onPreDead);
+				card.removeEventListener(CardEvent.ON_AFTER_HURT, onAfterHurt);
 			}
 			
 			super.removeCard();
 		}
 		
 		/**
-		 * 对对面以及相邻三张卡牌造成100点伤害
+		 * 立刻反击造成100点伤害
 		 * @param event
 		 * 
 		 */		
-		public function onPreDead(event:CardEvent):void
+		public function onAfterHurt(event:CardEvent):void
 		{
-			var target:Array = getTarget();
-			if (target == null || target.length == 0)
+			// 获取相邻的卡牌
+			var targets:Array = card.owner.enemyActObj.combatData.getRoundCard(card.attacker);
+			
+			if (targets.length == 0)
 				return;
 			
-			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, makeIDArray(target)));
-			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
+			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.attacker.objID]));
+			
 			var targetCard:BaseCardObj;
-			for (var i:int = 0; i < target.length; i++)
+			for (var i:int = 0; i < targets.length; i++)
 			{
-				targetCard = target[i] as BaseCardObj;
+				targetCard = targets[i] as BaseCardObj;
 				if (targetCard != null)
 				{
-					if (targetCard.onSkillHurt(this, 0) >= 0)
-						targetCard.onHurt(damage);
+					targetCard.onHurt(damage);
 				}
 			}
+			
+			
+			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 		}
 	}
 }

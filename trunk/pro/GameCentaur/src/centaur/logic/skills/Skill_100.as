@@ -46,7 +46,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			damage = data.param1;
+			damage = data.param1 * data.skillLevel;
 			rate = data.param2 / 100;
 			if (data.buffID != 0)
 			{
@@ -64,6 +64,7 @@ package centaur.logic.skills
 			if (hurt >= 0 && buffID > 0 && !targetCard.isDead && Math.random() < rate)
 			{
 				var data:BuffData = BuffDataList.getBuffData(buffID);
+				data.level = skillLevel;
 				new buff(targetCard, data);
 			}
 		}

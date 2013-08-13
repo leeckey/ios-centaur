@@ -1,21 +1,25 @@
 package centaur.logic.skills
 {
 	import centaur.data.skill.SkillData;
+	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
+	import centaur.logic.action.*;
+	import centaur.logic.combat.CombatLogic;
+	import centaur.logic.events.CardEvent;
 	
 	/**
-	 * 群体削弱：降低对方所有卡牌5点攻击力
+	 * 瘟疫技能:使对方所有卡牌丧失10点攻击力和生命值
 	 * @author liq
 	 * 
 	 */	
-	public class Skill_103 extends BaseSkill
+	public class Skill_107 extends BaseSkill
 	{
 		/**
 		 * 减少的攻击力 
 		 */		
-		public var deAttack:int;
+		public var attack:Number;
 		
-		public function Skill_103(data:SkillData, card:BaseCardObj)
+		public function Skill_107(data:SkillData, card:BaseCardObj)
 		{
 			super(data, card);
 		}
@@ -30,16 +34,20 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			deAttack = data.param1 * data.skillLevel;
+			attack = data.param1 * data.skillLevel;
 		}
 		
+
 		protected override function _doSkill(targetCard:BaseCardObj):void
 		{
 			if (targetCard == null)
 				return;
 			
 			if (targetCard.onSkillHurt(this, 0) >= 0)
-				targetCard.deductAttack(deAttack);
+			{
+				targetCard.deductHP(attack);
+				targetCard.deductAttack(attack);
+			}
 		}
 	}
 }

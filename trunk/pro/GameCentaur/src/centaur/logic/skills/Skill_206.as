@@ -29,7 +29,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			maxDamage = data.param1;
+			maxDamage = data.param1- data.param2 * data.skillLevel;
 		}
 		
 		/**

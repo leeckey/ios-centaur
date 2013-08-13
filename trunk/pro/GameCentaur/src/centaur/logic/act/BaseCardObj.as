@@ -49,13 +49,15 @@ package centaur.logic.act
 		
 		private var _attack:int;               // 卡牌的攻击力
 		private var _hp:int;                   // 卡牌的血量
+		private var _maxHp:int;                // 卡牌最大血量
 		public var waitRound:int;              // 冷却回合数
 		public var isDead:Boolean;             // 是否已经死亡
 		public var attackSkill:BaseSkill;      // 普通攻击技能
 		
 		
 		public var isActive:Boolean = true;   // 是否可行动
-		public var canAttack:Boolean = true;
+		public var canAttack:Boolean = true;  // 是否可攻击
+		public var canCure:Boolean = true;    // 是否可治疗
 		
 		public function get attack():int
 		{
@@ -69,7 +71,7 @@ package centaur.logic.act
 		 */		
 		public function get isHurt():Boolean
 		{
-			return _hp < cardData.maxHP;
+			return _hp < _maxHp;
 		}
 		
 		/**
@@ -147,6 +149,7 @@ package centaur.logic.act
 					if (!skillData)
 						continue;
 					
+					skillData.skillLevel = cardTemplateData.skillLevel[i];
 					skills.push(GetSkillByID(skillData));
 				}
 			}
@@ -213,6 +216,7 @@ package centaur.logic.act
 			
 			// 设置血量和攻击力
 			this._hp = cardData.maxHP;
+			this._maxHp = cardData.maxHP;
 			this._attack = cardData.attack;
 			this.waitRound = cardData.waitRound;
 			this.isDead = false;
@@ -404,18 +408,48 @@ package centaur.logic.act
 		 */		
 		public function addHP(num:int):int
 		{
-			if (_hp >= cardData.maxHP)
+			if (_hp >= _maxHp || !canCure)
 				return 0;
 			
 			var temp:int = _hp;
 			_hp = _hp + num;
-			if (_hp > cardData.maxHP) _hp = cardData.maxHP;
+			if (_hp > _maxHp) _hp = _maxHp;
 			temp = _hp - temp;
 			
 			CombatLogic.combatList.push(CureNotifyAction.getAction(temp, this.objID));
 			
 			trace(objID + "当前生命值为:" + _hp);
 			return temp;
+		}
+		
+		/**
+		 * 增加HP最大值 
+		 * @param num
+		 * 
+		 */		
+		public function addMaxHp(num:int):void
+		{
+			_maxHp += num;
+			_hp += num;
+			
+			// 加入Action
+			CombatLogic.combatList.push(MaxHpChangeAction.getAction(num, num, this.objID));
+		}
+		
+		/**
+		 * 减少HP最大值 
+		 * @param num
+		 * 
+		 */		
+		public function deductMaxHp(num:int):void
+		{
+			_maxHp -= num;
+			if (_maxHp < 0) _maxHp = 0;
+			var temp:int = _hp;
+			if (_hp > _maxHp) _hp = _maxHp;
+			
+			// 加入Action
+			CombatLogic.combatList.push(MaxHpChangeAction.getAction(-num, _hp - temp, this.objID));
 		}
 		
 		/**

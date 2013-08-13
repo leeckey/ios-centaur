@@ -34,7 +34,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			hp = data.param1;
+			hp = data.param1 * data.skillLevel;
 		}
 		
 		/**
@@ -67,7 +67,7 @@ package centaur.logic.skills
 		}
 		
 		/**
-		 * 出场时增加场上相同卡牌的攻击力 
+		 * 出场时增加场上相同卡牌的最大血量
 		 * @param event
 		 * 
 		 */		
@@ -83,12 +83,13 @@ package centaur.logic.skills
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, makeIDArray(targets)));
 				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 				
-				// 增加攻击力
+				// 增加最大血量
 				var target:BaseCardObj;
 				for (var i:int = 0; i < targets.length; i++)
 				{
 					target = targets[i] as BaseCardObj;
-					target.addHP(hp);
+					if (target != card)
+						target.addMaxHp(hp);
 				}
 			}
 			
@@ -114,13 +115,13 @@ package centaur.logic.skills
 			{
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [target.objID]));
 				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
-				target.addHP(hp);
+				target.addMaxHp(hp);
 			}
 		}
 		
 		
 		/**
-		 * 死亡时相同国家的卡恢复攻击力 
+		 * 死亡时相同国家的卡恢复最大血量
 		 * @param event
 		 * 
 		 */		
@@ -136,7 +137,7 @@ package centaur.logic.skills
 				for (var i:int = 0; i < targets.length; i++)
 				{
 					target = targets[i] as BaseCardObj;
-					target.deductHP(hp);
+					target.deductMaxHp(hp);
 				}
 			}
 			

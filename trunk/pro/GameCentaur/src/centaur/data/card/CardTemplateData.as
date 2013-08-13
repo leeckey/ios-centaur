@@ -16,6 +16,9 @@ package centaur.data.card
 		// 按顺序放置 0级    5级   10级        
 		public var skillList:Array = Utils.EMPTY_ARRAY;	// 卡牌拥有的技能ID列表
 		
+		// 按顺序放置 0级    5级   10级        
+		public var skillLevel:Array = Utils.EMPTY_ARRAY;	// 卡牌拥有的技能级别
+		
 		public function CardTemplateData()
 		{
 		}

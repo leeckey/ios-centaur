@@ -30,7 +30,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			cure = data.param1;
+			cure = data.param1 * data.skillLevel;
 		}
 		
 		/**

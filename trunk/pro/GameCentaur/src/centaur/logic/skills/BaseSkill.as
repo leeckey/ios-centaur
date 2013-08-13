@@ -8,6 +8,7 @@ package centaur.logic.skills
 	import centaur.logic.action.*;
 	import centaur.logic.buff.BaseBuff;
 	import centaur.logic.combat.CombatLogic;
+	import centaur.data.card.CardEnumDefines;
 
 	/**
 	 * 技能基类 
@@ -37,6 +38,11 @@ package centaur.logic.skills
 		private var _selectTargetType:int;
 		
 		/**
+		 * 技能级别
+		 */		
+		private var _skillLevel:int;
+		
+		/**
 		 * 技能触发优先级 
 		 */		
 		protected var _priority:int;
@@ -62,6 +68,11 @@ package centaur.logic.skills
 			return _magicType;
 		}
 		
+		public function get skillLevel():int
+		{
+			return _skillLevel;
+		}
+		
 		public function BaseSkill(data:SkillData, card:BaseCardObj)
 		{
 			if (data != null)
@@ -83,6 +94,7 @@ package centaur.logic.skills
 			_selectTargetType = data.selectTargetType;
 			_skillType = data.skillType;
 			_magicType = data.magicType;
+			_skillLevel = data.skillLevel;
 		}
 		
 		/**
@@ -170,6 +182,8 @@ package centaur.logic.skills
 			var idx:int;
 			var target:BaseCardObj;
 			var targets:Array = [];
+			var cards:Array;
+			var i:int = 0;
 			var targetAct:BaseActObj = card.owner.enemyActObj;
 			switch(_selectTargetType)
 			{
@@ -216,6 +230,10 @@ package centaur.logic.skills
 						target = targetAct.combatData.getCardFromCombatArea();
 					return target ? [target] : null;
 					
+				// 随机2个目标
+				case SkillEnumDefines.TARGET_RANDOM2_TYPE:
+					return targetAct.combatData.getCardFromCombatAreaRandom2();
+					
 				// 随机3个目标
 				case SkillEnumDefines.TARGET_RANDOM3_TYPE:
 					return targetAct.combatData.getCardFromCombatAreaRandom3();
@@ -238,8 +256,8 @@ package centaur.logic.skills
 					
 				// 相同国家的卡牌
 				case SkillEnumDefines.TARGET_SAME_COUNTRY:
-					var cards:Array = card.owner.combatData.selfCombatArea;
-					for (var i:int = 0; i < cards.length; i++)
+					cards = card.owner.combatData.selfCombatArea;
+					for (i = 0; i < cards.length; i++)
 					{
 						target = cards[i];
 						if (target != null && target.objID != card.objID && target.cardData.country == card.cardData.country)
@@ -251,6 +269,59 @@ package centaur.logic.skills
 						return [card];
 					else
 						return null;
+					
+				// 自身英雄
+				case SkillEnumDefines.TARGET_MY_HERO:
+					return [card.owner];
+					
+				// 对面英雄
+				case SkillEnumDefines.TARGET_ENEMY_HERO:
+					return [targetAct];
+					
+				// 势力1卡牌
+				case SkillEnumDefines.TARGET_COUNTRY_1:
+					cards = card.owner.combatData.selfCombatArea;
+					for (i = 0; i < cards.length; i++)
+					{
+						target = cards[i];
+						if (target != null && target.cardData.country == CardEnumDefines.CARD_COUNTRY_WEI)
+							targets.push(target);
+					}
+					return targets;
+					
+				// 势力2卡牌
+				case SkillEnumDefines.TARGET_COUNTRY_2:
+					cards = card.owner.combatData.selfCombatArea;
+					for (i = 0; i < cards.length; i++)
+					{
+						target = cards[i];
+						if (target != null && target.cardData.country == CardEnumDefines.CARD_COUNTRY_SHU)
+							targets.push(target);
+					}
+					return targets;
+					
+				// 势力3卡牌
+				case SkillEnumDefines.TARGET_COUNTRY_3:
+					cards = card.owner.combatData.selfCombatArea;
+					for (i = 0; i < cards.length; i++)
+					{
+						target = cards[i];
+						if (target != null && target.cardData.country == CardEnumDefines.CARD_COUNTRY_WU)
+							targets.push(target);
+					}
+					return targets;
+					
+				// 势力4卡牌
+				case SkillEnumDefines.TARGET_COUNTRY_4:
+					cards = card.owner.combatData.selfCombatArea;
+					for (i = 0; i < cards.length; i++)
+					{
+						target = cards[i];
+						if (target != null && target.cardData.country == CardEnumDefines.CARD_COUNTRY_QUN)
+							targets.push(target);
+					}
+					return targets;
+					
 			}
 			
 			return null;

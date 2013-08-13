@@ -35,7 +35,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			attack = data.param1;
+			attack = data.param1 * data.skillLevel;
 		}
 		
 		/**
@@ -89,7 +89,8 @@ package centaur.logic.skills
 				for (var i:int = 0; i < targets.length; i++)
 				{
 					target = targets[i] as BaseCardObj;
-					target.addAttack(attack);
+					if (target != card)
+						target.addAttack(attack);
 				}
 			}
 			
@@ -137,7 +138,8 @@ package centaur.logic.skills
 				for (var i:int = 0; i < targets.length; i++)
 				{
 					target = targets[i] as BaseCardObj;
-					target.deductAttack(attack);
+					if (target != card)
+						target.deductAttack(attack);
 				}
 			}
 			

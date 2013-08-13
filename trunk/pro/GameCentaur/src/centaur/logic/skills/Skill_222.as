@@ -1,29 +1,34 @@
 package centaur.logic.skills
 {
+	import centaur.data.buff.*;
 	import centaur.data.skill.SkillData;
+	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
-	import centaur.logic.events.CardEvent;
-	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.action.*;
+	import centaur.logic.combat.CombatLogic;
+	import centaur.logic.events.CardEvent;
+	
+	import flash.utils.getDefinitionByName;
 	
 	/**
-	 * 吸血:攻击造成物理伤害时，恢复伤害50%的生命值 
+	 * 裂伤技能:当攻击并对敌方造成物理伤害时施放,使对方无法回春和被治疗 
 	 * @author liq
 	 * 
 	 */	
-	public class Skill_208 extends BaseSkill
+	public class Skill_222 extends BaseSkill
 	{
 		/**
-		 * 吸血的比率 
+		 * BuffID 
 		 */		
-		public var rate:Number;
+		public var buffID:int;
 		
-		public function Skill_208(data:SkillData, card:BaseCardObj)
+		private var buff:Class;
+		
+		public function Skill_222(data:SkillData, card:BaseCardObj)
 		{
 			super(data, card);
 		}
 		
-
 		/**
 		 * 设置卡牌参数 
 		 * @param data
@@ -34,7 +39,11 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			rate = data.param1 * data.skillLevel / 100;
+			if (data.buffID != 0)
+			{
+				buffID = data.buffID;
+				buff = getDefinitionByName("centaur.logic.buff.Buff_" + BuffDataList.getBuffData(buffID).templateID) as Class;
+			}
 		}
 		
 		/**
@@ -67,18 +76,20 @@ package centaur.logic.skills
 		}
 		
 		/**
-		 * 攻击成功后吸取生命值
+		 * 裂伤技能Buff
 		 * @param event
 		 * 
 		 */		
 		public function onAttackSucc(event:CardEvent):void
 		{
-			if (!card.isHurt)
-				return;
-			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
-			var hp:int = rate * card.lastDamageValue;
-			card.addHP(hp);
+
+			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.target.objID]));
+				
+			var data:BuffData = BuffDataList.getBuffData(buffID);
+
+			new buff(card.target, data);
 			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 		}
+		
 	}
 }
