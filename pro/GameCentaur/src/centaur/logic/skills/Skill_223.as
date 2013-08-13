@@ -8,29 +8,26 @@ package centaur.logic.skills
 	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.events.CardEvent;
 	
-	import flashx.textLayout.formats.Float;
-	
 	/**
-	 * 暴击:攻击时有50几率提高100%攻击力 
-	 * @author minnie
+	 * 圣光:当攻击目标是地狱时,攻击力加成60%
+	 * @author liq
 	 * 
 	 */	
-	public class Skill_201 extends BaseSkill
+	public class Skill_223 extends BaseSkill
 	{
 		/**
-		 * 暴击几率 
-		 */		
-		public var rate:Number;
-		
-		/**
-		 * 暴击提升的攻击力 
+		 * 提升的攻击力 
 		 */		
 		public var attackUp:Number;
-			
+		
+		/**
+		 * 敌人种族 
+		 */		
+		public var enemyType:int;
+		
 		private var tempAttack:int;
 		
-		
-		public function Skill_201(data:SkillData, card:BaseCardObj)
+		public function Skill_223(data:SkillData, card:BaseCardObj)
 		{
 			super(data, card);
 		}
@@ -45,8 +42,8 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			rate = data.param1 / 100;
-			attackUp = data.param2 * data.skillLevel;
+			enemyType = data.param1;
+			attackUp = 0.3 + data.param2 * data.skillLevel;
 			tempAttack = 0;
 		}
 		
@@ -92,7 +89,8 @@ package centaur.logic.skills
 			if (targets == null || targets.length == 0)
 				return;
 			
-			if (Math.random() < rate)
+			var target:BaseCardObj = targets[0] as BaseCardObj;
+			if (target != null && target.cardData.country == enemyType)
 			{
 				// 暴击判定成功
 				tempAttack = card.attack * attackUp / 100;

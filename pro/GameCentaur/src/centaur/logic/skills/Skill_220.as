@@ -1,25 +1,35 @@
 package centaur.logic.skills
 {
+	import centaur.data.buff.*;
 	import centaur.data.skill.SkillData;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.action.*;
 	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.events.CardEvent;
+
+	import flash.utils.getDefinitionByName;
 	
 	/**
-	 * 狂热：被攻击时提升30点攻击力 
+	 * 燃烧:受到物理攻击时,使对方燃烧,在其每次行动结束后丢失25点生命值 
 	 * @author liq
 	 * 
 	 */	
-	public class Skill_211 extends BaseSkill
+	public class Skill_220 extends BaseSkill
 	{
 		/**
-		 * 提升的攻击值 
+		 * 燃烧伤害值 
 		 */		
-		public var attack:int;
+		public var damage:int;
 		
-		public function Skill_211(data:SkillData, card:BaseCardObj)
+		/**
+		 * BuffID 
+		 */		
+		public var buffID:int;
+		
+		private var buff:Class;
+		
+		public function Skill_220(data:SkillData, card:BaseCardObj)
 		{
 			super(data, card);
 		}
@@ -34,7 +44,13 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			attack = data.param1 * data.skillLevel;
+			damage = data.param1;
+			
+			if (data.buffID != 0)
+			{
+				buffID = data.buffID;
+				buff = getDefinitionByName("centaur.logic.buff.Buff_" + BuffDataList.getBuffData(buffID).templateID) as Class;
+			}
 		}
 		
 		/**
@@ -67,14 +83,23 @@ package centaur.logic.skills
 		}
 		
 		/**
-		 * 提升30点攻击力
+		 * 给予燃烧状态
 		 * @param event
 		 * 
 		 */		
 		public function onAfterHurt(event:CardEvent):void
 		{
-			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
-			card.addAttack(attack);
+			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.attacker.objID]));
+			
+			var hurt:int = card.attacker.onSkillHurt(this, damage);
+			if (hurt >= 0 && buffID > 0 && !card.attacker.isDead)
+			{
+				var data:BuffData = BuffDataList.getBuffData(buffID);
+				data.param1 = damage;
+				data.level = skillLevel;
+				new buff(card.attacker, data);
+			}
+			
 			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 		}
 	}

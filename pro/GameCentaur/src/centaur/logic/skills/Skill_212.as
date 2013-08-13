@@ -35,7 +35,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			attack = data.param1;
+			attack = data.param1 * data.skillLevel;
 		}
 		
 		/**

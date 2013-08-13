@@ -116,6 +116,15 @@ package centaur.logic.act
 			return temp;
 		}
 		
+		/**
+		 * 是否受伤 
+		 * @return 
+		 * 
+		 */		
+		public function isHurt():Boolean
+		{
+			return hp < actData.maxHP;
+		}
 		
 		/**
 		 * 判定是否胜利 

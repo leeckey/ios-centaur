@@ -1,29 +1,29 @@
 package centaur.logic.skills
 {
 	import centaur.data.skill.SkillData;
+	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
-	import centaur.logic.events.CardEvent;
-	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.action.*;
+	import centaur.logic.combat.CombatLogic;
+	import centaur.logic.events.CardEvent;
 	
 	/**
-	 * 吸血:攻击造成物理伤害时，恢复伤害50%的生命值 
+	 * 疾病技能:当攻击并对目标造成伤害时,对方丧失10点攻击力和生命值 
 	 * @author liq
 	 * 
 	 */	
-	public class Skill_208 extends BaseSkill
+	public class Skill_221 extends BaseSkill
 	{
 		/**
-		 * 吸血的比率 
+		 * 减少的攻击力 
 		 */		
-		public var rate:Number;
+		public var attack:Number;
 		
-		public function Skill_208(data:SkillData, card:BaseCardObj)
+		public function Skill_221(data:SkillData, card:BaseCardObj)
 		{
 			super(data, card);
 		}
 		
-
 		/**
 		 * 设置卡牌参数 
 		 * @param data
@@ -34,7 +34,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			rate = data.param1 * data.skillLevel / 100;
+			attack = data.param1 * data.skillLevel;
 		}
 		
 		/**
@@ -67,18 +67,19 @@ package centaur.logic.skills
 		}
 		
 		/**
-		 * 攻击成功后吸取生命值
+		 * 降低目标20点攻击力
 		 * @param event
 		 * 
 		 */		
 		public function onAttackSucc(event:CardEvent):void
 		{
-			if (!card.isHurt)
-				return;
-			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
-			var hp:int = rate * card.lastDamageValue;
-			card.addHP(hp);
-			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
+			if (card.target.onSkillHurt(this, 0) >= 0)
+			{
+				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.target.objID]));
+				card.target.deductHP(attack);
+				card.target.deductAttack(attack);
+				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
+			}
 		}
 	}
 }

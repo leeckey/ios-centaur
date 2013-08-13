@@ -7,30 +7,25 @@ package centaur.logic.buff
 	import centaur.logic.events.CardEvent;
 	
 	/**
-	 * 毒雾：行动结束后受到50点伤害 
+	 * 裂伤Buff 
 	 * @author liq
 	 * 
 	 */	
-	public class Buff_102 extends BaseBuff
+	public class Buff_103 extends BaseBuff
 	{
-		/**
-		 * 造成的伤害值 
-		 */		
-		public var damage:int;
-		
-		public function Buff_102(card:BaseCardObj, data:BuffData)
+		public function Buff_103(card:BaseCardObj, data:BuffData)
 		{
-			damage = data.param1 * data.level;
 			super(card, data);
 		}
 		
 		/**
-		 * 设置回合结束时受到50点伤害 
+		 * 禁止卡牌治疗效果
 		 * 
 		 */		
 		public override function addBuff():void
 		{
 			card.addEventListener(CardEvent.ON_ROUND_END, onRoundEnd);
+			card.canCure = false;
 			CombatLogic.combatList.push(BuffNotifyAction.getAction(id, card.objID));
 		}
 		
@@ -41,7 +36,7 @@ package centaur.logic.buff
 		public override function deBuff():void
 		{
 			card.removeEventListener(CardEvent.ON_ROUND_END, onRoundEnd);
-			card.canAttack = true;
+			card.canCure = true;
 			CombatLogic.combatList.push(BuffNotifyAction.getAction(id, card.objID, BuffNotifyAction.BUFF_REMOVE_ACTION));
 		}
 		
@@ -51,10 +46,6 @@ package centaur.logic.buff
 		 */		
 		private function onRoundEnd(event:CardEvent):void
 		{
-			if (card.isDead)
-				return;
-			
-			card.onHurt(damage);
 			if (--round <= 0)
 			{
 				deBuff();
