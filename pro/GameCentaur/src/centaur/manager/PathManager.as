@@ -30,6 +30,11 @@ package centaur.manager
 			return GlobalData.asite + "assets/ui/map/" + mapID + "/back.png";	
 		}
 		
+		public function getMapItemBackPath():String
+		{
+			return GlobalData.asite + "assets/ui/map/mapbtn.png";	
+		}
+		
 		public function getMapItemPath(mapID:uint, itemIdx:uint):String
 		{
 			return GlobalData.asite + "assets/ui/map/" + mapID + "/item" + itemIdx + ".png";

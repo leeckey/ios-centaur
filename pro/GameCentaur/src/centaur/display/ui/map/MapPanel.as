@@ -1,15 +1,21 @@
 package centaur.display.ui.map
 {
 	import centaur.data.GlobalAPI;
+	import centaur.data.GlobalData;
 	import centaur.data.map.MapData;
 	import centaur.data.map.MapDataList;
+	import centaur.display.control.MobileScrollPanel;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.ui.UIConst;
 	import ghostcat.util.display.DisplayUtil;
 
 	/**
@@ -17,8 +23,12 @@ package centaur.display.ui.map
 	 */ 
 	public final class MapPanel extends GBase
 	{
+		public static const MAP_COUNT:uint = 10;
+		
 		private var backUI:Sprite;		// 背景地图层
 		private var itemUI:Sprite;		// 副本Item层
+		private var insListPanel:MobileScrollPanel;	// 地图列表
+		private var mapItemList:Array;
 		
 		private var _mapID:uint;		// 地图ID
 		private var _itemList:Array;	// Item列表
@@ -40,7 +50,32 @@ package centaur.display.ui.map
 			itemUI.mouseEnabled = false;
 			this.addChild(itemUI);
 		
+			insListPanel = new MobileScrollPanel();
+			this.addChild(insListPanel);
+			
+			mapItemList = [];
+			for (var i:int = 0; i < MAP_COUNT; ++i)
+			{
+				var item:MapItem = new MapItem();
+				item.addEventListener(MouseEvent.CLICK, onMapItemClick);
+				item.data = i + 1;
+				item.x = i * (200);
+				(insListPanel.content as Sprite).addChild(item);
+				mapItemList.push(item);
+			}
+			insListPanel.wheelDirect = UIConst.HORIZONTAL;
+			insListPanel.wheelSpeed = 1;
+			insListPanel.scrollRect = new Rectangle(0, 0, 800, 100);
+			insListPanel.x = (960 - 800) * 0.5;
+			
 			_itemList = [];
+		}
+		
+		private function onMapItemClick(e:MouseEvent):void
+		{
+			var item:MapItem = e.currentTarget as MapItem;
+			if (item)
+				this.mapID = item.data;
 		}
 		
 		public function set mapID(value:uint):void
@@ -73,6 +108,9 @@ package centaur.display.ui.map
 		private function updateMapItems():void
 		{
 			var mapInfo:MapData = MapDataList.getMapData(_mapID);
+			if (!mapInfo)
+				return;
+			
 			var insMapList:Array = mapInfo.insMapList;
 			var posList:Array = mapInfo.insPosList;
 			
