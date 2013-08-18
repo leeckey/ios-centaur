@@ -22,6 +22,17 @@ package centaur.display.ui.combat
 			cemeteryCardList = [];
 		}
 		
+		public function clear():void
+		{
+			if (_lastShowItem)
+			{
+				if (_lastShowItem.parent)
+					_lastShowItem.parent.removeChild(_lastShowItem);
+				_lastShowItem = null;
+			}
+			cemeteryCardList.length = 0;
+		}
+		
 		public function addCardToCemeteryArea(cardObj:BaseCardObj):void
 		{
 			if (!cardObj)

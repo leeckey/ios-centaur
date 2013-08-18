@@ -101,7 +101,8 @@ package centaur.display.ui.map
 		
 		private function onCombatBtnClick(e:MouseEvent):void
 		{
-			GlobalData.forTestCombat();
+			if (_insMapData)
+				GlobalData.forTestCombat(_insMapData);
 		}
 		
 		private function onReturnBtnClick(e:MouseEvent):void

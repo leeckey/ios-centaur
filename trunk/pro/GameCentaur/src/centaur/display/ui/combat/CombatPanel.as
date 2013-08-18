@@ -35,7 +35,7 @@ package centaur.display.ui.combat
 		public var resultData:CombatResultData;	// 战斗数据
 		
 		// 处理操作相关参数
-		private var _handlerIdx:int;			
+		private var _handlerIdx:int;
 		private var _lagTime:int;
 		private var _startTime:int;
 		private var _combatPaused:Boolean;
@@ -56,7 +56,7 @@ package centaur.display.ui.combat
 		private function setup():void
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemoveToStage);
+//			this.addEventListener(Event.REMOVED_FROM_STAGE, onRemoveToStage);
 		}
 		
 		private function onAddedToStage(e:Event):void
@@ -81,6 +81,7 @@ package centaur.display.ui.combat
 		{
 			this.visible = true;
 			_combatPaused = false;
+			GlobalAPI.layerManager.setModuleContent(this);
 		}
 		
 		public function startPlay(resultData:CombatResultData):void
@@ -132,6 +133,7 @@ package centaur.display.ui.combat
 			_handlerIdx++;
 			if (_handlerIdx >= resultData.combatActionList.length)
 			{
+				GlobalAPI.tickManager.removeTick(this);
 				onCombatComplete();
 				return;
 			}
@@ -156,7 +158,19 @@ package centaur.display.ui.combat
 		{
 			if (parent)
 				parent.removeChild(this);
+			onRemoveToStage(null);
+			clear();
+			
 			GlobalAPI.layerManager.setModuleContent(InsCombatPanel.instance);
+		}
+		
+		private function clear():void
+		{
+			if (selfPanel)
+				selfPanel.clear();
+			if (targetPanel)
+				targetPanel.clear();
+			onRoundStart(1);
 		}
 		
 		public function dispose():void
