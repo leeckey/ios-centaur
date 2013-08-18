@@ -203,6 +203,13 @@ package centaur.logic.act
 			render.updateRenderByType(skinType);
 		}
 		
+		public function clearRender():void
+		{
+			if (render)
+				render.dispose();
+			render = null;
+		}
+		
 		/**
 		 * 重置卡牌技能 
 		 * 

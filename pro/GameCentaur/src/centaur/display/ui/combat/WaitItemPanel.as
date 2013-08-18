@@ -33,6 +33,20 @@ package centaur.display.ui.combat
 			waitItemList = [waitItem1, waitItem2, waitItem3, waitItem4, waitItem5];
 		}
 			
+		public function clear():void
+		{
+			var len:int = waitCardList.length;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var cardObj:BaseCardObj = waitCardList[i];
+				if (!cardObj)
+					continue;
+				
+				cardObj.clearRender();
+			}
+			waitCardList.length = 0;
+		}
+		
 		public function addCardToWaitArea(cardObj:BaseCardObj):void
 		{
 			waitCardList.push(cardObj);

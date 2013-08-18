@@ -55,7 +55,7 @@ package centaur.data
 			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.DETAIL_CARD_HIDE));
 		}
 		
-		public static function forTestCombat():void
+		public static function forTestCombat(actDataB:InsMapData):void
 		{
 			var actDataA:HeroData = new HeroData();	// 角色卡组
 			var cardData:CardData;
@@ -71,16 +71,16 @@ package centaur.data
 			
 			var actA:BaseActObj = new BaseActObj(actDataA);
 			
-			var actDataB:InsMapData = new InsMapData();
-			actDataB.cardList = [];
-			actDataB.maxHP = 6000;
-			for (var j:int = 1; j <= 5; j++)
-			{
-				cardData = new CardData();
-				cardData.templateID = j;
-				cardData.update();
-				actDataB.cardList.push(cardData);
-			}
+//			var actDataB:InsMapData = new InsMapData();
+//			actDataB.cardList = [];
+//			actDataB.maxHP = 6000;
+//			for (var j:int = 1; j <= 5; j++)
+//			{
+//				cardData = new CardData();
+//				cardData.templateID = j;
+//				cardData.update();
+//				actDataB.cardList.push(cardData);
+//			}
 			var actB:BaseActObj = new BaseActObj(actDataB);
 			
 			var logicData:CombatResultData = new CombatScene(actA, actB).start();

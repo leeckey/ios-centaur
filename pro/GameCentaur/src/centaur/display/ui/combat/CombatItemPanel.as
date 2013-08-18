@@ -33,6 +33,20 @@ package centaur.display.ui.combat
 			combatItemList = [combatItem1, combatItem2, combatItem3, combatItem4, combatItem5];
 		}
 		
+		public function clear():void
+		{
+			var len:int = combatCardList.length;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var cardObj:BaseCardObj = combatCardList[i];
+				if (!cardObj)
+					continue;
+				
+				cardObj.clearRender();
+			}
+			combatCardList.length = 0;
+		}
+		
 		public function addCardToCombatArea(cardObj:BaseCardObj):void
 		{
 			var idx:int = -1;

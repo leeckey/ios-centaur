@@ -45,6 +45,14 @@ package centaur.display.ui.combat
 			}
 		}
 		
+		public function clear():void
+		{
+			this.data = null;
+			waitItemPanel.clear();
+			combatItemPanel.clear();
+			cemeteryItemPanel.clear();
+		}
+		
 		private function onData():void
 		{
 			if (_actObj && _actObj.actData)

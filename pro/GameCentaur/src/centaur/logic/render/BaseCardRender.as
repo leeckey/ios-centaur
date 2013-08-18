@@ -22,6 +22,18 @@ package centaur.logic.render
 			this.cardObj = data;
 		}
 		
+		public function dispose():void
+		{
+			if (parent)
+				parent.removeChild(this);
+			
+			if (_subRender)
+				_subRender.destory();
+			_subRender = null;
+			
+			cardObj = null;
+		}
+		
 		public function updateRenderByType(skinType:int = BaseCardObj.SKIN_HEAD_TYPE):void
 		{
 			if (_skinType == skinType)
