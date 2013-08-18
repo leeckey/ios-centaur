@@ -20,6 +20,8 @@ package
 	import centaur.manager.PathManager;
 	import centaur.manager.TickManager;
 	
+	import com.adobe.nativeExtensions.Networkinfo.NetworkInfo;
+	
 	import flash.desktop.NativeApplication;
 	import flash.desktop.SystemIdleMode;
 	import flash.display.Sprite;
@@ -30,9 +32,11 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.StageOrientationEvent;
+	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
 	import net.hires.debug.Stats;
+	import network.NetWorkInfoHelper;
 	
 	public class GameMain extends Sprite
 	{
@@ -55,6 +59,16 @@ package
 			
 			// 初始化配置表
 			InitConfig.initConfig();
+			
+			////----wangq
+			var address:String = NetWorkInfoHelper.getHardwareAddress();
+			
+			var text:TextField = new TextField();
+			text.mouseEnabled = false;
+			text.text = "Mac地址  == " + address;
+			text.width = 200;
+			text.x = 200;
+			addChild(text);
 		}
 		
 		protected function setupGlobals():void

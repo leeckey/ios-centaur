@@ -272,4 +272,7 @@
 			
 		]]></manifestAdditions>
     </android>
+<extensions>
+        <extensionID>com.adobe.Networkinfo</extensionID>
+    </extensions>
 </application>
