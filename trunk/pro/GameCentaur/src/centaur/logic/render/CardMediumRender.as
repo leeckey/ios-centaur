@@ -142,12 +142,21 @@ package centaur.logic.render
 			if (_hp < 0)
 				_hp = 0;
 			
-			if (hpText)
-				hpText.setNumber(_hp, NumberType.SMALL_WHITE_NUMBER, true);
-			
 			// 处理受创效果
+			var numberType:uint = NumberType.SMALL_WHITE_NUMBER;
 			if (damage > 0)
 				renderDamageEffect();
+			else
+			{
+				// 血量大于最大血量，颜色显示变化
+				if (_cardObj && _hp > _cardObj.cardData.maxHP)
+				{
+					numberType = NumberType.SMALL_WHITE_NUMBER;	// 后续增加蓝色数字
+				}
+			}
+			
+			if (hpText)
+				hpText.setNumber(_hp, numberType, true);
 		}
 		
 		/**
