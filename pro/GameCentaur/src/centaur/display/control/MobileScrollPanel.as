@@ -13,7 +13,7 @@ package centaur.display.control
 	 *   移动设备使用的滚动面板
 	 *   @author wangq 2013.07.17
 	 */ 
-	public final class MobileScrollPanel extends GScrollPanel
+	public class MobileScrollPanel extends GScrollPanel
 	{
 		private var _move:Boolean = false;
 		private var _lastMoveX:Number;
