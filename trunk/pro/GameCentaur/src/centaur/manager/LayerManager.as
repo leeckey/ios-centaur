@@ -40,6 +40,7 @@ package centaur.manager
 		}
 		
 		private var _moduleContent:Sprite;
+		private var _lastModuleContent:Sprite;
 		public function setModuleContent(content:Sprite):void
 		{
 			if (_moduleContent != content)
@@ -47,12 +48,23 @@ package centaur.manager
 				if (_moduleContent && _moduleContent.parent)
 					_moduleContent.parent.removeChild(_moduleContent);
 				
+				_lastModuleContent = _moduleContent;
 				_moduleContent = content;
 				
 				if (_moduleContent && _moduleContent.parent != _moduleLayer)
 					_moduleLayer.addChild(_moduleContent);
 				
 			}
+		}
+		
+		public function getModuleContent():Sprite
+		{
+			return _moduleContent;
+		}
+		
+		public function getLastModuleContent():Sprite
+		{
+			return _lastModuleContent;
 		}
 		
 		/**

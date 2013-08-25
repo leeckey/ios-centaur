@@ -31,7 +31,7 @@ package centaur.display.control
 			this.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
-		private function onMouseDown(e:MouseEvent):void
+		protected function onMouseDown(e:MouseEvent):void
 		{
 			this.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 			_move = true;
@@ -39,13 +39,13 @@ package centaur.display.control
 			_lastMoveY = e.stageY;
 		}
 		
-		private function onMouseUp(e:MouseEvent):void
+		protected function onMouseUp(e:MouseEvent):void
 		{
 			_move = false;
 			this.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 		}
 		
-		private function onMouseMove(e:MouseEvent):void
+		protected function onMouseMove(e:MouseEvent):void
 		{
 			if (_move)
 			{

@@ -4,10 +4,12 @@ package centaur.data
 	import centaur.data.act.InsMapData;
 	import centaur.data.card.CardData;
 	import centaur.data.combat.CombatResultData;
+	import centaur.data.player.PlayerInfo;
 	import centaur.display.ui.card.CardDetailPanel;
 	import centaur.display.ui.combat.CombatPanel;
 	import centaur.display.ui.mainui.MainPanel;
 	import centaur.display.ui.map.MapPanel;
+	import centaur.display.ui.role.RoleCardPanel;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.combat.CombatScene;
@@ -23,10 +25,13 @@ package centaur.data
 //		public static var GAME_WIDTH:int = 960;
 //		public static var GAME_HEIGHT:int = 640;
 //		
+		public static var mainPlayerInfo:PlayerInfo;
+		
 		public static var gameMain:Sprite;
 		public static var mainPanel:MainPanel;
 		public static var detailCardPanel:CardDetailPanel;
 		public static var mapPanel:MapPanel;
+		public static var roleCardPanel:RoleCardPanel;		// 角色卡组信息面板
 		
 		public static function onGameResize(stageWidth:int, stageHeight:int):void
 		{

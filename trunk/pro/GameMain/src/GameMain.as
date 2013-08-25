@@ -7,7 +7,7 @@ package
 	import centaur.data.act.InsMapData;
 	import centaur.data.card.CardData;
 	import centaur.data.combat.CombatResultData;
-	import centaur.display.control.GTextField;
+	import centaur.data.player.PlayerInfo;
 	import centaur.display.ui.combat.CombatPanel;
 	import centaur.display.ui.combat.handler.ActionHandlerManager;
 	import centaur.display.ui.mainui.MainPanel;
@@ -20,8 +20,6 @@ package
 	import centaur.manager.PathManager;
 	import centaur.manager.TickManager;
 	
-	import com.adobe.nativeExtensions.Networkinfo.NetworkInfo;
-	
 	import flash.desktop.NativeApplication;
 	import flash.desktop.SystemIdleMode;
 	import flash.display.Sprite;
@@ -33,9 +31,9 @@ package
 	import flash.events.Event;
 	import flash.events.StageOrientationEvent;
 	import flash.text.TextField;
-	import flash.text.TextFormat;
 	
 	import net.hires.debug.Stats;
+	
 	import network.NetWorkInfoHelper;
 	
 	public class GameMain extends Sprite
@@ -98,7 +96,16 @@ package
 			
 			if (!GlobalData.mainPanel)
 				GlobalData.mainPanel = new MainPanel();
-			GlobalAPI.layerManager.getPopLayer().addChild(GlobalData.mainPanel);
+			GlobalAPI.layerManager.setModuleContent(GlobalData.mainPanel);
+			
+			////---- wangq
+			GlobalData.mainPlayerInfo = new PlayerInfo();
+			GlobalData.mainPlayerInfo.lv =1;
+			GlobalData.mainPlayerInfo.heroHP = 4567;
+			GlobalData.mainPlayerInfo.cost = 28;
+			GlobalData.mainPlayerInfo.cardTeam = 1;
+			GlobalData.mainPlayerInfo.totalAttack = 1234;
+			GlobalData.mainPlayerInfo.totalBody = 58;
 			
 			////----wangq
 //			forTest();

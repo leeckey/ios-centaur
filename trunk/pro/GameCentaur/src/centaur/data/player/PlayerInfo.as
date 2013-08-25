@@ -11,6 +11,12 @@ package centaur.data.player
 		public var sex:Boolean;	// true male  false female
 		public var lv:int;
 		
+		public var heroHP:int;					// 英雄血量
+		public var cost:int;					// 卡牌总cost值
+		public var cardTeam:int;				// 当前卡组号
+		public var totalAttack:int;				// 总攻击力
+		public var totalBody:int;				// 体力
+		
 		public function PlayerInfo()
 		{
 		}

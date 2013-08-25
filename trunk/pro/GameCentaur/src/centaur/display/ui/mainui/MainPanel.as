@@ -3,6 +3,7 @@ package centaur.display.ui.mainui
 	import centaur.data.GlobalAPI;
 	import centaur.data.GlobalData;
 	import centaur.display.ui.map.MapPanel;
+	import centaur.display.ui.role.RoleCardPanel;
 	
 	import flash.events.MouseEvent;
 	
@@ -33,13 +34,17 @@ package centaur.display.ui.mainui
 		private function addEvents():void
 		{
 			if (mapBtn)
-				mapBtn.addEventListener(MouseEvent.CLICK, onMapBtnClick);	
+				mapBtn.addEventListener(MouseEvent.CLICK, onMapBtnClick);
+			if (cardBtn)
+				cardBtn.addEventListener(MouseEvent.CLICK, onCardBtnClick);
 		}
 		
 		private function removeEvents():void
 		{
 			if (mapBtn)
 				mapBtn.removeEventListener(MouseEvent.CLICK, onMapBtnClick);
+			if (cardBtn)
+				cardBtn.removeEventListener(MouseEvent.CLICK, onCardBtnClick);
 		}
 		
 		private function onMapBtnClick(e:MouseEvent):void
@@ -51,6 +56,17 @@ package centaur.display.ui.mainui
 				GlobalData.mapPanel = new MapPanel();
 			GlobalData.mapPanel.mapID = 1;
 			GlobalAPI.layerManager.setModuleContent(GlobalData.mapPanel);
+		}
+		
+		private function onCardBtnClick(e:MouseEvent):void
+		{
+			if (parent)
+				parent.removeChild(this);
+			
+			if (!GlobalData.roleCardPanel)
+				GlobalData.roleCardPanel = new RoleCardPanel();
+			
+			GlobalAPI.layerManager.setModuleContent(GlobalData.roleCardPanel);
 		}
 	}
 }
