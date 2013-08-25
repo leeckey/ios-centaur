@@ -1,15 +1,21 @@
 package centaur.display.control
 {
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
+	import flash.events.MouseEvent;
+	
+	import ghostcat.ui.UIConst;
+	
+	import gs.TweenLite;
 
 	/**
 	 *   卡牌显示滚动面板
 	 */ 
 	public final class ScaledScrollPanel extends MobileScrollPanel
 	{
-		public var itemList:Array;
-		public var itemWidth:int;
-		public var itemHeight:int;
+		private var _itemList:Array;
+		private var _itemWidth:int;
+		private var _itemHeight:int;
 		
 		public function ScaledScrollPanel()
 		{
@@ -21,33 +27,89 @@ package centaur.display.control
 			super.setup();
 		}
 		
+		public function setupContent(itemList:Array, itemWidth:int, itemHeight):void
+		{
+			_itemList = itemList;
+			_itemWidth = itemWidth;
+			_itemHeight = itemHeight;
+			
+			updateItemContent();
+		}
+		
+		override protected function onMouseUp(e:MouseEvent):void
+		{
+			super.onMouseUp(e);
+			
+			if (this.wheelDirect == UIConst.HORIZONTAL)
+			{
+				var posIdx:Number = Math.abs(content.x) / _itemWidth;
+				var preIdx:int = int(posIdx);
+				var part:Number = posIdx - preIdx;
+				var tweenPosX:Number = (part < 0.5) ? (_itemWidth * preIdx) : (_itemWidth * (preIdx + 1));
+				TweenLite.to(this, 0.3, {scrollH : tweenPosX});
+			}
+			else
+			{
+				
+			}
+		}
+		
 		override public function set scrollH(v:int):void
 		{
 			super.scrollH = v;
-			onUpdateScrollH();
+			updateItemContent();
 		}
 		
 		override public function set scrollV(v:int):void
 		{
 			super.scrollV = v;
-			onUpdateScrollV();
+			updateItemContent();
+		}
+		
+		private function updateItemContent():void
+		{
+			if (this.wheelDirect == UIConst.HORIZONTAL)
+				onUpdateScrollH();
+			else
+				onUpdateScrollV();
 		}
 		
 		private function onUpdateScrollH():void
 		{
-			if (!itemList || itemWidth <= 0)
+			if (!_itemList || _itemWidth <= 0)
 				return;
 			
-			var posIdx:Number = Math.abs(content.x) / itemWidth;
+			var posIdx:Number = Math.abs(content.x) / _itemWidth;
 			var preIdx:int = int(posIdx);
 			var nextIdx:int = preIdx + 1;
 			var part:Number = posIdx - preIdx;
 			
-			var item:DisplayObject = itemList[preIdx];
-//			item.scaleX = item.scaleY = 1 + (1 - part) * 0.5;
-			
-			
-			
+			var posX:Number = 0;
+			var len:int = _itemList.length;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var item:DisplayObject = _itemList[i];
+				if (!item)
+					continue;
+				
+				if (i > nextIdx + 1 && item.parent == this.content)	// 后面的不需要更新
+					continue;
+				
+				var scale:Number = 1;
+				if (preIdx == i)
+					scale = 1 + (1 - part) * 1;
+				else if (nextIdx == i)
+					scale = 1 + part * 1;
+				
+				item.scaleX = item.scaleY = scale;
+				item.x = posX;
+				item.y = (_itemHeight - item.height) * 0.5;
+				posX += item.scaleX * _itemWidth;
+				
+				// 确保Item添加显示
+				if (item.parent != this.content)
+					(content as DisplayObjectContainer).addChild(item);
+			}
 		}
 		
 		private function onUpdateScrollV():void
