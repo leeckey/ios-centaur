@@ -32,6 +32,7 @@ package
 	import flash.events.StageOrientationEvent;
 	import flash.text.TextField;
 	
+	import net.HttpNetManager;
 	import net.hires.debug.Stats;
 	
 	import network.NetWorkInfoHelper;
@@ -80,6 +81,7 @@ package
 			GlobalAPI.effectManager = new EffectManager;
 			GlobalAPI.layerManager = new LayerManager(this);
 			GlobalAPI.timerManager = new DelayCallTimerManager();
+			GlobalAPI.httpManager = new HttpNetManager();
 			
 			EmbedAssetManager.setup();
 		}
