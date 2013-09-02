@@ -1,17 +1,20 @@
 package net.protocol
 {
+	/**
+	 *   
+	 */ 
 	public final class Net_LoginHandler extends ProtocolHandlerBase
 	{
 		public function Net_LoginHandler()
 		{
 		}
 		
-		public function get pCode():int
+		override public function get pCode():int
 		{
 			return ProtocolType.PROTOCOL_LOGIN;
 		}
 		
-		public function get url():String
+		override public function get url():String
 		{
 			return "http://tyfeng.duapp.com/php/login.php";
 		}
