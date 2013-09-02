@@ -11,12 +11,12 @@ package net.protocol
 		{
 		}
 		
-		public function get pCode():int
+		override public function get pCode():int
 		{
 			return ProtocolType.PROTOCOL_REGISTER;
 		}
 		
-		public function get url():String
+		override public function get url():String
 		{
 			return "http://tyfeng.duapp.com/php/register.php";
 		}
