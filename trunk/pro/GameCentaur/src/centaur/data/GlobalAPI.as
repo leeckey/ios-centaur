@@ -7,6 +7,8 @@ package centaur.data
 	import centaur.manager.LayerManager;
 	import centaur.manager.PathManager;
 	import centaur.manager.TickManager;
+	
+	import net.HttpNetManager;
 
 	/**
 	 *  全局API
@@ -33,5 +35,8 @@ package centaur.data
 		
 		// 定时器管理器
 		public static var timerManager:ITimerManager;
+		
+		// Http网络管理器
+		public static var httpManager:HttpNetManager;
 	}
 }
