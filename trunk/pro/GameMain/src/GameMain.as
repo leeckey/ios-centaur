@@ -10,6 +10,7 @@ package
 	import centaur.data.player.PlayerInfo;
 	import centaur.display.ui.combat.CombatPanel;
 	import centaur.display.ui.combat.handler.ActionHandlerManager;
+	import centaur.display.ui.login.LoginPanel;
 	import centaur.display.ui.mainui.MainPanel;
 	import centaur.effects.EffectManager;
 	import centaur.logic.act.BaseActObj;
@@ -60,11 +61,11 @@ package
 			InitConfig.initConfig();
 			
 			////----wangq
-			var address:String = NetWorkInfoHelper.getHardwareAddress();
+			GlobalData.macAddress = NetWorkInfoHelper.getHardwareAddress();
 			
 			var text:TextField = new TextField();
 			text.mouseEnabled = false;
-			text.text = "Mac地址  == " + address;
+			text.text = "Mac地址  == " + GlobalData.macAddress;
 			text.width = 200;
 			text.x = 200;
 			addChild(text);
@@ -96,9 +97,11 @@ package
 			// 调试帧频显示
 			addChild(new Stats());
 			
-			if (!GlobalData.mainPanel)
-				GlobalData.mainPanel = new MainPanel();
-			GlobalAPI.layerManager.setModuleContent(GlobalData.mainPanel);
+//			if (!GlobalData.mainPanel)
+//				GlobalData.mainPanel = new MainPanel();
+//			GlobalAPI.layerManager.setModuleContent(GlobalData.mainPanel);
+			var loginPanel:LoginPanel = new LoginPanel();
+			this.addChild(loginPanel);
 			
 			////---- wangq
 			GlobalData.mainPlayerInfo = new PlayerInfo();
