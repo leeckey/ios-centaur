@@ -7,8 +7,11 @@ package net.protocol
 
 	public class ProtocolHandlerBase
 	{
-		public function ProtocolHandlerBase()
+		private var _replyCallback:Function;
+		
+		public function ProtocolHandlerBase(reply:Function = null)
 		{
+			_replyCallback = reply;
 		}
 		
 		public function get pCode():int
@@ -38,7 +41,23 @@ package net.protocol
 		
 		protected function loadData(data:*):void
 		{
-			
+			data = parserData(data);
+			if (_replyCallback != null)
+				_replyCallback(data);
 		}
+		
+		private function parserData(data:*):*
+		{
+			var result:Object;
+			if (data is String)
+			{
+				result = JSON.parse(data);
+			}
+			else if (data is Object)
+				result = data;
+			
+			return result;
+		}
+			
 	}
 }

@@ -5,8 +5,9 @@ package net.protocol
 	 */ 
 	public final class Net_LoginHandler extends ProtocolHandlerBase
 	{
-		public function Net_LoginHandler()
+		public function Net_LoginHandler(reply:Function = null)
 		{
+			super(reply);
 		}
 		
 		override public function get pCode():int
@@ -34,7 +35,7 @@ package net.protocol
 		override protected function loadData(data:*):void
 		{
 			var result:Object = data as Object;
-			
+			super.loadData(data);
 		}
 	}
 }
