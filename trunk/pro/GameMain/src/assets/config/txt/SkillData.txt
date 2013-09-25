@@ -56,3 +56,5 @@ id	templateID	name	effectPath	discription	skillType	magicType	priority	selectTar
 54	104	治疗	assets/effects/zhiliao.fam	恢复我方1张损失生命值最多的卡牌25点生命	1	0	0	10	25	0	0	0
 55	104	甘霖	assets/effects/zhiliao.fam	恢复我方所有卡牌25点生命值	1	0	0	11	25	0	0	0
 55	105	祈祷	assets/effects/zhiliao.fam	恢复我方英雄50点生命值	1	0	0	14	50	0	0	0
+56	218	转生	assets/effects/zhuansheng.fam	死亡时有50%的概率进入手牌,如果手牌已满则进入牌堆	2	0	0	0	30	5	0	0
+57	207	免疫	assets/effects/mianyi.fam	不受任何技能造成的伤害和影响	2	0	0	0	0	0	0	0
