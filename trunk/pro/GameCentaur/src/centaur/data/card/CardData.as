@@ -30,8 +30,8 @@ package centaur.data.card
 				return;
 			
 			// 等级提升计算后续添加
-			this.maxHP = templateData.maxHP;
-			this.attack = templateData.attack;
+			this.maxHP = templateData.baseHP + templateData.growUpHP * lv;
+			this.attack = templateData.baseACK + templateData.growUpACK * lv;
 			this.defense = templateData.defense;
 			this.waitRound = templateData.maxWaitRound;
 			this.country = templateData.country;

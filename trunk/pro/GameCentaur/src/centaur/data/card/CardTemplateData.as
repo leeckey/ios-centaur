@@ -6,8 +6,10 @@ package centaur.data.card
 	{
 		public var templateID:uint;			// 模板ID
 		public var name:String;				// 卡牌名称
-		public var maxHP:uint;				    // 最大血量
-		public var attack:uint;				// 基础攻击
+		public var baseHP:uint;				    // 基础血量
+		public var growUpHP:uint;               // 成长血量
+		public var baseACK:uint;				// 基础攻击
+		public var growUpACK:uint               // 成长攻击
 		public var defense:uint;			    // 基础防御
 		public var maxWaitRound:uint;		    // 等待区时的最大等待轮数
 		public var starLv:uint;				// 卡牌的星级
