@@ -35,7 +35,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			rate = data.param1 / 100;
+			rate = (data.param1 + data.param2 * data.skillLevel) / 100;
 		}
 		
 		/**
