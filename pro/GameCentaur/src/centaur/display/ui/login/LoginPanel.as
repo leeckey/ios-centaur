@@ -18,6 +18,8 @@ package centaur.display.ui.login
 	
 	import net.protocol.Net_LoginHandler;
 	import net.protocol.Net_RegisterHandler;
+	import net.protocol.Pck_GetPlayerInfo;
+	import net.protocol.Pck_SetPlayerInfo;
 
 	public final class LoginPanel extends GBuilderBase
 	{
@@ -76,6 +78,7 @@ package centaur.display.ui.login
 			if (!data || data.result < 0)
 			{
 				// 登陆失败，需要增加提示
+				trace("登陆失败 " + data.info);
 				return;
 			}
 			
@@ -84,13 +87,64 @@ package centaur.display.ui.login
 				GlobalData.mainPlayerInfo.uin = data.uin;
 				GlobalData.mainPlayerInfo.sKey = data.skey;
 				
-				// 跳转到主界面
-				this.destory();
-				if (!GlobalData.mainPanel)
-					GlobalData.mainPanel = new MainPanel();
-				GlobalAPI.layerManager.setModuleContent(GlobalData.mainPanel);
+				var getInfo:Pck_GetPlayerInfo = new Pck_GetPlayerInfo(onGetPlayerInfo);
+				getInfo.requestGetPlayerInfo(data.uin, data.skey);
+			}
+		}
+		
+		private function onGetPlayerInfo(data:Object):void
+		{
+			if (!data || data.result < 0)
+			{
+				// 获取角色信息失败，需要增加提示
+				trace("获取角色信息失败 " + data.info);
+				return;
 			}
 			
+			if (data.result == 0)
+			{
+				// 创建角色新信息
+				if (data.is_new != 0)
+				{
+					// 设置角色信息
+					var setInfoPck:Pck_SetPlayerInfo = new Pck_SetPlayerInfo(onSetNewPlayerInfo);
+					setInfoPck.requestSetPlayerInfo(GlobalData.mainPlayerInfo.uin, GlobalData.mainPlayerInfo.sKey, 
+						"randomName" + int(Math.random() * 1000), 1, 1);
+				}
+				else
+				{
+					GlobalData.mainPlayerInfo.loadData(data);
+					goToMainPanel();
+				}
+			}
+		}
+		
+		/**
+		 *  
+		 */ 
+		private function onSetNewPlayerInfo(data:Object):void
+		{
+			if (!data || data.result < 0)
+			{
+				// 设置角色信息失败，需要增加提示
+				trace("设置角色信息失败 " + data.info);
+				return;
+			}
+			
+			if (data.result == 0)
+			{
+				var getInfo:Pck_GetPlayerInfo = new Pck_GetPlayerInfo(onGetPlayerInfo);
+				getInfo.requestGetPlayerInfo(GlobalData.mainPlayerInfo.uin, GlobalData.mainPlayerInfo.sKey);
+			}
+		}
+		
+		private function goToMainPanel():void
+		{
+			// 跳转到主界面
+			this.destory();
+			if (!GlobalData.mainPanel)
+				GlobalData.mainPanel = new MainPanel();
+			GlobalAPI.layerManager.setModuleContent(GlobalData.mainPanel);
 		}
 	}
 }
