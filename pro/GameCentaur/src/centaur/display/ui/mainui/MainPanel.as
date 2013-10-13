@@ -26,7 +26,7 @@ package centaur.display.ui.mainui
 		public var menuBtn:GButton;
 		
 		public var headSprite:GBase;
-		public var lvTxt:GText;
+		public var lvText:GBitmapNumberText;
 		public var nameTxt:GText;
 		public var diamondTxt:GBitmapNumberText;
 		public var moneyTxt:GBitmapNumberText;
@@ -49,7 +49,7 @@ package centaur.display.ui.mainui
 		{
 			initHead();
 			
-			lvTxt.text = String(GlobalData.mainPlayerInfo.lv);
+			lvText.setNumber(GlobalData.mainPlayerInfo.lv, NumberType.SMALL_WHITE_NUMBER);
 			nameTxt.text = String(GlobalData.mainPlayerInfo.name);
 			diamondTxt.setNumber(GlobalData.mainPlayerInfo.diamond, NumberType.MIDDLE_WHITE_NUMBER);
 			moneyTxt.setNumber(GlobalData.mainPlayerInfo.money, NumberType.MIDDLE_WHITE_NUMBER);
@@ -60,11 +60,11 @@ package centaur.display.ui.mainui
 			// 初始化头像
 			var headBitmap:Bitmap = new Bitmap(GlobalData.mainPlayerInfo.sex ? new HeadIconAsset1() : new HeadIconAsset2());
 			headBitmap.x = (headSprite.width - headBitmap.width) * 0.5;
-			headBitmap.x = (headSprite.height - headBitmap.height) * 0.5;
+			headBitmap.y = (headSprite.height - headBitmap.height) * 0.5;
 			
 			var mask:Shape = new Shape();
 			mask.graphics.beginFill(0, 1);
-			mask.graphics.drawCircle(0, 0, headBitmap.width * 0.5 - 2);
+			mask.graphics.drawCircle(headSprite.width * 0.5, headSprite.height * 0.5, headBitmap.width * 0.5 + 4);
 			mask.graphics.endFill();
 			headSprite.addChild(mask);
 			headBitmap.mask = mask;
