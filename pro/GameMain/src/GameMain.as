@@ -96,7 +96,9 @@ package
 			autoSize();
 			
 			// 调试帧频显示
-			addChild(new Stats());
+			var stats:Stats = new Stats();
+			stats.y = 100;
+			addChild(stats);
 			
 //			if (!GlobalData.mainPanel)
 //				GlobalData.mainPanel = new MainPanel();
