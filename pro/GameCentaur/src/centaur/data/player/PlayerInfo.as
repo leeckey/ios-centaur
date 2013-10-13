@@ -25,6 +25,8 @@ package centaur.data.player
 		public var totalAttack:int;				// 总攻击力
 		public var totalBody:int;				// 体力
 		
+		public var maxCombatCard:int;			// 最大上场卡牌数量
+		
 		public function PlayerInfo()
 		{
 		}

@@ -13,6 +13,8 @@ package centaur.data.act
 		
 		public var money:uint;				// 金钱，后续扩展
 		
+		public var combatCardIdxList:Array;		// 派上场战斗的卡牌索引列表
+		
 		public function HeroData()
 		{
 		}

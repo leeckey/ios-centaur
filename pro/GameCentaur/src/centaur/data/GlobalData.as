@@ -9,6 +9,7 @@ package centaur.data
 	import centaur.display.ui.combat.CombatPanel;
 	import centaur.display.ui.mainui.MainPanel;
 	import centaur.display.ui.map.MapPanel;
+	import centaur.display.ui.role.ConfigCardPanel;
 	import centaur.display.ui.role.RoleCardPanel;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
@@ -27,12 +28,15 @@ package centaur.data
 //		public static var GAME_HEIGHT:int = 640;
 //		
 		public static var mainPlayerInfo:PlayerInfo;
+		public static var mainActData:HeroData;
+		public static var mainActObj:BaseActObj;
 		
 		public static var gameMain:Sprite;
 		public static var mainPanel:MainPanel;
 		public static var detailCardPanel:CardDetailPanel;
 		public static var mapPanel:MapPanel;
 		public static var roleCardPanel:RoleCardPanel;		// 角色卡组信息面板
+		public static var configCardPanel:ConfigCardPanel; 	// 角色卡牌配置面板
 		
 		public static function onGameResize(stageWidth:int, stageHeight:int):void
 		{
@@ -57,6 +61,10 @@ package centaur.data
 		{
 			if (detailCardPanel && detailCardPanel.parent)
 				detailCardPanel.parent.removeChild(detailCardPanel);
+			
+			var lastModule:Sprite = GlobalAPI.layerManager.getLastModuleContent();
+			if (lastModule)
+				GlobalAPI.layerManager.setModuleContent(lastModule);
 			
 			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.DETAIL_CARD_HIDE));
 		}

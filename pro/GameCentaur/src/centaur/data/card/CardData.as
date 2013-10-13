@@ -13,6 +13,8 @@ package centaur.data.card
 		public var waitRound:uint;			    // 等待区时的等待轮数
 		public var country:int;                // 卡牌所属势力
 		
+		public var experience:uint;				// 经验值
+		
 		public function CardData()
 		{
 		}

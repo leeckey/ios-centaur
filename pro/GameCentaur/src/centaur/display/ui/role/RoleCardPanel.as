@@ -92,7 +92,9 @@ package centaur.display.ui.role
 		
 		private function onCardConfigBtnClick(e:MouseEvent):void
 		{
-			
+			if (!GlobalData.configCardPanel)
+				GlobalData.configCardPanel = new ConfigCardPanel();
+			GlobalAPI.layerManager.setModuleContent(GlobalData.configCardPanel);
 		}
 	}
 }
