@@ -14,6 +14,7 @@ package
 	import centaur.display.ui.mainui.MainPanel;
 	import centaur.effects.EffectManager;
 	import centaur.logic.act.BaseActObj;
+	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.combat.CombatScene;
 	import centaur.manager.DelayCallTimerManager;
 	import centaur.manager.EmbedAssetManager;
@@ -111,6 +112,24 @@ package
 			GlobalData.mainPlayerInfo.cardTeam = 1;
 			GlobalData.mainPlayerInfo.totalAttack = 1234;
 			GlobalData.mainPlayerInfo.totalBody = 58;
+			GlobalData.mainPlayerInfo.maxCombatCard = 6;
+			
+			GlobalData.mainActData = new HeroData();
+			var cardData:CardData;
+			GlobalData.mainActData.cardList = [];
+			GlobalData.mainActData.maxHP = 6000;
+			for (var i:int = 6; i <= 10; i++)
+			{
+				cardData = new CardData();
+				cardData.templateID = i;
+				cardData.update();
+				GlobalData.mainActData.cardList.push(cardData);
+			}
+			GlobalData.mainActObj = new BaseActObj(GlobalData.mainActData);
+			
+			GlobalData.mainActData.combatCardIdxList = [0, 1, 2, 3];
+			
+			// 角色卡牌信息
 			
 			////----wangq
 //			forTest();

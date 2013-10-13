@@ -13,6 +13,9 @@ package centaur.display.control
 	 */ 
 	public final class ScaledScrollPanel extends MobileScrollPanel
 	{
+		public var scaleMin:Number = 1.0;
+		public var scaleMax:Number = 2.0;
+		
 		private var _itemList:Array;
 		private var _itemWidth:int;
 		private var _itemHeight:int;
@@ -97,9 +100,9 @@ package centaur.display.control
 				
 				var scale:Number = 1;
 				if (preIdx == i)
-					scale = 1 + (1 - part) * 1;
+					scale = scaleMin + (1 - part) * (scaleMax - scaleMin);
 				else if (nextIdx == i)
-					scale = 1 + part * 1;
+					scale = scaleMin + part * (scaleMax - scaleMin);
 				
 				item.scaleX = item.scaleY = scale;
 				item.x = posX;

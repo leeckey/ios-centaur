@@ -2,13 +2,19 @@ package centaur.display.ui.mainui
 {
 	import centaur.data.GlobalAPI;
 	import centaur.data.GlobalData;
+	import centaur.display.control.GBitmapNumberText;
 	import centaur.display.ui.map.MapPanel;
 	import centaur.display.ui.role.RoleCardPanel;
+	import centaur.utils.NumberType;
 	
+	import flash.display.Bitmap;
+	import flash.display.Shape;
 	import flash.events.MouseEvent;
 	
+	import ghostcat.display.GBase;
 	import ghostcat.ui.controls.GBuilderBase;
 	import ghostcat.ui.controls.GButton;
+	import ghostcat.ui.controls.GText;
 
 	public final class MainPanel extends GBuilderBase
 	{
@@ -19,6 +25,13 @@ package centaur.display.ui.mainui
 		public var shopBtn:GButton;
 		public var menuBtn:GButton;
 		
+		public var headSprite:GBase;
+		public var lvTxt:GText;
+		public var nameTxt:GText;
+		public var diamondTxt:GBitmapNumberText;
+		public var moneyTxt:GBitmapNumberText;
+		public var addVigourBtn:GButton;
+		
 		public function MainPanel()
 		{
 			super(mainUIAsset);
@@ -28,7 +41,35 @@ package centaur.display.ui.mainui
 		
 		private function setup():void
 		{
+			initInfo();
 			addEvents();
+		}
+		
+		private function initInfo():void
+		{
+			initHead();
+			
+			lvTxt.text = String(GlobalData.mainPlayerInfo.lv);
+			nameTxt.text = String(GlobalData.mainPlayerInfo.name);
+			diamondTxt.setNumber(GlobalData.mainPlayerInfo.diamond, NumberType.MIDDLE_WHITE_NUMBER);
+			moneyTxt.setNumber(GlobalData.mainPlayerInfo.money, NumberType.MIDDLE_WHITE_NUMBER);
+		}
+		
+		private function initHead():void
+		{
+			// 初始化头像
+			var headBitmap:Bitmap = new Bitmap(GlobalData.mainPlayerInfo.sex ? new HeadIconAsset1() : new HeadIconAsset2());
+			headBitmap.x = (headSprite.width - headBitmap.width) * 0.5;
+			headBitmap.x = (headSprite.height - headBitmap.height) * 0.5;
+			
+			var mask:Shape = new Shape();
+			mask.graphics.beginFill(0, 1);
+			mask.graphics.drawCircle(0, 0, headBitmap.width * 0.5 - 2);
+			mask.graphics.endFill();
+			headSprite.addChild(mask);
+			headBitmap.mask = mask;
+			
+			headSprite.addChild(headBitmap);
 		}
 		
 		private function addEvents():void
