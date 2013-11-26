@@ -482,6 +482,31 @@ package centaur.logic.act
 		}
 		
 		/**
+		 * 卡牌直接死亡,不触发死亡事件 
+		 * 
+		 */		
+		public function doDead():void
+		{
+			if (isDead)
+				return;
+			
+			isDead = true;
+			
+			if (owner)
+				owner.cardToCemeteryArea(this);
+		}
+		
+		/**
+		 * 卡牌回到牌堆 
+		 * 
+		 */		
+		public function doBack():void
+		{
+			if (owner)
+				owner.cardToCardArea(this);
+		}
+		
+		/**
 		 *   处于出场时
 		 */ 
 		public function onPresent():void

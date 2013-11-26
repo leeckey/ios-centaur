@@ -169,6 +169,35 @@ package centaur.logic.act
 		}
 		
 		/**
+		 * 卡牌回到手牌
+		 * @param cardObj
+		 * 
+		 */		
+		public function cardToCardArea(cardObj:BaseCardObj):void
+		{
+			if (!cardObj)
+				return;
+			
+			var combatData:CombatData = combatData;
+			
+			// 从其他区中移除
+			var idx:int = combatData.selfCombatArea.indexOf(cardObj);
+			if (idx > -1)
+				combatData.selfCombatArea[idx] = null;	// 位置不变，回合结束后梳理
+			else if ((idx = combatData.selfCardArea.indexOf(cardObj)) > -1)
+				combatData.selfCardArea.splice(idx, 1);
+			else if ((idx = combatData.selfWaitArea.indexOf(cardObj)) > -1)
+				combatData.selfWaitArea.splice(idx, 1);
+			
+			// 添加到手牌区
+			if (combatData.selfCardArea.indexOf(cardObj) == -1)
+				combatData.selfCardArea.push(cardObj);
+			
+			// 添加相应的操作数据
+			CombatLogic.combatList.push(SelectCardToCardAreaAction.getAction(objID, cardObj.objID));
+		}
+		
+		/**
 		 *   卡牌移动到墓地区
 		 */ 
 		public function cardToCemeteryArea(cardObj:BaseCardObj):void
