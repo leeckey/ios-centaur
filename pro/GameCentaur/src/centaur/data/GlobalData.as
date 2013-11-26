@@ -75,7 +75,7 @@ package centaur.data
 			var cardData:CardData;
 			actDataA.cardList = [];
 			actDataA.maxHP = 6000;
-			for (var i:int = 6; i <= 10; i++)
+			for (var i:int = 16; i <= 20; i++)
 			{
 				cardData = new CardData();
 				cardData.templateID = i;

@@ -43,6 +43,7 @@ package centaur.data.skill
 		public static const TARGET_COUNTRY_2:int = 17; 			// 第二类卡牌
 		public static const TARGET_COUNTRY_3:int = 18; 			// 第三类卡牌
 		public static const TARGET_COUNTRY_4:int = 19; 			// 第四类卡牌
+		public static const MAX_ROUND_WAIT:int = 20;            // 等待区中等待时间最长的卡牌
 		
 		// 特殊技能的类型
 		public static const SPEC_COMBATTOCARD_TYPE:int = 1;			// 送还：将对面的卡牌送回卡组

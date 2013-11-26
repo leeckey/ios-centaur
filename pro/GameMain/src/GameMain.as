@@ -244,7 +244,7 @@ package
 			var cardData:CardData;
 			actDataA.cardList = [];
 			actDataA.maxHP = 6000;
-			for (var i:int = 6; i <= 10; i++)
+			for (var i:int = 26; i <= 30; i++)
 			{
 				cardData = new CardData();
 				cardData.templateID = i;
@@ -257,7 +257,7 @@ package
 			var actDataB:InsMapData = new InsMapData();
 			actDataB.cardList = [];
 			actDataB.maxHP = 6000;
-			for (var j:int = 1; j <= 5; j++)
+			for (var j:int = 21; j <= 25; j++)
 			{
 				cardData = new CardData();
 				cardData.templateID = j;

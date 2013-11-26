@@ -322,6 +322,20 @@ package centaur.logic.skills
 					}
 					return targets;
 					
+				// 等待时间最长的卡牌
+				case SkillEnumDefines.MAX_ROUND_WAIT:
+					cards = targetAct.combatData.selfWaitArea;
+					var maxWait:int = 0;
+					for (i = 0; i < cards.length; i++)
+					{
+						target = card[i];
+						if (target != null && target.waitRound > maxWait)
+						{
+							maxWait = target.waitRound;
+							targets[0] = target;
+						}
+					}
+					return targets;
 			}
 			
 			return null;
