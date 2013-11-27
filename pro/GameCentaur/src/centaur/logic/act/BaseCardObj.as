@@ -141,16 +141,49 @@ package centaur.logic.act
 			var cardTemplateData:CardTemplateData = CardTemplateDataList.getCardData(cardData.templateID);
 			if (cardTemplateData)
 			{
-				var skillLen:int = cardTemplateData.skillList.length;
-				
-				for (var i:int = 0; i < skillLen; ++i)
+				// 普通攻击技能
+				var skillID:int = cardTemplateData.normolAttID;
+				var skillData:SkillData = null;
+				var skill:BaseSkill = null;
+				if (skillID > 0)
 				{
-					var skillData:SkillData = SkillDataList.getSkillData(cardTemplateData.skillList[i]);
-					if (!skillData)
-						continue;
-					
-					skillData.skillLevel = cardTemplateData.skillLevel[i];
-					skills.push(GetSkillByID(skillData));
+					skills.push(GetSkillByID(SkillDataList.getSkillData(skillID)));
+				}
+				
+				skillID = cardTemplateData.skill1ID;
+				if (skillID > 0)
+				{
+					skillData = SkillDataList.getSkillData(skillID);
+					if (skillData)
+					{
+						skill = GetSkillByID(skillData);
+						skill.SetCardData(cardTemplateData.skill1Para);
+						skills.push(skill);
+					}
+				}
+				
+				skillID = cardTemplateData.skill2ID;
+				if (skillID > 0)
+				{
+					skillData = SkillDataList.getSkillData(skillID);
+					if (skillData)
+					{
+						skill = GetSkillByID(skillData);
+						skill.SetCardData(cardTemplateData.skill2Para);
+						skills.push(skill);
+					}
+				}
+				
+				skillID = cardTemplateData.skill3ID;
+				if (skillID > 0)
+				{
+					skillData = SkillDataList.getSkillData(skillID);
+					if (skillData)
+					{
+						skill = GetSkillByID(skillData);
+						skill.SetCardData(cardTemplateData.skill3Para);
+						skills.push(skill);
+					}
 				}
 			}
 			
@@ -504,6 +537,32 @@ package centaur.logic.act
 		{
 			if (owner)
 				owner.cardToCardArea(this);
+		}
+		
+		/**
+		 * 卡牌复活 进入等待区
+		 * 
+		 */		
+		public function doReturn():void
+		{
+			if (!isDead)
+				return;
+			
+			if (owner)
+				owner.cardReturn(this);
+		}
+		
+		/**
+		 * 卡牌复活 
+		 * 
+		 */		
+		public function doRevive():void
+		{
+			if (!isDead)
+				return;
+			
+			if (owner)
+				owner.cardRevive(this);
 		}
 		
 		/**
