@@ -53,8 +53,6 @@ package centaur.logic.skills
 		 */		
 		private function onAttack(event:CardEvent):void
 		{
-
-			
 			if (!card || card.isDead || card.attack <= 0)
 				return;
 			

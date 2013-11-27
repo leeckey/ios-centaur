@@ -1,6 +1,7 @@
 package centaur.logic.skills
 {
 	import centaur.data.card.CardData;
+	import centaur.data.card.CardEnumDefines;
 	import centaur.data.skill.SkillData;
 	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseActObj;
@@ -8,7 +9,6 @@ package centaur.logic.skills
 	import centaur.logic.action.*;
 	import centaur.logic.buff.BaseBuff;
 	import centaur.logic.combat.CombatLogic;
-	import centaur.data.card.CardEnumDefines;
 
 	/**
 	 * 技能基类 
@@ -80,6 +80,19 @@ package centaur.logic.skills
 			
 			if (card != null)
 				registerCard(card);
+		}
+		
+		/**
+		 * 设置卡牌自带的技能参数,默认为技能级别 
+		 * @param data
+		 * 
+		 */		
+		public function SetCardData(data:Array):void
+		{
+			if (data == null || data.length == 0)
+				return;
+			
+			_skillLevel = data[0];
 		}
 		
 		/**

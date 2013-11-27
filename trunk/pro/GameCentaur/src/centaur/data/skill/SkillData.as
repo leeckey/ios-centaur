@@ -26,5 +26,6 @@ package centaur.data.skill
 		public function SkillData()
 		{
 		}
+		
 	}
 }

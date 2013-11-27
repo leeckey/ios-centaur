@@ -77,7 +77,30 @@ package centaur.display.ui.card
 			var cardTemplateData:CardTemplateData = CardTemplateDataList.getCardData(_cardData.cardData.templateID);
 			if (cardTemplateData)
 			{
-				var skillLen:int = cardTemplateData.skillList.length;
+				var skillData:SkillData = null;
+				skillData = SkillDataList.getSkillData(cardTemplateData.skill1ID);
+				if (skillData)
+				{
+					discrip += skillData.name + "\n";
+					discrip += "  " + skillData.discription + "\n";
+				}
+				
+				skillData = SkillDataList.getSkillData(cardTemplateData.skill2ID);
+				if (skillData)
+				{
+					discrip += "\n";
+					discrip += skillData.name + "\n";
+					discrip += "  " + skillData.discription + "\n";
+				}
+				
+				skillData = SkillDataList.getSkillData(cardTemplateData.skill3ID);
+				if (skillData)
+				{
+					discrip += "\n";
+					discrip += skillData.name + "\n";
+					discrip += "  " + skillData.discription + "\n";
+				}
+/*				var skillLen:int = cardTemplateData.skillList.length;
 				
 				for (var i:int = 0; i < skillLen; ++i)
 				{
@@ -87,7 +110,7 @@ package centaur.display.ui.card
 					
 					discrip += skillData.name + "\n";
 					discrip += "  " + skillData.discription + "\n";
-				}
+				}*/
 			}
 			
 			discriptionText.textField.multiline = true;

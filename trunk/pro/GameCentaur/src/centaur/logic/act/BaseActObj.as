@@ -228,7 +228,7 @@ package centaur.logic.act
 		 * @param cardObj
 		 * 
 		 */		
-		public function cardRevive(cardObj:BaseCardObj):void
+		public function cardReturn(cardObj:BaseCardObj):void
 		{
 			if (cardObj == null || combatData.selfCemeteryArea.indexOf(cardObj) == -1)
 				return;
@@ -257,6 +257,33 @@ package centaur.logic.act
 				// 添加相应操作
 				CombatLogic.combatList.push(SelectCardToCardAreaAction.getAction(this.objID, cardObj.objID));
 			}
+		}
+		
+		/**
+		 * 卡牌复活,直接上场 
+		 * @param cardObj
+		 * 
+		 */		
+		public function cardRevive(cardObj:BaseCardObj):void
+		{
+			if (cardObj == null || combatData.selfCemeteryArea.indexOf(cardObj) == -1)
+				return;
+			
+			// 从墓地中移除
+			var idx:int = combatData.selfCemeteryArea.indexOf(cardObj);
+			if (idx > -1)
+				combatData.selfCemeteryArea.splice(idx, 1);
+			
+			// 初始化数据
+			cardObj.resetCombatData();
+			
+			// 加入战斗
+			combatData.selfCombatArea.push(cardObj);
+			
+			// 添加相应操作
+			CombatLogic.combatList.push(SelectCardToCombatAreaAction.getAction(this.objID, cardObj.objID));
+
+			cardObj.onPresent();
 		}
 		
 		/**

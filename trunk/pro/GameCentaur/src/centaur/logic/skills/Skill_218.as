@@ -80,7 +80,7 @@ package centaur.logic.skills
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
 				CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 				
-				card.owner.cardRevive(card);
+				card.doReturn();
 			}
 		}
 	}
