@@ -1,6 +1,6 @@
 templateID	name	baseHP	growUpHP	baseACK	growUpACK	defense	maxWaitRound	normolAttID	skill1ID	skill1Para	skill2ID	skill2Para	skill3ID	skill3Para	starLv	country
 模板ID	名称	基础血量	成长血量	基础攻击	成长攻击	防御	等待回合	普通攻击	技能1	技能1参数	技能2	技能2参数	技能3	技能3参数	卡牌星级	势力
-1	夜叉行	300	36	85	10	0	2	1	0	0	3	2	14	1	1	1
+1	夜叉行	300	36	85	10	0	2	1	0	0	33	2	14	1	1	1
 2	长枪兵	330	15	95	16	0	2	1	24	1	33	3	48	4	1	1
 3	元戎弩	370	8	110	18	0	2	1	0	0	22	4	6	2	1	1
 4	骠刀骑	360	21	105	15	0	2	1	0	0	14	1	44	4	1	1
