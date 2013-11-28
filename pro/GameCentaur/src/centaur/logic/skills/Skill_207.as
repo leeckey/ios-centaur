@@ -13,9 +13,9 @@ package centaur.logic.skills
 	 */	
 	public class Skill_207 extends BaseSkill
 	{
-		public function Skill_207(data:SkillData, card:BaseCardObj)
+		public function Skill_207(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**

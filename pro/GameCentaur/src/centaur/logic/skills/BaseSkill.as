@@ -9,6 +9,7 @@ package centaur.logic.skills
 	import centaur.logic.action.*;
 	import centaur.logic.buff.BaseBuff;
 	import centaur.logic.combat.CombatLogic;
+	import centaur.utils.Utils;
 
 	/**
 	 * 技能基类 
@@ -48,6 +49,11 @@ package centaur.logic.skills
 		protected var _priority:int;
 		
 		/**
+		 * BuffID 
+		 */		
+		protected var _buffID:int;
+		
+		/**
 		 * 技能所有者 
 		 */	
 		public var card:BaseCardObj;
@@ -73,8 +79,19 @@ package centaur.logic.skills
 			return _skillLevel;
 		}
 		
-		public function BaseSkill(data:SkillData, card:BaseCardObj)
+		public function get buffID():int
 		{
+			return _buffID;
+		}
+		public function set buffID(id:int):void
+		{
+			_buffID = id;
+		}
+		
+		public function BaseSkill(data:SkillData, card:BaseCardObj, skillPara:Array)
+		{
+			SetCardData(skillPara);
+			
 			if (data != null)
 				initConfig(data);
 			
@@ -107,7 +124,7 @@ package centaur.logic.skills
 			_selectTargetType = data.selectTargetType;
 			_skillType = data.skillType;
 			_magicType = data.magicType;
-			_skillLevel = data.skillLevel;
+			// _skillLevel = data.skillLevel;
 		}
 		
 		/**
@@ -341,12 +358,56 @@ package centaur.logic.skills
 					var maxWait:int = 0;
 					for (i = 0; i < cards.length; i++)
 					{
-						target = card[i];
+						target = cards[i];
 						if (target != null && target.waitRound > maxWait)
 						{
 							maxWait = target.waitRound;
 							targets[0] = target;
 						}
+					}
+					return targets;
+					
+				// 随机1个没有buff的卡牌
+				case SkillEnumDefines.NO_BUFF_RANDOM:
+					cards = targetAct.combatData.selfCombatArea;
+					for (i = 0; i < cards.length; i++)
+					{
+						target = cards[i];
+						if (target && !target.hasBuff(this.buffID))
+							targets.push(target);
+					}
+					return Utils.randomArray(targets, 1);
+					
+				// 随机2个没有buff的卡牌
+				case SkillEnumDefines.NO_BUFF_RANDOM2:
+					cards = targetAct.combatData.selfCombatArea;
+					for (i = 0; i < cards.length; i++)
+					{
+						target = cards[i];
+						if (target && !target.hasBuff(this.buffID))
+							targets.push(target);
+					}
+					return Utils.randomArray(targets, 2);
+					
+				// 随机3个没有buff的卡牌
+				case SkillEnumDefines.NO_BUFF_RANDOM3:
+					cards = targetAct.combatData.selfCombatArea;
+					for (i = 0; i < cards.length; i++)
+					{
+						target = cards[i];
+						if (target && !target.hasBuff(this.buffID))
+							targets.push(target);
+					}
+					return Utils.randomArray(targets, 3);
+					
+				// 所有没有buff的卡牌
+				case SkillEnumDefines.NO_BUFF_ALL:
+					cards = targetAct.combatData.selfCombatArea;
+					for (i = 0; i < cards.length; i++)
+					{
+						target = cards[i];
+						if (target && !target.hasBuff(this.buffID))
+							targets.push(target);
 					}
 					return targets;
 			}

@@ -27,9 +27,9 @@ package centaur.logic.skills
 		
 		private var tempAttack:int;
 		
-		public function Skill_223(data:SkillData, card:BaseCardObj)
+		public function Skill_223(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**
@@ -43,7 +43,7 @@ package centaur.logic.skills
 			super.initConfig(data);
 			
 			enemyType = data.param1;
-			attackUp = 0.3 + data.param2 * data.skillLevel;
+			attackUp = 0.3 + data.param2 * skillLevel;
 			tempAttack = 0;
 		}
 		
@@ -59,7 +59,6 @@ package centaur.logic.skills
 			if (card != null)
 			{
 				card.addEventListener(CardEvent.ON_PRE_ATTACK, onPreAttack, false, _priority);
-				
 			}
 		}
 		

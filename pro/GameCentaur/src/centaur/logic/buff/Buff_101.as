@@ -28,6 +28,8 @@ package centaur.logic.buff
 			card.addEventListener(CardEvent.ON_ROUND_END, onRoundEnd);
 			card.canAttack = false;
 			CombatLogic.combatList.push(BuffNotifyAction.getAction(id, card.objID));
+			
+			super.deBuff();
 		}
 		
 		/**

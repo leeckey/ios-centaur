@@ -43,6 +43,8 @@ package centaur.logic.buff
 			card.removeEventListener(CardEvent.ON_ROUND_END, onRoundEnd);
 			card.canAttack = true;
 			CombatLogic.combatList.push(BuffNotifyAction.getAction(id, card.objID, BuffNotifyAction.BUFF_REMOVE_ACTION));
+			
+			super.deBuff();
 		}
 		
 		/**

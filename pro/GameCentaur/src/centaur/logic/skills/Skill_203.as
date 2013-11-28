@@ -19,9 +19,9 @@ package centaur.logic.skills
 		 */		
 		public var damage:int;
 		
-		public function Skill_203(data:SkillData, card:BaseCardObj)
+		public function Skill_203(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**
@@ -34,7 +34,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			damage = data.param1 * data.skillLevel;
+			damage = data.param1 * skillLevel;
 		}
 		
 		/**

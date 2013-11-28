@@ -15,9 +15,9 @@ package centaur.logic.skills
 		 */		
 		public var deAttack:int;
 		
-		public function Skill_103(data:SkillData, card:BaseCardObj)
+		public function Skill_103(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**
@@ -30,7 +30,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			deAttack = data.param1 * data.skillLevel;
+			deAttack = data.param1 * skillLevel;
 		}
 		
 		protected override function _doSkill(targetCard:BaseCardObj):void

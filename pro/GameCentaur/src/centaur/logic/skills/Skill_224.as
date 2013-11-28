@@ -15,9 +15,9 @@ package centaur.logic.skills
 	{
 		private var skills:Array = [60, 61, 62];
 		
-		public function Skill_224(data:SkillData, card:BaseCardObj)
+		public function Skill_224(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**

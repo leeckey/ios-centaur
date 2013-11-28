@@ -44,6 +44,10 @@ package centaur.data.skill
 		public static const TARGET_COUNTRY_3:int = 18; 			// 第三类卡牌
 		public static const TARGET_COUNTRY_4:int = 19; 			// 第四类卡牌
 		public static const MAX_ROUND_WAIT:int = 20;            // 等待区中等待时间最长的卡牌
+		public static const NO_BUFF_RANDOM:int = 21;            // 随机1个没有相同buff的卡牌
+		public static const NO_BUFF_RANDOM2:int = 22;            // 随机2个没有相同buff的卡牌
+		public static const NO_BUFF_RANDOM3:int = 23;            // 随机3个没有相同buff的卡牌
+		public static const NO_BUFF_ALL:int = 24;            // 所有没有相同buff的卡牌
 		
 		// 特殊技能的类型
 		public static const SPEC_COMBATTOCARD_TYPE:int = 1;			// 送还：将对面的卡牌送回卡组

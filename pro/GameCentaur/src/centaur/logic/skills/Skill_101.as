@@ -20,9 +20,9 @@ package centaur.logic.skills
 		 */		
 		public var max:int;
 		
-		public function Skill_101(data:SkillData, card:BaseCardObj)
+		public function Skill_101(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**
@@ -35,8 +35,8 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			min = data.param1 * data.skillLevel;
-			max = data.param2 * data.skillLevel;
+			min = data.param1 * skillLevel;
+			max = data.param2 * skillLevel;
 		}
 		
 		protected override function _doSkill(targetCard:BaseCardObj):void

@@ -30,9 +30,9 @@ package centaur.logic.skills
 		private var tempAttack:int;
 		
 		
-		public function Skill_201(data:SkillData, card:BaseCardObj)
+		public function Skill_201(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**
@@ -46,7 +46,7 @@ package centaur.logic.skills
 			super.initConfig(data);
 			
 			rate = data.param1 / 100;
-			attackUp = data.param2 * data.skillLevel;
+			attackUp = data.param2 * skillLevel;
 			tempAttack = 0;
 		}
 		
