@@ -20,9 +20,9 @@ package centaur.logic.skills
 		 */		
 		public var attack:int;
 		
-		public function Skill_216(data:SkillData, card:BaseCardObj)
+		public function Skill_216(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**
@@ -35,7 +35,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			attack = data.param1 * data.skillLevel;
+			attack = data.param1 * skillLevel;
 		}
 		
 		/**

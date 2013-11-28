@@ -9,6 +9,7 @@ package centaur.data.buff
 		public var discription:String;         // 描述
 		public var param1:int;                 // 参数1
 		public var round:int;                  // 回合数
+		public var superposition:int;          // 是否可叠加
 		
 		public var level:int;                  // 技能等级
 	}

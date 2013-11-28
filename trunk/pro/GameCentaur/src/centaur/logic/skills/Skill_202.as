@@ -18,9 +18,9 @@ package centaur.logic.skills
 		 */		
 		public var defence:int;
 		
-		public function Skill_202(data:SkillData, card:BaseCardObj)
+		public function Skill_202(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**
@@ -33,7 +33,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			defence = data.param1 * data.skillLevel;
+			defence = data.param1 * skillLevel;
 		}
 		
 		/**

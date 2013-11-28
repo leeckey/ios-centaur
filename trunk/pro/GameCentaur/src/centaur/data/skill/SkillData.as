@@ -21,7 +21,7 @@ package centaur.data.skill
 		public var buffID:int;                 // buffID
 		public var buffLevel:int;              // buff级别
 		
-		public var skillLevel:int;             // 技能等级,动态设置
+		// public var skillLevel:int;             // 技能等级,动态设置
 		
 		public function SkillData()
 		{

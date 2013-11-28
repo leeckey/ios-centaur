@@ -38,7 +38,7 @@ package centaur.logic.act
 		public var cardData:CardData;         // 卡牌初始化数据
 		public var render:BaseCardRender;     // 卡牌显示控制
 		public var skills:Array;              // 卡牌的技能
-		public var buffDic:Dictionary;        // 卡牌Buff
+		public var buffs:Array;               // 卡牌Buff
 		
 		public var lastDamageValue:int;		// 最近一次伤害敌方的伤害值
 		public var lastBeAttackVal:int;        // 最近一次受到普通攻击的攻击力
@@ -147,7 +147,7 @@ package centaur.logic.act
 				var skill:BaseSkill = null;
 				if (skillID > 0)
 				{
-					skills.push(GetSkillByID(SkillDataList.getSkillData(skillID)));
+					skills.push(GetSkillByID(SkillDataList.getSkillData(skillID), []));
 				}
 				
 				skillID = cardTemplateData.skill1ID;
@@ -155,11 +155,7 @@ package centaur.logic.act
 				{
 					skillData = SkillDataList.getSkillData(skillID);
 					if (skillData)
-					{
-						skill = GetSkillByID(skillData);
-						skill.SetCardData(cardTemplateData.skill1Para);
-						skills.push(skill);
-					}
+						skills.push(GetSkillByID(skillData, cardTemplateData.skill1Para));
 				}
 				
 				skillID = cardTemplateData.skill2ID;
@@ -167,11 +163,7 @@ package centaur.logic.act
 				{
 					skillData = SkillDataList.getSkillData(skillID);
 					if (skillData)
-					{
-						skill = GetSkillByID(skillData);
-						skill.SetCardData(cardTemplateData.skill2Para);
-						skills.push(skill);
-					}
+						skills.push(GetSkillByID(skillData, cardTemplateData.skill2Para));
 				}
 				
 				skillID = cardTemplateData.skill3ID;
@@ -179,11 +171,7 @@ package centaur.logic.act
 				{
 					skillData = SkillDataList.getSkillData(skillID);
 					if (skillData)
-					{
-						skill = GetSkillByID(skillData);
-						skill.SetCardData(cardTemplateData.skill3Para);
-						skills.push(skill);
-					}
+						skills.push(GetSkillByID(skillData, cardTemplateData.skill3Para));
 				}
 			}
 			
@@ -197,12 +185,12 @@ package centaur.logic.act
 		 * @return 
 		 * 
 		 */		
-		public function GetSkillByID(data:SkillData):BaseSkill
+		public function GetSkillByID(data:SkillData, skillPara:Array):BaseSkill
 		{
 			var skillID:String = "centaur.logic.skills.Skill_" + data.templateID.toString();
 			var skill:Class= getDefinitionByName(skillID) as Class;
 			if (skill != null)	
-				return new skill(data, this);
+				return new skill(data, this, skillPara);
 			
 			return null;
 		}
@@ -214,16 +202,44 @@ package centaur.logic.act
 		 */		
 		public function addBuff(buff:BaseBuff):void
 		{
-			// 先去掉同类型的buff
-			if (buffDic[buff.id] != null)
+			// 不可叠加的buff先看下是否存在
+			if (buff.superposition == 0 && hasBuff(buff.id))
 			{
-				var oldBuff:BaseBuff = buffDic[buff.id] as BaseBuff;
-				oldBuff.copy(buff);
 				return;
 			}
 			
 			buff.addBuff();
-			buffDic[buff.id] = buff;
+			buffs.push(buff);
+		}
+		
+		/**
+		 *  去掉一个buff 
+		 * @param buff
+		 * 
+		 */		
+		public function deBuff(buff:BaseBuff):void
+		{
+			var idx:int = buffs.indexOf(buff);
+			if (idx != -1)
+				buffs.splice(idx, 1);
+		}
+		
+		/**
+		 * 是否已经存在Buff 
+		 * @param buffID
+		 * @return 
+		 * 
+		 */		
+		public function hasBuff(buffID:int):Boolean
+		{
+			for (var i:int = 0; i < buffs.length; i++)
+			{
+				var bf:BaseBuff = buffs[i] as BaseBuff;
+				if (bf.id == buffID && bf.round > 0)
+					return true;
+			}
+			
+			return false;
 		}
 		
 		/**
@@ -252,7 +268,7 @@ package centaur.logic.act
 			if (!cardData)
 				return;
 
-			buffDic = new Dictionary();	
+			buffs = [];	
 			
 			// 设置血量和攻击力
 			this._hp = cardData.maxHP;

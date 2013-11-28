@@ -15,9 +15,9 @@ package centaur.logic.skills
 		 */		
 		public var cure:int;
 		
-		public function Skill_104(data:SkillData, card:BaseCardObj)
+		public function Skill_104(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**
@@ -30,7 +30,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			cure = data.param1 * data.skillLevel;
+			cure = data.param1 * skillLevel;
 		}
 		
 		/**

@@ -13,9 +13,9 @@ package centaur.logic.skills
 		 */		
 		public var maxDamage:int;
 		
-		public function Skill_205(data:SkillData, card:BaseCardObj)
+		public function Skill_205(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**
@@ -28,7 +28,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			maxDamage = data.param1 - data.param2 * data.skillLevel;
+			maxDamage = data.param1 - data.param2 * skillLevel;
 		}
 		
 		/**

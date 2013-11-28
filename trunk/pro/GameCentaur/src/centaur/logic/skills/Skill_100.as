@@ -24,16 +24,11 @@ package centaur.logic.skills
 		 */		
 		public var rate:Number;
 		
-		/**
-		 * BuffID 
-		 */		
-		public var buffID:int;
-		
 		private var buff:Class;
 		
-		public function Skill_100(data:SkillData, card:BaseCardObj)
+		public function Skill_100(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**
@@ -46,7 +41,7 @@ package centaur.logic.skills
 			// 设置公共信息
 			super.initConfig(data);
 			
-			damage = data.param1 * data.skillLevel;
+			damage = data.param1 * skillLevel;
 			rate = data.param2 / 100;
 			if (data.buffID != 0)
 			{

@@ -22,6 +22,11 @@ package centaur.logic.buff
 		public var round:int;
 		
 		/**
+		 * 是否可叠加 
+		 */		
+		public var superposition:int;
+		
+		/**
 		 * buff作用的卡牌 
 		 */		
 		public var card:BaseCardObj;
@@ -31,6 +36,7 @@ package centaur.logic.buff
 			this.card = card;
 			this.id = data.id;
 			this.round = data.round;
+			this.superposition = data.superposition;
 			if (card != null)
 				card.addBuff(this);
 		}
@@ -50,6 +56,8 @@ package centaur.logic.buff
 		 */		
 		public function deBuff():void
 		{
+			if (card != null)
+				card.deBuff(this);
 		}
 		
 		/**

@@ -16,17 +16,12 @@ package centaur.logic.skills
 	 * 
 	 */	
 	public class Skill_222 extends BaseSkill
-	{
-		/**
-		 * BuffID 
-		 */		
-		public var buffID:int;
-		
+	{	
 		private var buff:Class;
 		
-		public function Skill_222(data:SkillData, card:BaseCardObj)
+		public function Skill_222(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**

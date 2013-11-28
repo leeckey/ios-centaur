@@ -22,16 +22,11 @@ package centaur.logic.skills
 		 */		
 		public var damage:int;
 		
-		/**
-		 * BuffID 
-		 */		
-		public var buffID:int;
-		
 		private var buff:Class;
 		
-		public function Skill_220(data:SkillData, card:BaseCardObj)
+		public function Skill_220(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
-			super(data, card);
+			super(data, card, skillPara);
 		}
 		
 		/**

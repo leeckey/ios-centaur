@@ -50,5 +50,28 @@ package centaur.utils
 					dataObj[propertyName] = propertyValue;
 			}
 		}
+		
+		/**
+		 *  从一个数组中随机N个出来
+		 */		
+		public static function randomArray(arr:Array, count:int):Array
+		{
+			var arr1:Array = arr.concat();
+			var result:Array = [];
+			var idx:int = 0;
+			
+			// 数组数量小于要求
+			if (arr1.length <= count)
+				return arr1;
+
+			for (var i:int = 0; i < count; i++)
+			{
+				idx = Math.random() * arr1.length;
+				result.push(arr1[idx]);
+				arr1.splice(idx, 1);
+			}
+			
+			return result;
+		}
 	}
 }
