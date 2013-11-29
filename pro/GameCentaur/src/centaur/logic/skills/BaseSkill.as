@@ -272,11 +272,18 @@ package centaur.logic.skills
 				case SkillEnumDefines.TARGET_ALL_TYPE:
 					return targetAct.combatData.getAllCombatAreaCard();
 				
+				case SkillEnumDefines.TARGET_MAX_LOSE_HP_TYPE:
+					// 失血最多的目标
+					var maxLoseHPTarget:BaseCardObj = card.owner.combatData.getCardFromCombatAreaMaxLoseHP();
+					return maxLoseHPTarget ? [maxLoseHPTarget] : null;
+					break;
+					
 				// 随机一个可以治疗的目标
 				case SkillEnumDefines.TARGET_RANDOM_CURE:
-					idx = Math.random() * card.owner.combatData.getCardFromCombatAreaCanCure().length;
-					if (idx == 0)
+					cards = card.owner.combatData.getCardFromCombatAreaCanCure();
+					if (cards.length == 0)
 						return null;
+					idx = Math.random() * card.owner.combatData.getCardFromCombatAreaCanCure().length
 					target = card.owner.combatData.selfCombatArea[idx];
 					return target ? [target] : null;
 						
@@ -314,7 +321,7 @@ package centaur.logic.skills
 					for (i = 0; i < cards.length; i++)
 					{
 						target = cards[i];
-						if (target != null && target.cardData.country == CardEnumDefines.CARD_COUNTRY_WEI)
+						if (target != null && target != card && target.cardData.country == CardEnumDefines.CARD_COUNTRY_SHU)
 							targets.push(target);
 					}
 					return targets;
@@ -325,7 +332,7 @@ package centaur.logic.skills
 					for (i = 0; i < cards.length; i++)
 					{
 						target = cards[i];
-						if (target != null && target.cardData.country == CardEnumDefines.CARD_COUNTRY_SHU)
+						if (target != null && target != card && target.cardData.country == CardEnumDefines.CARD_COUNTRY_WEI)
 							targets.push(target);
 					}
 					return targets;
@@ -336,7 +343,7 @@ package centaur.logic.skills
 					for (i = 0; i < cards.length; i++)
 					{
 						target = cards[i];
-						if (target != null && target.cardData.country == CardEnumDefines.CARD_COUNTRY_WU)
+						if (target != null && target != card && target.cardData.country == CardEnumDefines.CARD_COUNTRY_WU)
 							targets.push(target);
 					}
 					return targets;
@@ -347,7 +354,7 @@ package centaur.logic.skills
 					for (i = 0; i < cards.length; i++)
 					{
 						target = cards[i];
-						if (target != null && target.cardData.country == CardEnumDefines.CARD_COUNTRY_QUN)
+						if (target != null && target != card && target.cardData.country == CardEnumDefines.CARD_COUNTRY_QUN)
 							targets.push(target);
 					}
 					return targets;

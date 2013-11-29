@@ -5,9 +5,10 @@ package centaur.logic.skills
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.action.*;
+	import centaur.logic.buff.BaseBuff;
 	import centaur.logic.combat.CombatLogic;
 	import centaur.logic.events.CardEvent;
-
+	
 	import flash.utils.getDefinitionByName;
 	
 	/**
@@ -84,9 +85,19 @@ package centaur.logic.skills
 		 */		
 		public function onAfterHurt(event:CardEvent):void
 		{
+			// 已经有同等级相同的buff就不处理
+			var attacker:BaseCardObj = card.attacker;
+			var buffs:Array = attacker.buffs;
+			for (var i:int = 0; i < buffs.length; i++)
+			{
+				var bf:BaseBuff = buffs[i];
+				if (bf.id == this.buffID && bf.level == skillLevel && bf.round > 0)
+					return;
+			}
+			
 			CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.attacker.objID]));
 			
-			var hurt:int = card.attacker.onSkillHurt(this, damage);
+			var hurt:int = card.attacker.onSkillHurt(this, 0);
 			if (hurt >= 0 && buffID > 0 && !card.attacker.isDead)
 			{
 				var data:BuffData = BuffDataList.getBuffData(buffID);
