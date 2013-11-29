@@ -20,8 +20,9 @@ package centaur.logic.buff
 		
 		public function Buff_102(card:BaseCardObj, data:BuffData)
 		{
-			damage = data.param1 * data.level;
 			super(card, data);
+			
+			damage = data.param1 * data.level;
 		}
 		
 		/**

@@ -27,6 +27,11 @@ package centaur.logic.buff
 		public var superposition:int;
 		
 		/**
+		 * 技能等级 
+		 */		
+		public var level:int;
+		
+		/**
 		 * buff作用的卡牌 
 		 */		
 		public var card:BaseCardObj;
@@ -37,6 +42,7 @@ package centaur.logic.buff
 			this.id = data.id;
 			this.round = data.round;
 			this.superposition = data.superposition;
+			this.level = data.level;
 			if (card != null)
 				card.addBuff(this);
 		}

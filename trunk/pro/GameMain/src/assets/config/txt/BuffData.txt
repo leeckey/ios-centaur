@@ -4,5 +4,5 @@ id	templateID	name	effectPath	discription	param1	round	superposition
 2	101	麻痹	assets/effects/麻痹.fam	无法普通攻击	0	1	0
 3	102	中毒	assets/effects/中毒.fam	行动结束后受到20点伤害	20	1	1
 4	100	陷阱	assets/effects/锁定.fam	无法行动	0	1	0
-5	102	燃烧	assets/effects/中毒.fam	行动结束后受到20点伤害	20	9999	1
-6	103	裂伤	assets/effects/中毒.fam	无法回春和被治疗	0	9999	0
+5	102	燃烧	assets/effects/ranshaoBuff.fam	行动结束后受到20点伤害	20	9999	1
+6	103	裂伤	assets/effects/lieshang.fam	无法回春和被治疗	0	9999	0

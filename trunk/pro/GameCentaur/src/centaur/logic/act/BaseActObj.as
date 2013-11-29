@@ -93,7 +93,8 @@ package centaur.logic.act
 			hp = hp + num;
 			if (hp > actData.maxHP) hp = actData.maxHP;
 			temp = hp - temp;
-			
+			if (temp > 0)
+				CombatLogic.combatList.push(CureNotifyAction.getAction(temp, this.objID));
 			return temp;
 		}
 		
