@@ -39,6 +39,15 @@ package centaur.display.control
 			updateItemContent();
 		}
 		
+		override public function get maxScrollH():int
+		{
+			var len:int = _itemList ? _itemList.length : 0;
+			if (len <= 1)
+				return 0;
+			
+			return (len - 1) * _itemWidth;
+		}
+		
 		override protected function onMouseUp(e:MouseEvent):void
 		{
 			super.onMouseUp(e);
@@ -106,7 +115,7 @@ package centaur.display.control
 				
 				item.scaleX = item.scaleY = scale;
 				item.x = posX;
-				item.y = (_itemHeight - item.height) * 0.5;
+				item.y = (_itemHeight - _itemHeight * scale) * 0.5;
 				posX += item.scaleX * _itemWidth;
 				
 				// 确保Item添加显示

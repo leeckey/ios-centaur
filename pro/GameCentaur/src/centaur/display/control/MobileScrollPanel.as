@@ -54,10 +54,10 @@ package centaur.display.control
 				_lastMoveX = e.stageX;
 				_lastMoveY = e.stageY;
 				
-				if (wheelDirect == UIConst.HORIZONTAL)
+				if (wheelDirect == UIConst.HORIZONTAL && deltaX != 0)
 					tweenTargetH = scrollH = Math.min(maxScrollH,Math.max(0,scrollH - deltaX * wheelSpeed));
 				
-				if (wheelDirect == UIConst.VERTICAL)
+				if (wheelDirect == UIConst.VERTICAL && deltaY != 0)
 					tweenTargetV = scrollV = Math.min(maxScrollV,Math.max(0,scrollV - deltaY * wheelSpeed));
 				
 				dispatchEvent(new Event(Event.SCROLL));

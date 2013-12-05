@@ -61,7 +61,7 @@ package centaur.display.ui.role
 			cardScrollPanelBg.addChild(cardScrollPanel);
 			cardScrollPanel.wheelDirect = UIConst.HORIZONTAL;
 			cardScrollPanel.wheelSpeed = 1;
-			cardScrollPanel.scrollRect = new Rectangle(-100, -100, 1200, 600);
+			cardScrollPanel.scrollRect = new Rectangle(0, -100, 1200, 600);
 			
 			initCardData();
 			initCombatCardData();
@@ -91,7 +91,7 @@ package centaur.display.ui.role
 				itemHeight = item.height;
 			}
 			
-			cardScrollPanel.setupContent(cardItemList, itemWidth + 15, itemHeight);
+			cardScrollPanel.setupContent(cardItemList, itemWidth + 2, itemHeight);
 		}
 		
 		/**
