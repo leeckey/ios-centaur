@@ -108,7 +108,7 @@ package centaur.display.ui.role
 			
 			var maxCardCount:int = GlobalData.mainPlayerInfo.maxCombatCard;
 			var headItemList:Array = [];
-			var len:int = cardHeadContainerList.length;//combatIdxList.length;
+			var len:int = cardHeadContainerList.length;
 			for (var i:int = 0; i < len; ++i)
 			{
 				var container:ConfigHeadCardItem = cardHeadContainerList[i];
@@ -142,9 +142,7 @@ package centaur.display.ui.role
 		
 		private function onReturnBtnClick(e:MouseEvent):void
 		{
-			var lastModule:Sprite = GlobalAPI.layerManager.getLastModuleContent();
-			if (lastModule)
-				GlobalAPI.layerManager.setModuleContent(lastModule);
+			GlobalAPI.layerManager.returnLastModule();
 		}
 	}
 }

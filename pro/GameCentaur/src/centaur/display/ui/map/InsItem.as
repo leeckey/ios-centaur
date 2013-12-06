@@ -56,14 +56,6 @@ package centaur.display.ui.map
 			InsCombatPanel.instance.mapID = this.mapID;
 			InsCombatPanel.instance.insIdx = this.insIdx;
 			GlobalAPI.layerManager.setModuleContent(InsCombatPanel.instance);
-			
-			GlobalEventDispatcher.addEventListener(GlobalEventDispatcher.INS_COMBAT_HIDE, onInsCombatHide);
-		}
-		
-		private function onInsCombatHide(e:Event):void
-		{
-			GlobalEventDispatcher.removeEventListener(GlobalEventDispatcher.INS_COMBAT_HIDE, onInsCombatHide);
-			GlobalAPI.layerManager.setModuleContent(GlobalData.mapPanel);
 		}
 		
 		override public function set data(v:*):void

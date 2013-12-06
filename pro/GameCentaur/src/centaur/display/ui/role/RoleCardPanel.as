@@ -4,6 +4,8 @@ package centaur.display.ui.role
 	import centaur.data.GlobalData;
 	import centaur.data.player.PlayerInfo;
 	import centaur.display.control.GBitmapNumberText;
+	import centaur.logic.act.BaseCardObj;
+	import centaur.logic.render.CardMediumRender;
 	import centaur.utils.NumberCache;
 	import centaur.utils.NumberType;
 	
@@ -43,6 +45,7 @@ package centaur.display.ui.role
 		public var cardBg10:GBase;
 		
 		private var cardBgList:Array;
+		private var cardRenderList:Array;
 		
 		public function RoleCardPanel()
 		{
@@ -65,10 +68,48 @@ package centaur.display.ui.role
 		
 		private function setup():void
 		{
+			cardRenderList = [];
 			cardBgList = [cardBg1, cardBg2, cardBg3, cardBg4, cardBg5, cardBg6, cardBg7, cardBg8, cardBg9, cardBg10];
 			addEvents();
 			
 			updateInfo();
+			updateCombatCardDisplay();
+		}
+		
+		private function updateCombatCardDisplay():void
+		{
+			var cardObjList:Array = GlobalData.mainActObj.cardObjList;
+			if (!cardObjList)
+				return;
+			var combatIdxList:Array = GlobalData.mainActData.combatCardIdxList;
+			if (!combatIdxList)
+				return;
+			
+			var len:int = cardBgList.length;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var container:GBase = cardBgList[i];
+				var render:CardMediumRender = cardRenderList[i];
+				var cardObj:BaseCardObj = cardObjList[combatIdxList[i]];
+				if (render && cardObj && render.parent == container && render.cardObj == cardObj)
+					continue;
+				
+				// 卡信息不存在，移除显示对象
+				if (!cardObj)
+				{
+					if (render && render.parent)
+						render.parent.removeChild(render);
+					cardBgList[i] = null;
+				}
+				else
+				{
+					if (!render || render.cardObj != cardObj)
+						render = new CardMediumRender(cardObj);
+					cardBgList[i] = render;
+					if (render.parent != container)
+						container.addChild(render);
+				}
+			}
 		}
 		
 		private function addEvents():void
@@ -85,9 +126,7 @@ package centaur.display.ui.role
 		
 		private function onReturnBtnClick(e:MouseEvent):void
 		{
-			var lastModule:Sprite = GlobalAPI.layerManager.getLastModuleContent();
-			if (lastModule)
-				GlobalAPI.layerManager.setModuleContent(lastModule);
+			GlobalAPI.layerManager.returnLastModule();
 		}
 		
 		private function onCardConfigBtnClick(e:MouseEvent):void

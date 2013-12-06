@@ -81,7 +81,7 @@ package centaur.display.ui.combat
 		{
 			this.visible = true;
 			_combatPaused = false;
-			GlobalAPI.layerManager.setModuleContent(this);
+			GlobalAPI.layerManager.returnLastModule();
 		}
 		
 		public function startPlay(resultData:CombatResultData):void
@@ -161,7 +161,7 @@ package centaur.display.ui.combat
 			onRemoveToStage(null);
 			clear();
 			
-			GlobalAPI.layerManager.setModuleContent(InsCombatPanel.instance);
+			GlobalAPI.layerManager.returnLastModule();	// 返回上级面板
 		}
 		
 		private function clear():void
