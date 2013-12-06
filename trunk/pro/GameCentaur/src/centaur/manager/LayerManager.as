@@ -41,20 +41,38 @@ package centaur.manager
 		
 		private var _moduleContent:Sprite;
 		private var _lastModuleContent:Sprite;
-		public function setModuleContent(content:Sprite):void
+		private var _moduleList:Array = [];
+		public function setModuleContent(content:Sprite, record:Boolean = true):void
 		{
 			if (_moduleContent != content)
 			{
 				if (_moduleContent && _moduleContent.parent)
 					_moduleContent.parent.removeChild(_moduleContent);
 				
-				_lastModuleContent = _moduleContent;
+				if (record)
+				{
+					// 记录上次的面板
+					_lastModuleContent = _moduleContent;
+					if (_lastModuleContent && _moduleList.indexOf(_lastModuleContent) == -1)
+						_moduleList.push(_lastModuleContent);
+				}
+				
 				_moduleContent = content;
 				
 				if (_moduleContent && _moduleContent.parent != _moduleLayer)
 					_moduleLayer.addChild(_moduleContent);
 				
 			}
+		}
+		
+		public function returnLastModule():void
+		{
+			if (_moduleList.length == 0)
+				return;
+			
+			var lastModule:Sprite = _moduleList.pop();
+			if (lastModule)
+				setModuleContent(lastModule, false);
 		}
 		
 		public function getModuleContent():Sprite

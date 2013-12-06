@@ -62,10 +62,7 @@ package centaur.data
 			if (detailCardPanel && detailCardPanel.parent)
 				detailCardPanel.parent.removeChild(detailCardPanel);
 			
-			var lastModule:Sprite = GlobalAPI.layerManager.getLastModuleContent();
-			if (lastModule)
-				GlobalAPI.layerManager.setModuleContent(lastModule);
-			
+			GlobalAPI.layerManager.returnLastModule();
 			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.DETAIL_CARD_HIDE));
 		}
 		

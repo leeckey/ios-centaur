@@ -36,6 +36,11 @@ package centaur.logic.render
 			setup();
 		}
 		
+		public function get cardObj():BaseCardObj
+		{
+			return _cardObj;
+		}
+		
 		protected function setup():void
 		{
 			if (!_cardObj)

@@ -107,7 +107,8 @@ package centaur.display.ui.map
 		
 		private function onReturnBtnClick(e:MouseEvent):void
 		{
-			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.INS_COMBAT_HIDE));
+//			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.INS_COMBAT_HIDE));
+			GlobalAPI.layerManager.returnLastModule();
 		}
 	}
 }
