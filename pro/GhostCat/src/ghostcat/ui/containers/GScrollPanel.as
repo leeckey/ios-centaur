@@ -223,10 +223,12 @@ package ghostcat.ui.containers
             }
         }
         
+		private var _scrollRect:Rectangle;
         public override function set scrollRect(value:Rectangle) : void
         {
-            super.scrollRect = value;
-            
+//            super.scrollRect = value;
+			_scrollRect = value;
+			
             if (createScrollArea)
             {
                 graphics.clear();
@@ -235,6 +237,11 @@ package ghostcat.ui.containers
                 graphics.endFill();
             }
         }
+		
+		override public function get scrollRect():Rectangle
+		{
+			return _scrollRect;
+		}
         
         /** @inheritDoc*/
         public function get maxScrollH():int
