@@ -16,8 +16,12 @@ package centaur.display.ui.map
 	public final class MapItem extends GBuilderBase
 	{
 		private var back:Bitmap;
+		private var disableBack:Bitmap;
+		private var lockBitmap:Bitmap;
+		private var numSpriteContainer:Sprite;
 		private var numSprite:Sprite;
 		
+		private var _mapEnable:Boolean = true;
 		private var _num:uint;
 		
 		public function MapItem()
@@ -28,10 +32,34 @@ package centaur.display.ui.map
 		
 		private function setup():void
 		{
+			disableBack = new Bitmap();
+			addChild(disableBack);
 			back = new Bitmap();
-			addChildAt(back, 0);
+			addChild(back);
+			numSpriteContainer = new Sprite();
+			addChild(numSpriteContainer);
+			lockBitmap = new Bitmap();
+			lockBitmap.visible = false;
+			addChild(lockBitmap);
 			
+			setEnable(true);
 			GlobalAPI.loaderManager.getBitmapInstance(GlobalAPI.pathManager.getMapItemBackPath(), backComplete);
+			GlobalAPI.loaderManager.getBitmapInstance(GlobalAPI.pathManager.getMapItemBack2Path(), back2Complete);
+			GlobalAPI.loaderManager.getBitmapInstance(GlobalAPI.pathManager.getMapItemLockPath(), lockBitmapComplete);
+		}
+		
+		public function setEnable(enable:Boolean):void
+		{
+			_mapEnable = enable;
+			disableBack.visible = !enable;
+			back.visible = enable;
+			numSpriteContainer.visible = enable;
+			lockBitmap.visible = !enable;
+		}
+		
+		public function getEnable():Boolean
+		{
+			return _mapEnable;
 		}
 		
 		override public function set data(v:*):void
@@ -56,7 +84,7 @@ package centaur.display.ui.map
 				numSprite = null;
 			}
 			numSprite = NumberCache.getNumber(_num, NumberType.MIDDLE_WHITE_NUMBER);
-			addChild(numSprite);
+			numSpriteContainer.addChild(numSprite);
 			layout();
 		}
 		
@@ -66,12 +94,34 @@ package centaur.display.ui.map
 			layout();
 		}
 		
+		private function back2Complete(data:BitmapData):void
+		{
+			disableBack.bitmapData = data;
+			layout();
+		}
+		
+		private function lockBitmapComplete(data:BitmapData):void
+		{
+			lockBitmap.bitmapData = data;
+			layout();
+		}
+		
 		private function layout():void
 		{
 			if (numSprite)
 			{
 				numSprite.x = (back.width - numSprite.width) * 0.5;
 				numSprite.y = (back.height - numSprite.height) * 0.5;
+			}
+			if (lockBitmap)
+			{
+				lockBitmap.x = (back.width - lockBitmap.width) * 0.5;
+				lockBitmap.y = (back.height - lockBitmap.height) * 0.5;
+			}
+			if (disableBack)
+			{
+				disableBack.x = (back.width - disableBack.width) * 0.5;
+				disableBack.y = (back.height - disableBack.height) * 0.5;
 			}
 		}
 	}
