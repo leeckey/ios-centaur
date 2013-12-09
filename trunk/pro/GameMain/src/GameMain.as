@@ -115,6 +115,7 @@ package
 			GlobalData.mainPlayerInfo.totalAttack = 1234;
 			GlobalData.mainPlayerInfo.totalBody = 58;
 			GlobalData.mainPlayerInfo.maxCombatCard = 6;
+			GlobalData.mainPlayerInfo.mapEnableCount = 2;
 			
 			GlobalData.mainActData = new HeroData();
 			var cardData:CardData;
