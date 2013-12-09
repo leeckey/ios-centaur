@@ -62,6 +62,11 @@ package centaur.logic.render
 			this.addEventListener(MouseEvent.CLICK, onCardClickHandler);
 		}
 		
+		public function removeEvents():void
+		{
+			this.removeEventListener(MouseEvent.CLICK, onCardClickHandler);
+		}
+		
 		protected function onCardClickHandler(e:MouseEvent):void
 		{
 			if (_cardObj)

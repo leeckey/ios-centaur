@@ -27,12 +27,22 @@ package centaur.manager
 		
 		public function getMapBackgroundPath(mapID:uint):String
 		{
-			return GlobalData.asite + "assets/ui/map/" + mapID + "/back.png";	
+			return GlobalData.asite + "assets/ui/map/" + mapID + "/back.jpg";	
 		}
 		
 		public function getMapItemBackPath():String
 		{
-			return GlobalData.asite + "assets/ui/map/mapbtn.png";	
+			return GlobalData.asite + "assets/ui/map/mapbtn.png";
+		}
+		
+		public function getMapItemBack2Path():String
+		{
+			return GlobalData.asite + "assets/ui/map/mapbtnback.png";
+		}
+		
+		public function getMapItemLockPath():String
+		{
+			return GlobalData.asite + "assets/ui/map/mapbtnlock.png";
 		}
 		
 		public function getMapItemPath(mapID:uint, itemIdx:uint):String

@@ -16,6 +16,7 @@ package centaur.display.ui.map
 	
 	import ghostcat.display.GBase;
 	import ghostcat.ui.UIConst;
+	import ghostcat.ui.controls.GButton;
 	import ghostcat.util.display.DisplayUtil;
 
 	/**
@@ -26,12 +27,14 @@ package centaur.display.ui.map
 		public static const MAP_COUNT:uint = 10;
 		
 		private var backUI:Sprite;		// 背景地图层
+		private var _backBitmap:Bitmap;	// 地图位图
 		private var itemUI:Sprite;		// 副本Item层
 		private var insListPanel:MobileScrollPanel;	// 地图列表
 		private var mapItemList:Array;
 		
 		private var _mapID:uint;		// 地图ID
 		private var _itemList:Array;	// Item列表
+		private var _returnBtn:GButton;
 		
 		public function MapPanel()
 		{
@@ -53,29 +56,46 @@ package centaur.display.ui.map
 			insListPanel = new MobileScrollPanel();
 			this.addChild(insListPanel);
 			
+			// returnBtn
+			_returnBtn = new GButton(commonReturnBtnSkin);
+			_returnBtn.addEventListener(MouseEvent.CLICK, onReturnBtnClick);
+			_returnBtn.x = 820;
+			_returnBtn.y = 510;
+			this.addChild(_returnBtn);
+			
 			mapItemList = [];
 			for (var i:int = 0; i < MAP_COUNT; ++i)
 			{
 				var item:MapItem = new MapItem();
 				item.addEventListener(MouseEvent.CLICK, onMapItemClick);
 				item.data = i + 1;
-				item.x = i * (200);
+				item.x = i * (180);
+				item.setEnable(i < GlobalData.mainPlayerInfo.mapEnableCount);
 				(insListPanel.content as Sprite).addChild(item);
 				mapItemList.push(item);
 			}
 			insListPanel.wheelDirect = UIConst.HORIZONTAL;
 			insListPanel.wheelSpeed = 1;
-			insListPanel.scrollRect = new Rectangle(0, 0, 800, 100);
-			insListPanel.x = (960 - 800) * 0.5;
+			insListPanel.scrollRect = new Rectangle(0, 0, 900, 100);
+			insListPanel.x = (960 - 180 * 5) * 0.5;
+			insListPanel.enableSmooth = true;
 			
 			_itemList = [];
 		}
 		
 		private function onMapItemClick(e:MouseEvent):void
 		{
+			if (insListPanel && insListPanel.hasScroll)
+				return;
+			
 			var item:MapItem = e.currentTarget as MapItem;
-			if (item)
+			if (item && item.getEnable())
 				this.mapID = item.data;
+		}
+		
+		private function onReturnBtnClick(e:MouseEvent):void
+		{
+			GlobalAPI.layerManager.returnLastModule();
 		}
 		
 		public function set mapID(value:uint):void
@@ -98,11 +118,12 @@ package centaur.display.ui.map
 		
 		private function onBackLoadComplete(bitmapData:BitmapData):void
 		{
-			////----wangq 地图显示资源不匹配，先放大显示
-			var bitmap:Bitmap = new Bitmap(bitmapData);
-			bitmap.x = bitmap.y = -100;
-			bitmap.scaleX = bitmap.scaleY = 3;
-			backUI.addChild(bitmap);
+			if (!_backBitmap)
+				_backBitmap = new Bitmap(bitmapData);
+			else
+				_backBitmap.bitmapData = bitmapData;
+			if (_backBitmap.parent != backUI)
+				backUI.addChild(_backBitmap);
 		}
 		
 		private function updateMapItems():void
@@ -122,7 +143,7 @@ package centaur.display.ui.map
 				var item:InsItem = _itemList[i];
 				if (!item)
 				{
-					item = new InsItem();
+					item = _itemList[i] = new InsItem();
 					itemUI.addChild(item);
 				}
 				

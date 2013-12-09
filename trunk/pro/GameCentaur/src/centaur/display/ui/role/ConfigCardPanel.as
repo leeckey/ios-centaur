@@ -62,6 +62,7 @@ package centaur.display.ui.role
 			cardScrollPanel.wheelDirect = UIConst.HORIZONTAL;
 			cardScrollPanel.wheelSpeed = 1;
 			cardScrollPanel.scrollRect = new Rectangle(0, -100, 1200, 600);
+			cardScrollPanel.enableSmooth = true;
 			
 			initCardData();
 			initCombatCardData();
@@ -89,9 +90,22 @@ package centaur.display.ui.role
 					item = cardItemList[i] = new CardMediumRender(cardObj);
 				itemWidth = item.width;
 				itemHeight = item.height;
+				
+				item.removeEvents();
+				item.addEventListener(MouseEvent.CLICK, onMediumItemClick);
 			}
 			
 			cardScrollPanel.setupContent(cardItemList, itemWidth + 2, itemHeight);
+		}
+		
+		private function onMediumItemClick(e:MouseEvent):void
+		{
+			if (cardScrollPanel && cardScrollPanel.hasScroll)
+				return;
+			
+			var item:CardMediumRender = e.currentTarget as CardMediumRender;
+			if (item && item.cardObj)
+				GlobalData.popupCardDetailPanel(item.cardObj);
 		}
 		
 		/**
