@@ -3,6 +3,7 @@ package centaur.logic.skills
 	import centaur.data.card.CardData;
 	import centaur.data.card.CardEnumDefines;
 	import centaur.data.skill.SkillData;
+	import centaur.data.skill.SkillDataList;
 	import centaur.data.skill.SkillEnumDefines;
 	import centaur.logic.act.BaseActObj;
 	import centaur.logic.act.BaseCardObj;
@@ -10,7 +11,9 @@ package centaur.logic.skills
 	import centaur.logic.buff.BaseBuff;
 	import centaur.logic.combat.CombatLogic;
 	import centaur.utils.Utils;
-
+	
+	import flash.utils.getDefinitionByName;
+	
 	/**
 	 * 技能基类 
 	 * @author minnie
@@ -97,6 +100,24 @@ package centaur.logic.skills
 			
 			if (card != null)
 				registerCard(card);
+		}
+		
+		
+		/**
+		 * 根据ID获取技能对象 
+		 * @param id
+		 * @return 
+		 * 
+		 */		
+		public static function getSkillByID(card:BaseCardObj, skillID:int, skillPara:Array):BaseSkill
+		{
+			var data:SkillData = SkillDataList.getSkillData(skillID);
+			var skillName:String = "centaur.logic.skills.Skill_" + data.templateID.toString();
+			var skill:Class= getDefinitionByName(skillName) as Class;
+			if (skill != null)	
+				return new skill(data, card, skillPara);
+			
+			return null;
 		}
 		
 		/**

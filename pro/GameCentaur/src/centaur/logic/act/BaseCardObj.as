@@ -146,54 +146,25 @@ package centaur.logic.act
 				var skillData:SkillData = null;
 				var skill:BaseSkill = null;
 				if (skillID > 0)
-				{
-					skills.push(GetSkillByID(SkillDataList.getSkillData(skillID), []));
-				}
+					skills.push(BaseSkill.getSkillByID(this, skillID, []));
 				
 				skillID = cardTemplateData.skill1ID;
 				if (skillID > 0)
-				{
-					skillData = SkillDataList.getSkillData(skillID);
-					if (skillData)
-						skills.push(GetSkillByID(skillData, cardTemplateData.skill1Para));
-				}
+					skills.push(BaseSkill.getSkillByID(this, skillID, cardTemplateData.skill1Para));
 				
 				skillID = cardTemplateData.skill2ID;
 				if (skillID > 0)
-				{
-					skillData = SkillDataList.getSkillData(skillID);
-					if (skillData)
-						skills.push(GetSkillByID(skillData, cardTemplateData.skill2Para));
-				}
+					skills.push(BaseSkill.getSkillByID(this, skillID, cardTemplateData.skill2Para));
 				
 				skillID = cardTemplateData.skill3ID;
 				if (skillID > 0)
-				{
-					skillData = SkillDataList.getSkillData(skillID);
-					if (skillData)
-						skills.push(GetSkillByID(skillData, cardTemplateData.skill3Para));
-				}
+					skills.push(BaseSkill.getSkillByID(this, skillID, cardTemplateData.skill3Para));
 			}
 			
 			resetCombatData();
 			this.dispatchEvent(CardEvent.EventFactory(CardEvent.ON_INITIALIZE, this));
 		}
 		
-		/**
-		 * 根据ID获取技能对象 
-		 * @param id
-		 * @return 
-		 * 
-		 */		
-		public function GetSkillByID(data:SkillData, skillPara:Array):BaseSkill
-		{
-			var skillID:String = "centaur.logic.skills.Skill_" + data.templateID.toString();
-			var skill:Class= getDefinitionByName(skillID) as Class;
-			if (skill != null)	
-				return new skill(data, this, skillPara);
-			
-			return null;
-		}
 		
 		/**
 		 * 增加一个buff 
