@@ -77,7 +77,7 @@ package centaur.display.ui.role
 			var cardObjList:Array = GlobalData.mainActObj.cardObjList;
 			if (!cardObjList)
 				return;
-			
+			var combatIdxList:Array = GlobalData.mainActData.combatCardIdxList;
 			var itemWidth:Number;
 			var itemHeight:Number;
 			cardItemList = [];
@@ -91,6 +91,9 @@ package centaur.display.ui.role
 				itemWidth = item.width;
 				itemHeight = item.height;
 				
+				// 是否被选中
+				var selected:Boolean = (combatIdxList && combatIdxList.indexOf(i) != -1);
+				item.setSelectState(selected);
 				item.removeEvents();
 				item.addEventListener(MouseEvent.CLICK, onMediumItemClick);
 			}
