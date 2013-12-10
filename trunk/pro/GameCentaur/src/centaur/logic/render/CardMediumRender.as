@@ -23,6 +23,7 @@ package centaur.logic.render
 	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 	
+	import ghostcat.display.GBase;
 	import ghostcat.ui.controls.GText;
 
 	/**
@@ -228,6 +229,24 @@ package centaur.logic.render
 			_raceBitmap = null;
 				
 			super.destory();
+		}
+		
+		private var _selectSkin:GBase;
+		public function setSelectState(select:Boolean):void
+		{
+			if (select)
+			{
+				if (!_selectSkin)
+				{
+					_selectSkin = new GBase(SelectStateSkin);
+					_selectSkin.x = this.width - _selectSkin.width;
+					_selectSkin.y = this.height - _selectSkin.height - 30;
+					this.addChild(_selectSkin);
+				}
+				_selectSkin.visible = true;
+			}
+			else if (_selectSkin)
+				_selectSkin.visible = false;
 		}
 	}
 }
