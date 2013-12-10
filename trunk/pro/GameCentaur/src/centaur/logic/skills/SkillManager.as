@@ -16,7 +16,7 @@ package centaur.logic.skills
 										Skill_200, Skill_201, Skill_202, Skill_203, Skill_204, Skill_205, Skill_206, 
 										Skill_207, Skill_208, Skill_209, Skill_210, Skill_211, Skill_212, Skill_213,
 										Skill_214, Skill_215, Skill_216, Skill_217, Skill_218, Skill_219, Skill_220,
-										Skill_221, Skill_222, Skill_223,Skill_224];
+										Skill_221, Skill_222, Skill_223, Skill_224, Skill_225, Skill_226];
 		
 		private var buffCladd:Array = [ Buff_100, Buff_101, Buff_102 ];
 		

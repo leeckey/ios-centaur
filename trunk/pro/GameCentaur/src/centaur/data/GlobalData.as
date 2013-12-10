@@ -71,11 +71,12 @@ package centaur.data
 			var actDataA:HeroData = new HeroData();	// 角色卡组
 			var cardData:CardData;
 			actDataA.cardList = [];
-			actDataA.maxHP = 6000;
-			for (var i:int = 16; i <= 20; i++)
+			actDataA.maxHP = 8000;
+			for (var i:int = 21; i <= 30; i++)
 			{
 				cardData = new CardData();
 				cardData.templateID = i;
+				cardData.lv = 10;
 				cardData.update();
 				actDataA.cardList.push(cardData);
 			}
