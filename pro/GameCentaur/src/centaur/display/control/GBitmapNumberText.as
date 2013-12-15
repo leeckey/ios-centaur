@@ -51,14 +51,20 @@ package centaur.display.control
 			else
 			{
 				_lastVal = _numberVal = num;
-				updateNumber(_numberVal);
+				updateNumber(_numberVal.toString());
 			}
+		}
+		
+		public function setStrNumber(numStr:String, type:int):void
+		{
+			_type = type;
+			updateNumber(numStr);
 		}
 		
 		/**
 		 *   根据数字的值更新显示
 		 */ 
-		private function updateNumber(num:int):void
+		private function updateNumber(num:String):void
 		{
 			if (_numSprite)
 				NumberCache.recycle(_numSprite);
@@ -92,7 +98,7 @@ package centaur.display.control
 				return;
 			}
 			
-			updateNumber(int(numObj.num));
+			updateNumber(int(numObj.num).toString());
 		}
 		
 		override public function destory():void

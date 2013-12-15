@@ -66,7 +66,10 @@ package centaur.utils
 			new MiddleNum6(),
 			new MiddleNum7(),
 			new MiddleNum8(),
-			new MiddleNum9()
+			new MiddleNum9(),
+			null,				// “-”
+			null,				// “+”
+			new MiddleNumXG()	// “/”
 		];
 		
 		public static var _fightPowerWordAsset:BitmapData = null;		// 战斗力		
@@ -133,7 +136,7 @@ package centaur.utils
 			_poolBitmap.length = 0;
 		}
 		/*******************************/
-		public static function getNumber(value:int,type:int,color:String = ""):Sprite
+		public static function getNumber(value:String,type:int,color:String = ""):Sprite
 		{
 			var t:String = value.toString();
 //			if(type != NumberType.FIGHT_CHANGE_CUR && type != NumberType.PERSONCHOP)			// 战斗力不加		人斩也不加
@@ -426,6 +429,7 @@ package centaur.utils
 				case "9":return 9;
 				case "-":return 10;
 				case "+":return 11;
+				case "/":return 12;
 			}
 			return 0;
 		}

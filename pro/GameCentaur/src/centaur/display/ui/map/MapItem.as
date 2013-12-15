@@ -83,7 +83,7 @@ package centaur.display.ui.map
 					numSprite.parent.removeChild(numSprite);
 				numSprite = null;
 			}
-			numSprite = NumberCache.getNumber(_num, NumberType.MIDDLE_WHITE_NUMBER);
+			numSprite = NumberCache.getNumber(_num.toString(), NumberType.MIDDLE_WHITE_NUMBER);
 			numSpriteContainer.addChild(numSprite);
 			layout();
 		}
