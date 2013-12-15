@@ -3,6 +3,7 @@ package centaur.display.ui.mainui
 	import centaur.data.GlobalAPI;
 	import centaur.data.GlobalData;
 	import centaur.display.control.GBitmapNumberText;
+	import centaur.display.control.GImageProgress;
 	import centaur.display.ui.map.MapPanel;
 	import centaur.display.ui.role.RoleCardPanel;
 	import centaur.utils.NumberType;
@@ -31,6 +32,8 @@ package centaur.display.ui.mainui
 		public var diamondTxt:GBitmapNumberText;
 		public var moneyTxt:GBitmapNumberText;
 		public var addVigourBtn:GButton;
+		public var bodyText:GBitmapNumberText;
+		public var bodyProgress:GImageProgress;
 		
 		public function MainPanel()
 		{
@@ -53,6 +56,10 @@ package centaur.display.ui.mainui
 			nameTxt.text = String(GlobalData.mainPlayerInfo.name);
 			diamondTxt.setNumber(GlobalData.mainPlayerInfo.diamond, NumberType.MIDDLE_WHITE_NUMBER);
 			moneyTxt.setNumber(GlobalData.mainPlayerInfo.money, NumberType.MIDDLE_WHITE_NUMBER);
+			bodyText.setStrNumber(GlobalData.mainPlayerInfo.totalBody + "/" + GlobalData.mainPlayerInfo.maxBody, NumberType.MIDDLE_WHITE_NUMBER);
+			var precent:Number = GlobalData.mainPlayerInfo.totalBody / GlobalData.mainPlayerInfo.maxBody;
+			if (precent > 1) precent = 1;
+			bodyProgress.setprogress(precent);
 		}
 		
 		private function initHead():void

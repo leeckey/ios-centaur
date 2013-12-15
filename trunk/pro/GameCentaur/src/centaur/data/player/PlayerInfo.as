@@ -24,6 +24,7 @@ package centaur.data.player
 		public var cardTeam:int;				// 当前卡组号
 		public var totalAttack:int;				// 总攻击力
 		public var totalBody:int;				// 体力
+		public var maxBody:int;					// 最大体力
 		public var mapEnableCount:int;			// 当前地图开启最大数量
 		
 		public var maxCombatCard:int;			// 最大上场卡牌数量
