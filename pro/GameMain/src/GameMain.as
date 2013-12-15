@@ -114,6 +114,7 @@ package
 			GlobalData.mainPlayerInfo.cardTeam = 1;
 			GlobalData.mainPlayerInfo.totalAttack = 1234;
 			GlobalData.mainPlayerInfo.totalBody = 58;
+			GlobalData.mainPlayerInfo.maxBody = 70;
 			GlobalData.mainPlayerInfo.maxCombatCard = 6;
 			GlobalData.mainPlayerInfo.mapEnableCount = 2;
 			
