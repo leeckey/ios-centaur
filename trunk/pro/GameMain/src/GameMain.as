@@ -117,6 +117,7 @@ package
 			GlobalData.mainPlayerInfo.maxBody = 70;
 			GlobalData.mainPlayerInfo.maxCombatCard = 6;
 			GlobalData.mainPlayerInfo.mapEnableCount = 2;
+			GlobalData.mainPlayerInfo.insStarLvList = [NaN, 3, 2, 1, 0, 2];		// 模拟副本星级数据
 			
 			GlobalData.mainActData = new HeroData();
 			var cardData:CardData;
