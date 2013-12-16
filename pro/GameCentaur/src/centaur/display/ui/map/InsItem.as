@@ -29,6 +29,8 @@ package centaur.display.ui.map
 		public var insIdx:uint;
 		private var _insMapID:uint;
 		private var _insMapData:InsMapData;
+		private var _starLv:int = 0;
+		private var _starItemList:Array;
 		
 		public function InsItem()
 		{
@@ -69,7 +71,6 @@ package centaur.display.ui.map
 				
 				this.invalidateDisplayList()
 			}
-			
 		}
 		
 		override protected function updateDisplayList():void
@@ -83,8 +84,43 @@ package centaur.display.ui.map
 		{
 			insMapNameText.text = _insMapData ? _insMapData.name : "";
 			insMapIdxText.text = _insMapData ? (mapID + "_" + insIdx) : "";
+			updateStarLv();
 			
 			GlobalAPI.loaderManager.getBitmapInstance(GlobalAPI.pathManager.getMapItemPath(mapID, insIdx), onItemBackComplete);
+		}
+		
+		private function updateStarLv():void
+		{
+			if (!_starItemList) _starItemList = [];
+			var starLvList:Array = GlobalData.mainPlayerInfo.insStarLvList;
+			var starLv:int = starLvList ? int(starLvList[_insMapID]) : 0;
+			var totalWidth:Number;
+			for (var i:int = 0; i < starLv; ++i)
+			{
+				var item:GBase = _starItemList[i];
+				if (!item)
+				{
+					item = _starItemList[i] = new GBase(InsStarSkin);
+					InsMapStarLv.addChild(item);
+				}
+				
+				totalWidth = starLv * item.width;
+				var segWidth:Number = totalWidth / starLv;
+				var offset:Number = (segWidth - item.width) * 0.5;
+				item.x = segWidth * i + offset - totalWidth * 0.5;
+				item.y = -item.height * 0.5;
+			}
+			
+			// 清楚掉多余
+			var endIdx:int = i;
+			var len:int = _starItemList.length;
+			for (i = endIdx; i < len; ++i)
+			{
+				var disposeItem:GBase = _starItemList[i];
+				if (disposeItem && disposeItem.parent)
+					disposeItem.parent.removeChild(disposeItem);
+			}
+			_starItemList.length = endIdx;
 		}
 		
 		private function onItemBackComplete(data:BitmapData):void
