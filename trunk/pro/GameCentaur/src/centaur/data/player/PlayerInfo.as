@@ -28,6 +28,7 @@ package centaur.data.player
 		public var mapEnableCount:int;			// 当前地图开启最大数量
 		
 		public var maxCombatCard:int;			// 最大上场卡牌数量
+		public var insStarLvList:Array;			// 记录主角每个副本的通关星级
 		
 		public function PlayerInfo()
 		{
