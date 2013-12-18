@@ -2,13 +2,11 @@ package centaur.display.ui.map
 {
 	import centaur.data.GlobalAPI;
 	import centaur.data.GlobalData;
-	import centaur.data.GlobalEventDispatcher;
 	import centaur.data.act.InsMapData;
 	import centaur.data.act.InsMapDataList;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import ghostcat.display.GBase;
@@ -29,6 +27,9 @@ package centaur.display.ui.map
 		public var insIdx:uint;
 		private var _insMapID:uint;
 		private var _insMapData:InsMapData;
+		private var _insMapIDList:Array;
+		private var _insMapDataList:Array;
+		
 		private var _starLv:int = 0;
 		private var _starItemList:Array;
 		
@@ -66,11 +67,58 @@ package centaur.display.ui.map
 			{
 				super.data = v;
 				
-				_insMapID = v;
-				_insMapData = InsMapDataList.getInsMapData(_insMapID);
+				if (v is String)
+					_insMapIDList = (v as String).split("_");
+				else if (v is Array)
+					_insMapIDList = v as Array;
+				else
+					_insMapIDList = null;
+				_insMapID = _insMapIDList ? _insMapIDList[0] : 0;
 				
-				this.invalidateDisplayList()
+				// 更新副本数据列表
+				updateInsMapDataList();
+				_insMapData = _insMapDataList ? _insMapDataList[0] : null;
+				
+				// 计算当前完成星级
+				updateStarLv();
+				
+				this.invalidateDisplayList();
 			}
+		}
+		
+		private function updateInsMapDataList():void
+		{
+			if (!_insMapIDList)
+			{
+				_insMapDataList = null;
+				return;
+			}
+			
+			_insMapDataList = [];
+			var len:int = _insMapIDList.length;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var insID:uint = _insMapIDList[i] as uint;
+				_insMapDataList[i] = InsMapDataList.getInsMapData(insID);
+			}
+		}
+		
+		private function updateStarLv():void
+		{
+			_starLv = 0;
+			if (!GlobalData.mainPlayerInfo.insFinishList)
+				return;
+				
+			var allFinishIns:Array = GlobalData.mainPlayerInfo.insFinishList;
+			var len:int = _insMapIDList.length;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var insID:uint = _insMapIDList[i];
+				if (allFinishIns.indexOf(insID) != -1)
+					break;
+			}
+			
+			_starLv = (i < len) ? (i + 1) : 0;
 		}
 		
 		override protected function updateDisplayList():void
@@ -84,18 +132,16 @@ package centaur.display.ui.map
 		{
 			insMapNameText.text = _insMapData ? _insMapData.name : "";
 			insMapIdxText.text = _insMapData ? (mapID + "_" + insIdx) : "";
-			updateStarLv();
+			updateStarLvDisplay();
 			
 			GlobalAPI.loaderManager.getBitmapInstance(GlobalAPI.pathManager.getMapItemPath(mapID, insIdx), onItemBackComplete);
 		}
 		
-		private function updateStarLv():void
+		private function updateStarLvDisplay():void
 		{
 			if (!_starItemList) _starItemList = [];
-			var starLvList:Array = GlobalData.mainPlayerInfo.insStarLvList;
-			var starLv:int = starLvList ? int(starLvList[_insMapID]) : 0;
 			var totalWidth:Number;
-			for (var i:int = 0; i < starLv; ++i)
+			for (var i:int = 0; i < _starLv; ++i)
 			{
 				var item:GBase = _starItemList[i];
 				if (!item)
@@ -104,8 +150,8 @@ package centaur.display.ui.map
 					InsMapStarLv.addChild(item);
 				}
 				
-				totalWidth = starLv * item.width;
-				var segWidth:Number = totalWidth / starLv;
+				totalWidth = _starLv * item.width;
+				var segWidth:Number = totalWidth / _starLv;
 				var offset:Number = (segWidth - item.width) * 0.5;
 				item.x = segWidth * i + offset - totalWidth * 0.5;
 				item.y = -item.height * 0.5;
