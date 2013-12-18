@@ -1,5 +1,6 @@
 package centaur.data
 {
+	import centaur.data.act.ActData;
 	import centaur.data.act.HeroData;
 	import centaur.data.act.InsMapData;
 	import centaur.data.card.CardData;
@@ -66,7 +67,7 @@ package centaur.data
 			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.DETAIL_CARD_HIDE));
 		}
 		
-		public static function forTestCombat(actDataB:InsMapData):void
+		public static function forTestCombat(actDataB:ActData):void
 		{
 			var actDataA:HeroData = new HeroData();	// 角色卡组
 			var cardData:CardData;

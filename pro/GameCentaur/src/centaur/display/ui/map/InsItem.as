@@ -55,9 +55,9 @@ package centaur.display.ui.map
 		
 		private function onMouseClick(e:MouseEvent):void
 		{
-			InsCombatPanel.instance.data = _insMapID;
 			InsCombatPanel.instance.mapID = this.mapID;
 			InsCombatPanel.instance.insIdx = this.insIdx;
+			InsCombatPanel.instance.setInsData(this._insMapIDList, this._insMapDataList);
 			GlobalAPI.layerManager.setModuleContent(InsCombatPanel.instance);
 		}
 		
@@ -98,27 +98,14 @@ package centaur.display.ui.map
 			var len:int = _insMapIDList.length;
 			for (var i:int = 0; i < len; ++i)
 			{
-				var insID:uint = _insMapIDList[i] as uint;
+				var insID:uint = uint(_insMapIDList[i]);
 				_insMapDataList[i] = InsMapDataList.getInsMapData(insID);
 			}
 		}
 		
 		private function updateStarLv():void
 		{
-			_starLv = 0;
-			if (!GlobalData.mainPlayerInfo.insFinishList)
-				return;
-				
-			var allFinishIns:Array = GlobalData.mainPlayerInfo.insFinishList;
-			var len:int = _insMapIDList.length;
-			for (var i:int = 0; i < len; ++i)
-			{
-				var insID:uint = _insMapIDList[i];
-				if (allFinishIns.indexOf(insID) != -1)
-					break;
-			}
-			
-			_starLv = (i < len) ? (i + 1) : 0;
+			_starLv = GlobalData.mainPlayerInfo.calcInsStarLv(_insMapIDList);
 		}
 		
 		override protected function updateDisplayList():void
