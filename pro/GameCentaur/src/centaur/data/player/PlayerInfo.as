@@ -29,6 +29,7 @@ package centaur.data.player
 		
 		public var maxCombatCard:int;			// 最大上场卡牌数量
 		public var insStarLvList:Array;			// 记录主角每个副本的通关星级
+		public var insFinishList:Array;			// 记录主角通关的所有副本ID
 		
 		public function PlayerInfo()
 		{
