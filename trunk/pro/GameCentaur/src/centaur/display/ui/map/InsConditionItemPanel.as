@@ -8,9 +8,20 @@ package centaur.display.ui.map
 		public var extraShape:GBase;
 		public var finishShape:GBase;
 		
+		private var _finish:Boolean;
+		
 		public function InsConditionItemPanel(skin:* = null, replace:Boolean = true)
 		{
 			super(skin, replace);
+		}
+		
+		public function setFinish(finish:Boolean):void
+		{
+			_finish = finish;
+			if (extraShape)
+				extraShape.visible = !_finish;
+			if (finishShape)
+				finishShape.visible = _finish;
 		}
 	}
 }

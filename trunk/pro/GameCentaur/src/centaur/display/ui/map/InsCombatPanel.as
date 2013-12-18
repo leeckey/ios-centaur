@@ -3,6 +3,7 @@ package centaur.display.ui.map
 	import centaur.data.GlobalAPI;
 	import centaur.data.GlobalData;
 	import centaur.data.GlobalEventDispatcher;
+	import centaur.data.act.ActData;
 	import centaur.data.act.InsMapData;
 	import centaur.data.act.InsMapDataList;
 	
@@ -37,9 +38,10 @@ package centaur.display.ui.map
 		
 		public var mapID:uint;
 		public var insIdx:uint;
+		private var insIDList:Array;
+		private var insDataList:Array;
+		private var _starLv:uint;
 		private var _nameText:Bitmap;
-		private var _insMapID:uint;
-		private var _insMapData:InsMapData;
 		
 		private static var _instance:InsCombatPanel;
 		public static function get instance():InsCombatPanel
@@ -60,22 +62,23 @@ package centaur.display.ui.map
 			addEvents();
 		}
 		
-		override public function set data(v:*):void
+		public function setInsData(insIDList:Array, insDataList:Array):void
 		{
-			if (super.data != v)
-			{
-				super.data = v;
-				
-				_insMapID = v;
-				_insMapData = InsMapDataList.getInsMapData(_insMapID);
+			this.insIDList = insIDList;
+			this.insDataList = insDataList;
 			
-				this.invalidateDisplayList();
-			}
+			this.invalidateDisplayList();
 		}
 		
 		override protected function updateDisplayList():void
 		{
 			super.updateDisplayList();
+			
+			_starLv = GlobalData.mainPlayerInfo.calcInsStarLv(this.insIDList);
+			simpleInsItem.setFinish(_starLv > 0);
+			normalInsItem.setFinish(_starLv > 1);
+			hardInsItem.setFinish(_starLv > 2);
+			// 三星的话，战斗按钮不显示 ADD TO
 			
 			GlobalAPI.loaderManager.getBitmapInstance(GlobalAPI.pathManager.getMapItemNamePath(mapID, insIdx), nameBitmapComplete);
 		}
@@ -91,18 +94,64 @@ package centaur.display.ui.map
 		{
 			combatBtn.addEventListener(MouseEvent.CLICK, onCombatBtnClick);
 			returnBtn.addEventListener(MouseEvent.CLICK, onReturnBtnClick);
+			
+			simpleInsItem.addEventListener(MouseEvent.CLICK, onSimpleInsClick);
+			normalInsItem.addEventListener(MouseEvent.CLICK, onNormalInsClick);
+			hardInsItem.addEventListener(MouseEvent.CLICK, onHardInsClick);
 		}
 		
 		private function removeEvents():void
 		{
 			combatBtn.removeEventListener(MouseEvent.CLICK, onCombatBtnClick);
 			returnBtn.removeEventListener(MouseEvent.CLICK, onReturnBtnClick);
+			
+			simpleInsItem.removeEventListener(MouseEvent.CLICK, onSimpleInsClick);
+			normalInsItem.removeEventListener(MouseEvent.CLICK, onNormalInsClick);
+			hardInsItem.removeEventListener(MouseEvent.CLICK, onHardInsClick);
+		}
+		
+		private function onSimpleInsClick(e:MouseEvent):void
+		{
+			gotoCombatByIndex(0);
+		}
+		
+		private function onNormalInsClick(e:MouseEvent):void
+		{
+			gotoCombatByIndex(1);
+		}
+		
+		private function onHardInsClick(e:MouseEvent):void
+		{
+			gotoCombatByIndex(2);
 		}
 		
 		private function onCombatBtnClick(e:MouseEvent):void
 		{
-			if (_insMapData)
-				GlobalData.forTestCombat(_insMapData);
+			_starLv = GlobalData.mainPlayerInfo.calcInsStarLv(this.insIDList);
+			if (_starLv >= 3)
+				return;
+			
+			gotoCombatByIndex(_starLv);
+		}
+		
+		private function gotoCombatByIndex(idx:int):void
+		{
+			var insID:uint = insIDList ? uint(insIDList[idx]) : 0;
+			if (insID <= 0)
+				return;
+			
+			var hasFinish:Boolean = GlobalData.mainPlayerInfo.insFinishList.indexOf(insID) != -1;
+			if (hasFinish)
+				return;
+			
+			var insData:InsMapData = InsMapDataList.getInsMapData(insID);
+			gotoCombat(insData);
+		}
+		
+		private function gotoCombat(actData:ActData):void
+		{
+			if (actData)
+				GlobalData.forTestCombat(actData);
 		}
 		
 		private function onReturnBtnClick(e:MouseEvent):void

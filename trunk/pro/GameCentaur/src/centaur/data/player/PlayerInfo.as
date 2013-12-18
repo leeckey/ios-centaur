@@ -28,7 +28,6 @@ package centaur.data.player
 		public var mapEnableCount:int;			// 当前地图开启最大数量
 		
 		public var maxCombatCard:int;			// 最大上场卡牌数量
-		public var insStarLvList:Array;			// 记录主角每个副本的通关星级
 		public var insFinishList:Array;			// 记录主角通关的所有副本ID
 		
 		public function PlayerInfo()
@@ -50,6 +49,25 @@ package centaur.data.player
 			this.vigour = data.Vigour;
 			this.exp = data.Exp;
 			this.lastUpdateTime = data.LastUpdateTime;
+		}
+		
+		public function calcInsStarLv(insIDList:Array):uint
+		{
+			var starLv:uint = 0;
+			if (!insFinishList)
+				return starLv;
+			
+			var len:int = insIDList.length;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var insID:uint = insIDList[i];
+				if (insFinishList.indexOf(insID) == -1)
+					break;
+			}
+			
+			starLv = i;
+			if (starLv > 3) starLv = 3;
+			return starLv;
 		}
 	}
 }
