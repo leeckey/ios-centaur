@@ -81,7 +81,6 @@ package centaur.display.ui.combat
 		{
 			this.visible = true;
 			_combatPaused = false;
-			GlobalAPI.layerManager.returnLastModule();
 		}
 		
 		public function startPlay(resultData:CombatResultData):void

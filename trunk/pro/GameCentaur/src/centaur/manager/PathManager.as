@@ -17,7 +17,12 @@ package centaur.manager
 		
 		public function getCardBodyByID(id:uint):String
 		{
-			return GlobalData.asite + "assets/ui/Card/" + id + ".png";
+			return GlobalData.asite + "assets/ui/Card/" + id + ".jpg";
+		}
+		
+		public function getCardDetailBodyByID(id:uint):String
+		{
+			return GlobalData.asite + "assets/ui/DetailCard/" + id + ".jpg";
 		}
 		
 		public function getRoundActionEffectPath():String

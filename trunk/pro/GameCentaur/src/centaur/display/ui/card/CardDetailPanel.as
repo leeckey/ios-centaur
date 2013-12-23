@@ -7,6 +7,7 @@ package centaur.display.ui.card
 	import centaur.data.skill.SkillData;
 	import centaur.data.skill.SkillDataList;
 	import centaur.logic.act.BaseCardObj;
+	import centaur.logic.render.CardDetailRender;
 	import centaur.logic.render.CardMediumRender;
 	
 	import flash.events.Event;
@@ -24,7 +25,7 @@ package centaur.display.ui.card
 		public var configBtn:GButton;
 		public var discriptionText:GText;
 		
-		private var _mediumRender:CardMediumRender;
+		private var _detailRender:CardDetailRender;
 		
 		private var _cardData:BaseCardObj;
 		
@@ -58,12 +59,10 @@ package centaur.display.ui.card
 		
 		private function updateCardDisplay():void
 		{
-			if (_mediumRender)
-				_mediumRender.destory();
-			_mediumRender = new CardMediumRender(_cardData);
-			cardPanel.addChild(_mediumRender);
-			_mediumRender.scaleX = cardPanel.width / _mediumRender.width;
-			_mediumRender.scaleY = cardPanel.height / _mediumRender.height;
+			if (_detailRender)
+				_detailRender.destory();
+			_detailRender = new CardDetailRender(_cardData);
+			cardPanel.addChild(_detailRender);
 			
 			updateDiscription();
 		}
