@@ -71,8 +71,11 @@ package centaur.logic.render
 		
 		override protected function setup():void
 		{
+			if (!_cardObj)
+				return;
+			
 			// 优先添加卡牌种族背景,先随机测试，到时读取配置表
-			_raceBitmap = new Bitmap(GlobalAPI.loaderManager.getBitmapByClass(EmbedAssetManager.getCardRace(Math.random() * 4)));
+			_raceBitmap = new Bitmap(GlobalAPI.loaderManager.getBitmapByClass(EmbedAssetManager.getCardRace(_cardObj.cardData.country)));
 			addChildAt(_raceBitmap, 0);
 			
 			_width = _raceBitmap.width;

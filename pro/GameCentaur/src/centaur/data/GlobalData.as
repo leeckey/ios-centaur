@@ -52,7 +52,6 @@ package centaur.data
 			
 			if (!detailCardPanel.parent)
 				GlobalAPI.layerManager.setModuleContent(detailCardPanel);
-			
 			detailCardPanel.cardData = cardData;
 			
 			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.DETAIL_CARD_SHOW));

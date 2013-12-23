@@ -14,6 +14,7 @@ package centaur.data.card
 		public var maxWaitRound:uint;		    // 等待区时的最大等待轮数
 		public var starLv:uint;				    // 卡牌的星级
 		public var country:uint;                // 卡牌的势力
+		public var cost:int;					// 卡牌cost值
 		
 		public var normolAttID:int;             // 普通攻击技能ID
 		
