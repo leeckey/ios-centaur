@@ -32,7 +32,7 @@ package centaur.manager
 		
 		public function getMapBackgroundPath(mapID:uint):String
 		{
-			return GlobalData.asite + "assets/ui/map/" + mapID + "/back.jpg";	
+			return GlobalData.asite + "assets/ui/map/back/" + mapID + ".jpg";
 		}
 		
 		public function getMapItemBackPath():String
