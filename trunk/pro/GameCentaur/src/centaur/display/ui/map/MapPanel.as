@@ -150,8 +150,8 @@ package centaur.display.ui.map
 				item.data = itemData;
 				item.mapID = _mapID;
 				item.insIdx = i + 1;
-				item.x = itemPos.x;
-				item.y = itemPos.y;
+				item.x = itemPos.x - item.width * 0.5;
+				item.y = itemPos.y - item.height * 0.5;
 			}
 			
 			var itemUILen:int = _itemList.length;

@@ -121,7 +121,7 @@ package centaur.display.ui.map
 			insMapIdxText.text = _insMapData ? (mapID + "_" + insIdx) : "";
 			updateStarLvDisplay();
 			
-			GlobalAPI.loaderManager.getBitmapInstance(GlobalAPI.pathManager.getMapItemPath(mapID, insIdx), onItemBackComplete);
+//			GlobalAPI.loaderManager.getBitmapInstance(GlobalAPI.pathManager.getMapItemPath(mapID, insIdx), onItemBackComplete);
 		}
 		
 		private function updateStarLvDisplay():void
