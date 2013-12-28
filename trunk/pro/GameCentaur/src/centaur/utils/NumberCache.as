@@ -72,6 +72,22 @@ package centaur.utils
 			new MiddleNumXG()	// “/”
 		];
 		
+		private static var _goldNumberSource:Array = [
+			new GoldNum0(),
+			new GoldNum1(),
+			new GoldNum2(),
+			new GoldNum3(),
+			new GoldNum4(),
+			new GoldNum5(),
+			new GoldNum6(),
+			new GoldNum7(),
+			new GoldNum8(),
+			new GoldNum9()//,
+//			null,				// “-”
+//			null,				// “+”
+//			new MiddleNumXG()	// “/”
+		];
+		
 		public static var _fightPowerWordAsset:BitmapData = null;		// 战斗力		
 		private static var _whiteCriticalHitAsset:BitmapData = null;	//白色暴击字
 		private static var _orangeCriticalHitAsset:BitmapData = null;	//橙色暴击字
@@ -468,6 +484,8 @@ package centaur.utils
 					return _smallNumberSource;	
 				case NumberType.MIDDLE_WHITE_NUMBER:	// 白色中等数字
 					return _middleNumberSource;	
+				case NumberType.GOLD_NUMBER:
+					return _goldNumberSource;
 				case NumberType.FIGHT_CHANGE_CUR:			// 金色
 					return _glodNumberSource;
 				case NumberType.FIGHT_CHANGE_PLUS:			// 绿色

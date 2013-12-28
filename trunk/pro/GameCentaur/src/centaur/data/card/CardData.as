@@ -6,7 +6,7 @@ package centaur.data.card
 	public final class CardData
 	{
 		public var templateID:uint;			// 模板ID
-		public var lv:uint = 1;					// 卡牌等级
+		public var lv:uint = 0;					// 卡牌等级
 		public var maxHP:uint;				    // 最大血量
 		public var attack:uint;				// 基础攻击
 		public var defense:uint;			    // 基础防御

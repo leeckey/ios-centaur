@@ -113,8 +113,8 @@ package centaur.logic.render
 			var totalHP:int = templateData.baseHP + templateData.growUpHP * level;
 			var totalAttack:int = templateData.baseACK + templateData.growUpACK * level;
 			
-			costText.setNumber(templateData.cost, NumberType.MIDDLE_WHITE_NUMBER);
-			lvText.setNumber(level, NumberType.MIDDLE_WHITE_NUMBER);
+			costText.setNumber(templateData.cost, NumberType.GOLD_NUMBER);
+			lvText.setNumber(level, NumberType.GOLD_NUMBER);
 			attackText.setNumber(totalAttack, NumberType.MIDDLE_WHITE_NUMBER);
 			hpText.setNumber(totalHP, NumberType.MIDDLE_WHITE_NUMBER);
 			
