@@ -1,11 +1,13 @@
 package centaur.display.ui.card
 {
+	import centaur.data.GameDefines;
 	import centaur.data.GlobalData;
 	import centaur.data.card.CardData;
 	import centaur.data.card.CardTemplateData;
 	import centaur.data.card.CardTemplateDataList;
 	import centaur.data.skill.SkillData;
 	import centaur.data.skill.SkillDataList;
+	import centaur.display.control.GImageProgress;
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.render.CardDetailRender;
 	import centaur.logic.render.CardMediumRender;
@@ -24,6 +26,10 @@ package centaur.display.ui.card
 		public var okBtn:GButton;
 		public var configBtn:GButton;
 		public var discriptionText:GText;
+		public var nameText:GText;
+		public var countryText:GText;
+		public var lvText:GText;
+		public var EXPProgress:GImageProgress;
 		
 		private var _detailRender:CardDetailRender;
 		
@@ -39,7 +45,7 @@ package centaur.display.ui.card
 		public function setup():void
 		{
 			okBtn.addEventListener(MouseEvent.CLICK, onOKClick);
-			
+			this.addEventListener(MouseEvent.CLICK, onOKClick);
 		}
 		
 		private function onOKClick(e:Event):void
@@ -65,6 +71,22 @@ package centaur.display.ui.card
 			cardPanel.addChild(_detailRender);
 			
 			updateDiscription();
+			
+			updateCardInfo();
+		}
+		
+		private function updateCardInfo():void
+		{
+			if (!_cardData || !_cardData.cardData)
+				return;
+			
+			var cardTemplateData:CardTemplateData = CardTemplateDataList.getCardData(_cardData.cardData.templateID);
+			if (cardTemplateData)
+				this.nameText.text = cardTemplateData.name;
+			this.countryText.text = "国家：" + GameDefines.COUNTRY_STR[_cardData.cardData.country];
+			this.lvText.text = "Lv：" + String(_cardData.cardData.lv);
+			
+			EXPProgress.setprogress(0.3);
 		}
 		
 		private function updateDiscription():void

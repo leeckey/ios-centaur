@@ -52,5 +52,6 @@ package centaur.utils
 		
 		public static const SMALL_WHITE_NUMBER:uint = 1001;
 		public static const MIDDLE_WHITE_NUMBER:uint = 1002;
+		public static const GOLD_NUMBER:uint = 1003;
 	}
 }
