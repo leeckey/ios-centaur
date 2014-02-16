@@ -21,6 +21,8 @@ package
 	import centaur.manager.LayerManager;
 	import centaur.manager.PathManager;
 	import centaur.manager.TickManager;
+	import centaur.utils.GSaveManager;
+	import centaur.utils.shareobject.PlayerInfoShareManager;
 	
 	import flash.desktop.NativeApplication;
 	import flash.desktop.SystemIdleMode;
@@ -106,51 +108,83 @@ package
 			var loginPanel:LoginPanel = new LoginPanel();
 			this.addChild(loginPanel);
 			
-			////---- wangq
-			GlobalData.mainPlayerInfo = new PlayerInfo();
-			GlobalData.mainPlayerInfo.lv =1;
-			GlobalData.mainPlayerInfo.heroHP = 4567;
-			GlobalData.mainPlayerInfo.cost = 28;
-			GlobalData.mainPlayerInfo.cardTeam = 1;
-			GlobalData.mainPlayerInfo.totalAttack = 1234;
-			GlobalData.mainPlayerInfo.totalBody = 58;
-			GlobalData.mainPlayerInfo.maxBody = 70;
-			GlobalData.mainPlayerInfo.maxCombatCard = 6;
-			GlobalData.mainPlayerInfo.mapEnableCount = 2;
-			GlobalData.mainPlayerInfo.insFinishList = [1,2, 4,5,6, 7, 10,11,12  ];	//  模拟记录角色已完成的关卡ID
+			////----wangq
+//			GSaveManager.instance.clear();
+			initMainInfo();
+//			var test:PlayerInfo = PlayerInfoShareManager.getSharePlayerInfo();
+////			GSaveManager.instance.clear();
+//			
+//			////---- wangq
+//			GlobalData.mainPlayerInfo = new PlayerInfo();
+//			GlobalData.mainPlayerInfo.lv =1;
+//			GlobalData.mainPlayerInfo.heroHP = 4567;
+//			GlobalData.mainPlayerInfo.cost = 28;
+//			GlobalData.mainPlayerInfo.cardTeam = 1;
+//			GlobalData.mainPlayerInfo.totalAttack = 1234;
+//			GlobalData.mainPlayerInfo.totalBody = 58;
+//			GlobalData.mainPlayerInfo.maxBody = 70;
+//			GlobalData.mainPlayerInfo.maxCombatCard = 6;
+//			GlobalData.mainPlayerInfo.mapEnableCount = 2;
+//			GlobalData.mainPlayerInfo.insFinishList = [1,2, 4,5,6, 7, 10,11,12  ];	//  模拟记录角色已完成的关卡ID
+//			
+////			PlayerInfoShareManager.setSharePlayerInfo(GlobalData.mainPlayerInfo);
+//			
+//			GlobalData.mainActData = new HeroData();
+//			var cardData:CardData;
+//			GlobalData.mainActData.cardList = [];
+//			GlobalData.mainActData.maxHP = 6000;
+//			for (var i:int = 6; i <= 10; i++)
+//			{
+//				cardData = new CardData();
+//				cardData.templateID = i;
+//				cardData.update();
+//				GlobalData.mainActData.cardList.push(cardData);
+//			}
+//			GlobalData.mainActData.combatCardIdxList = [0, 1, 2, 3];
+//			GlobalData.mainActObj = new BaseActObj(GlobalData.mainActData);
 			
-			GlobalData.mainActData = new HeroData();
-			var cardData:CardData;
-			GlobalData.mainActData.cardList = [];
-			GlobalData.mainActData.maxHP = 6000;
-			for (var i:int = 6; i <= 10; i++)
+		}
+		
+		private function initMainInfo():void
+		{
+			GlobalData.mainPlayerInfo = PlayerInfoShareManager.getSharePlayerInfo();
+			if (!GlobalData.mainPlayerInfo)
 			{
-				cardData = new CardData();
-				cardData.templateID = i;
-				cardData.update();
-				GlobalData.mainActData.cardList.push(cardData);
+				GlobalData.mainPlayerInfo = new PlayerInfo();
+				GlobalData.mainPlayerInfo.lv =1;
+				GlobalData.mainPlayerInfo.heroHP = 500;
+				GlobalData.mainPlayerInfo.cost = 5;
+				GlobalData.mainPlayerInfo.cardTeam = 1;
+				GlobalData.mainPlayerInfo.totalAttack = 123;
+				GlobalData.mainPlayerInfo.totalBody = 50;
+				GlobalData.mainPlayerInfo.maxBody = 70;
+				GlobalData.mainPlayerInfo.maxCombatCard = 4;
+				GlobalData.mainPlayerInfo.mapEnableCount = 1;
+				GlobalData.mainPlayerInfo.insFinishList = [];//[1,2, 4,5,6, 7, 10,11,12  ];	//  模拟记录角色已完成的关卡ID
+			
+				PlayerInfoShareManager.setSharePlayerInfo(GlobalData.mainPlayerInfo);
+			}
+			
+			GlobalData.mainActData = PlayerInfoShareManager.getShareHeroData();
+			if (!GlobalData.mainActData)
+			{
+				GlobalData.mainActData = new HeroData();
+				var cardData:CardData;
+				GlobalData.mainActData.cardList = [];
+				GlobalData.mainActData.maxHP = 500;
+				for (var i:int = 6; i <= 7; i++)
+				{
+					cardData = new CardData();
+					cardData.templateID = i;
+					cardData.update();
+					GlobalData.mainActData.cardList.push(cardData);
+				}
+				GlobalData.mainActData.combatCardIdxList = [0, 1/*, 2, 3*/];
+				
+				PlayerInfoShareManager.setShareHeroData(GlobalData.mainActData);
 			}
 			GlobalData.mainActObj = new BaseActObj(GlobalData.mainActData);
 			
-			GlobalData.mainActData.combatCardIdxList = [0, 1, 2, 3];
-			
-			// 角色卡牌信息
-			
-			////----wangq
-//			forTest();
-//			forLoadSWFTest();
-//			
-//			var text:GTextField = new GTextField(GTextField.FONT_SAMPLE1);
-//			var textFormat:TextFormat = new TextFormat();
-//			textFormat.font = text.textField.defaultTextFormat.font;
-//			textFormat.size = text.textField.defaultTextFormat.size;
-//			textFormat.bold = true;
-//			textFormat.display = text.textField.defaultTextFormat.display;
-//			textFormat.color = text.textField.defaultTextFormat.color;
-//			text.textField.defaultTextFormat = textFormat;
-//			text.textField.textColor = 0xff0000;
-//			
-//			addChild(text);
 		}
 		
 		/**
