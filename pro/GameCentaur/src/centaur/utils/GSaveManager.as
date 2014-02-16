@@ -67,7 +67,7 @@ package centaur.utils
 		 * @param defName
 		 * 
 		 */		
-		private function setData(obj :Object,objName :String,defName :String= "localSharedObj"):void
+		public function setData(obj :Object,objName :String,defName :String= "localSharedObj"):void
 		{
 			this.sharedObj = SharedObject.getLocal(defName,"/");
 			this.sharedObj.data[objName] = obj;
@@ -87,7 +87,7 @@ package centaur.utils
 		 * @return 
 		 * 
 		 */		
-		private function getData(objName :String,defName :String= "localSharedObj"):Object
+		public function getData(objName :String,defName :String= "localSharedObj"):Object
 		{
 			this.sharedObj = SharedObject.getLocal(defName,"/");
 			if(this.sharedObj.data[objName] != null)
@@ -98,6 +98,12 @@ package centaur.utils
 			return null;
 		}
 		
+		public function clear(defName:String = "localSharedObj"):void
+		{
+			this.sharedObj = SharedObject.getLocal(defName,"/");
+			if (sharedObj)
+				sharedObj.clear();
+		}
 		
 		private function netHandler(e :NetStatusEvent):void
 		{

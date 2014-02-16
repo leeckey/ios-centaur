@@ -10,6 +10,7 @@ package centaur.display.ui.mainui
 	
 	import flash.display.Bitmap;
 	import flash.display.Shape;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	import ghostcat.display.GBase;
@@ -52,6 +53,11 @@ package centaur.display.ui.mainui
 		{
 			initHead();
 			
+			updateDisplay();
+		}
+		
+		private function updateDisplay():void
+		{
 			lvText.setNumber(GlobalData.mainPlayerInfo.lv, NumberType.SMALL_WHITE_NUMBER);
 			nameTxt.text = String(GlobalData.mainPlayerInfo.name);
 			diamondTxt.setNumber(GlobalData.mainPlayerInfo.diamond, NumberType.MIDDLE_WHITE_NUMBER);
@@ -85,6 +91,13 @@ package centaur.display.ui.mainui
 				mapBtn.addEventListener(MouseEvent.CLICK, onMapBtnClick);
 			if (cardBtn)
 				cardBtn.addEventListener(MouseEvent.CLICK, onCardBtnClick);
+			
+			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		}
+		
+		private function onAddedToStage(e:Event):void
+		{
+			this.updateDisplay();
 		}
 		
 		private function removeEvents():void

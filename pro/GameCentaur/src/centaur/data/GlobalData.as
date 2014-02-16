@@ -60,28 +60,30 @@ package centaur.data
 		public static function hideCardDetailPanel():void
 		{
 			if (detailCardPanel && detailCardPanel.parent)
+			{
 				detailCardPanel.parent.removeChild(detailCardPanel);
-			
-			GlobalAPI.layerManager.returnLastModule();
-			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.DETAIL_CARD_HIDE));
+				
+				GlobalAPI.layerManager.returnLastModule();
+				GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.DETAIL_CARD_HIDE));
+			}
 		}
 		
-		public static function forTestCombat(actDataB:ActData):void
+		public static function forTestCombat(actDataB:ActData, complete:Function = null):CombatResultData
 		{
-			var actDataA:HeroData = new HeroData();	// 角色卡组
-			var cardData:CardData;
-			actDataA.cardList = [];
-			actDataA.maxHP = 8000;
-			for (var i:int = 21; i <= 30; i++)
-			{
-				cardData = new CardData();
-				cardData.templateID = i;
-				cardData.lv = 10;
-				cardData.update();
-				actDataA.cardList.push(cardData);
-			}
-			
-			var actA:BaseActObj = new BaseActObj(actDataA);
+//			var actDataA:HeroData = new HeroData();	// 角色卡组
+//			var cardData:CardData;
+//			actDataA.cardList = [];
+//			actDataA.maxHP = 8000;
+//			for (var i:int = 21; i <= 30; i++)
+//			{
+//				cardData = new CardData();
+//				cardData.templateID = i;
+//				cardData.lv = 10;
+//				cardData.update();
+//				actDataA.cardList.push(cardData);
+//			}
+//			
+//			var actA:BaseActObj = new BaseActObj(actDataA);
 			
 //			var actDataB:InsMapData = new InsMapData();
 //			actDataB.cardList = [];
@@ -93,13 +95,15 @@ package centaur.data
 //				cardData.update();
 //				actDataB.cardList.push(cardData);
 //			}
-			var actB:BaseActObj = new BaseActObj(actDataB);
 			
-			var logicData:CombatResultData = new CombatScene(actA, actB).start();
+			var actB:BaseActObj = new BaseActObj(actDataB);
+			var logicData:CombatResultData = new CombatScene(GlobalData.mainActObj, actB).start();
 			
 			////---- 处理战斗显示部分
-			CombatPanel.instance.startPlay(logicData);
+			CombatPanel.instance.startPlay(logicData, complete);
 			GlobalAPI.layerManager.setModuleContent(CombatPanel.instance);
+			
+			return logicData;
 		}
 	}
 }

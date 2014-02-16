@@ -63,7 +63,7 @@ package centaur.display.ui.map
 		
 		override public function set data(v:*):void
 		{
-			if (super.data != v)
+			if (1/*super.data != v*/)
 			{
 				super.data = v;
 				
@@ -106,6 +106,11 @@ package centaur.display.ui.map
 		private function updateStarLv():void
 		{
 			_starLv = GlobalData.mainPlayerInfo.calcInsStarLv(_insMapIDList);
+		}
+		
+		public function get starLv():uint
+		{
+			return _starLv;
 		}
 		
 		override protected function updateDisplayList():void

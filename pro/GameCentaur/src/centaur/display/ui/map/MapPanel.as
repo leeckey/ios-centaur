@@ -2,6 +2,7 @@ package centaur.display.ui.map
 {
 	import centaur.data.GlobalAPI;
 	import centaur.data.GlobalData;
+	import centaur.data.GlobalEventDispatcher;
 	import centaur.data.map.MapData;
 	import centaur.data.map.MapDataList;
 	import centaur.display.control.MobileScrollPanel;
@@ -10,6 +11,8 @@ package centaur.display.ui.map
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -81,6 +84,22 @@ package centaur.display.ui.map
 			insListPanel.enableSmooth = true;
 			
 			_itemList = [];
+			
+			// events
+			GlobalEventDispatcher.addEventListener(GlobalEventDispatcher.INS_COMBAT_COMPLETE, onInsCombatComplete);
+			GlobalEventDispatcher.addEventListener(GlobalEventDispatcher.MAP_COMBAT_COMPLETE, onMapCombatComplete);
+		}
+		
+		private function updateMapItemList():void
+		{
+			for (var i:int = 0; i < MAP_COUNT; ++i)
+			{
+				var item:MapItem = mapItemList[i] as MapItem;
+				if (!item)
+					continue;
+				
+				item.setEnable(i < GlobalData.mainPlayerInfo.mapEnableCount);
+			}
 		}
 		
 		private function onMapItemClick(e:MouseEvent):void
@@ -98,6 +117,26 @@ package centaur.display.ui.map
 			GlobalAPI.layerManager.returnLastModule();
 		}
 		
+		private function onInsCombatComplete(e:Event):void
+		{
+			var currTarget:Object = e.currentTarget;	
+			if (!currTarget || !currTarget.hasOwnProperty("data"))
+				return;
+			
+			var insID:uint = currTarget.data;
+			updateMapInsItems();
+		}
+		
+		private function onMapCombatComplete(e:Event):void
+		{
+			var currTarget:Object = e.currentTarget;	
+			if (!currTarget || !currTarget.hasOwnProperty("data"))
+				return;
+			
+			var mapID:uint = currTarget.data;
+			updateMapItemList();
+		}
+		
 		public function set mapID(value:uint):void
 		{
 			if (_mapID != value)
@@ -105,7 +144,7 @@ package centaur.display.ui.map
 				_mapID = value;
 				
 				updateBackground();
-				updateMapItems();
+				updateMapInsItems();
 			}
 		}
 		
@@ -126,7 +165,7 @@ package centaur.display.ui.map
 				backUI.addChild(_backBitmap);
 		}
 		
-		private function updateMapItems():void
+		private function updateMapInsItems():void
 		{
 			var mapInfo:MapData = MapDataList.getMapData(_mapID);
 			if (!mapInfo)
@@ -135,6 +174,7 @@ package centaur.display.ui.map
 			var insMapList:Array = mapInfo.insMapList;
 			var posList:Array = mapInfo.insPosList;
 			
+			var lastOpenItem:uint = 0;
 			var len:int = insMapList.length;
 			for (var i:int = 0; i < len; ++i)
 			{
@@ -152,6 +192,11 @@ package centaur.display.ui.map
 				item.insIdx = i + 1;
 				item.x = itemPos.x - item.width * 0.5;
 				item.y = itemPos.y - item.height * 0.5;
+				
+				// 更新副本是否开启,如果当前地图的副本全部开启，则检测下个地图是否开启
+				if (item.starLv > 0)
+					lastOpenItem = i + 1;
+				item.visible = (lastOpenItem >= i);
 			}
 			
 			var itemUILen:int = _itemList.length;
@@ -162,6 +207,10 @@ package centaur.display.ui.map
 					item.destory();
 			}
 			_itemList.length = len;
+			
+			// 检测下个地图是否需要开启标记
+			if (lastOpenItem >= len)
+				GlobalData.mainPlayerInfo.flagMapIDFinish(this._mapID);
 		}
 		
 	}

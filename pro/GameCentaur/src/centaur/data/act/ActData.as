@@ -16,6 +16,11 @@ package centaur.data.act
 		{
 		}
 		
+		public function getCombatCardList():Array
+		{
+			return cardList;
+		}
+		
 		
 	}
 }
