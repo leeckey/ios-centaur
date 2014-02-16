@@ -24,8 +24,10 @@ package centaur.logic.combat
 		{
 			_selfAct = selfAct;
 			_selfAct.enemyActObj = targetAct;
+			_selfAct.resetCombatData();
 			_targetAct = targetAct;
 			_targetAct.enemyActObj = selfAct;
+			_targetAct.resetCombatData();
 			
 			// 未分胜负，继续战斗
 			var combatResult:int;

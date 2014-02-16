@@ -49,10 +49,11 @@ package centaur.logic.act
 				return;
 			
 			cardObjList = [];
-			var len:int = actData.cardList ? actData.cardList.length : 0;
+			var cardDataList:Array = actData.getCombatCardList();
+			var len:int = cardDataList ? cardDataList.length : 0;
 			for (var i:int = 0; i < len; ++i)
 			{
-				var cardData:CardData = actData.cardList[i] as CardData;
+				var cardData:CardData = cardDataList[i] as CardData;
 				var cardObj:BaseCardObj = new BaseCardObj(cardData, this);
 				cardObjList.push(cardObj);
 			}
@@ -79,6 +80,7 @@ package centaur.logic.act
 			}
 			
 			hp = actData.maxHP;
+			this.isWin = false;
 		}
 		
 		/**

@@ -33,6 +33,7 @@ package centaur.display.ui.combat
 		public var targetPanel:CombatActPanel;	// 敌方面板
 		private var _panelDic:Dictionary;		// 面板的映射
 		public var resultData:CombatResultData;	// 战斗数据
+		private var _onCombatCompleteCallback:Function;	// 战斗结束时的回调函数
 		
 		// 处理操作相关参数
 		private var _handlerIdx:int;
@@ -83,9 +84,10 @@ package centaur.display.ui.combat
 			_combatPaused = false;
 		}
 		
-		public function startPlay(resultData:CombatResultData):void
+		public function startPlay(resultData:CombatResultData, complete:Function = null):void
 		{
 			this.resultData = resultData;
+			this._onCombatCompleteCallback = complete;
 			if (!resultData || !resultData.selfAct || !resultData.targetAct)
 				return;
 			
@@ -150,17 +152,29 @@ package centaur.display.ui.combat
 		
 		private function onCombatComplete():void
 		{
-			GlobalAPI.timerManager.startDelayCall(2000, backToMainPanel, 1);
+			CombatResultPanel.instance.setResult(resultData.result);
+			this.addChild(CombatResultPanel.instance);
+			
+			GlobalAPI.timerManager.startDelayCall(3000, backToMainPanel, 1);
 		}
 		
 		private function backToMainPanel():void
 		{
+			if (CombatResultPanel.instance.parent)
+				CombatResultPanel.instance.parent.removeChild(CombatResultPanel.instance);
+			
 			if (parent)
 				parent.removeChild(this);
 			onRemoveToStage(null);
 			clear();
 			
 			GlobalAPI.layerManager.returnLastModule();	// 返回上级面板
+			
+			if (this._onCombatCompleteCallback != null)
+			{
+				_onCombatCompleteCallback(resultData);
+				_onCombatCompleteCallback = null;
+			}
 		}
 		
 		private function clear():void

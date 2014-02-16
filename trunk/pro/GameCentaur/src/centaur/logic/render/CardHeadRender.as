@@ -41,10 +41,10 @@ package centaur.logic.render
 		
 		override protected function setup():void
 		{
-			super.setup();
+			_originWidth = borderSide ? borderSide.width : 120;
+			_originHeight = borderSide ? borderSide.height : 120;
 			
-			_originWidth = borderSide ? borderSide.width : this.width;
-			_originHeight = borderSide ? borderSide.height : this.height;
+			super.setup();
 			
 			if (attackText)
 				attackText.mouseChildren = attackText.mouseEnabled = false;

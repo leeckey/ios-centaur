@@ -6,6 +6,8 @@ package centaur.display.ui.map
 	import centaur.data.act.ActData;
 	import centaur.data.act.InsMapData;
 	import centaur.data.act.InsMapDataList;
+	import centaur.data.combat.CombatResultData;
+	import centaur.display.ui.role.RoleCardPanel;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -13,6 +15,7 @@ package centaur.display.ui.map
 	import flash.events.MouseEvent;
 	
 	import ghostcat.display.GBase;
+	import ghostcat.ui.ToolTipSprite;
 	import ghostcat.ui.controls.GBuilderBase;
 	import ghostcat.ui.controls.GButton;
 	import ghostcat.ui.controls.GText;
@@ -94,6 +97,7 @@ package centaur.display.ui.map
 		{
 			combatBtn.addEventListener(MouseEvent.CLICK, onCombatBtnClick);
 			returnBtn.addEventListener(MouseEvent.CLICK, onReturnBtnClick);
+			cardBtn.addEventListener(MouseEvent.CLICK, onCardBtnClick);
 			
 			simpleInsItem.addEventListener(MouseEvent.CLICK, onSimpleInsClick);
 			normalInsItem.addEventListener(MouseEvent.CLICK, onNormalInsClick);
@@ -104,24 +108,48 @@ package centaur.display.ui.map
 		{
 			combatBtn.removeEventListener(MouseEvent.CLICK, onCombatBtnClick);
 			returnBtn.removeEventListener(MouseEvent.CLICK, onReturnBtnClick);
+			cardBtn.removeEventListener(MouseEvent.CLICK, onCardBtnClick);
 			
 			simpleInsItem.removeEventListener(MouseEvent.CLICK, onSimpleInsClick);
 			normalInsItem.removeEventListener(MouseEvent.CLICK, onNormalInsClick);
 			hardInsItem.removeEventListener(MouseEvent.CLICK, onHardInsClick);
 		}
 		
+		private function onCardBtnClick(e:MouseEvent):void
+		{
+			if (parent)
+				parent.removeChild(this);
+			
+			if (!GlobalData.roleCardPanel)
+				GlobalData.roleCardPanel = new RoleCardPanel();
+			
+			GlobalAPI.layerManager.setModuleContent(GlobalData.roleCardPanel);
+		}
+		
 		private function onSimpleInsClick(e:MouseEvent):void
 		{
+			_starLv = GlobalData.mainPlayerInfo.calcInsStarLv(this.insIDList);
+			if (_starLv != 0)
+				return;
+			
 			gotoCombatByIndex(0);
 		}
 		
 		private function onNormalInsClick(e:MouseEvent):void
 		{
+			_starLv = GlobalData.mainPlayerInfo.calcInsStarLv(this.insIDList);
+			if (_starLv != 1)
+				return;
+			
 			gotoCombatByIndex(1);
 		}
 		
 		private function onHardInsClick(e:MouseEvent):void
 		{
+			_starLv = GlobalData.mainPlayerInfo.calcInsStarLv(this.insIDList);
+			if (_starLv != 2)
+				return;
+			
 			gotoCombatByIndex(2);
 		}
 		
@@ -145,13 +173,36 @@ package centaur.display.ui.map
 				return;
 			
 			var insData:InsMapData = InsMapDataList.getInsMapData(insID);
-			gotoCombat(insData);
+			gotoCombat(insData, insID);
 		}
 		
-		private function gotoCombat(actData:ActData):void
+		private var _currCombatInsID:uint;
+		private function gotoCombat(actData:InsMapData, insID:uint):void
 		{
-			if (actData)
-				GlobalData.forTestCombat(actData);
+			if (!actData)
+				return;
+
+			if (GlobalData.mainPlayerInfo.totalBody < actData.needMobility)
+			{
+				// 提示体力不足
+				
+				return;
+			}
+			
+			GlobalData.mainPlayerInfo.totalBody -= actData.needMobility;
+			_currCombatInsID = insID;
+			GlobalData.forTestCombat(actData, onCombatComplete);
+		}
+		
+		private function onCombatComplete(resultData:CombatResultData):void
+		{
+			if (!resultData)
+				return;
+			
+			if (resultData.result != 0)
+				GlobalData.mainPlayerInfo.flagInsIDFinish(_currCombatInsID);
+			
+			_currCombatInsID = 0;
 		}
 		
 		private function onReturnBtnClick(e:MouseEvent):void

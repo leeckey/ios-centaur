@@ -1,5 +1,10 @@
 package centaur.data.player
 {
+	import centaur.data.GlobalEventDispatcher;
+	import centaur.utils.shareobject.PlayerInfoShareManager;
+	
+	import flash.events.Event;
+
 	/**
 	 *   角色信息类
 	 */ 
@@ -68,6 +73,37 @@ package centaur.data.player
 			starLv = i;
 			if (starLv > 3) starLv = 3;
 			return starLv;
+		}
+		
+		public function flagInsIDFinish(insID:uint):Boolean
+		{
+			if (!insID)
+				return false;
+			
+			if (!insFinishList)
+				insFinishList = [];
+			var idx:int = insFinishList.indexOf(insID);
+			if (idx >= 0)
+				return false;
+			
+			insFinishList.push(insID);
+			insFinishList.sort(Array.NUMERIC);
+			PlayerInfoShareManager.saveSelf();	// 保存自己数据到本地
+			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.INS_COMBAT_COMPLETE), insID);
+			
+			return true;
+		}
+		
+		public function flagMapIDFinish(mapID:uint):Boolean
+		{
+			if (this.mapEnableCount != mapID)
+				return false;
+			
+			this.mapEnableCount = ++mapID;
+			PlayerInfoShareManager.saveSelf();	// 保存自己数据到本地
+			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.MAP_COMBAT_COMPLETE), mapID);
+			
+			return true;
 		}
 	}
 }
