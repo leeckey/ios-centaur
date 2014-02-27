@@ -141,7 +141,7 @@ package centaur.logic.act
 			var cardTemplateData:CardTemplateData = CardTemplateDataList.getCardData(cardData.templateID);
 			if (cardTemplateData)
 			{
-				// 普通攻击技能
+				// 普通攻击技能,需要根据卡牌级别来设置技能
 				var skillID:int = cardTemplateData.normolAttID;
 				var skillData:SkillData = null;
 				var skill:BaseSkill = null;
