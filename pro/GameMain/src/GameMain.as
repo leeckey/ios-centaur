@@ -152,7 +152,7 @@ package
 			{
 				GlobalData.mainPlayerInfo = new PlayerInfo();
 				GlobalData.mainPlayerInfo.lv =1;
-				GlobalData.mainPlayerInfo.heroHP = 500;
+				GlobalData.mainPlayerInfo.heroHP = 5000;
 				GlobalData.mainPlayerInfo.cost = 5;
 				GlobalData.mainPlayerInfo.cardTeam = 1;
 				GlobalData.mainPlayerInfo.totalAttack = 123;
@@ -171,18 +171,21 @@ package
 				GlobalData.mainActData = new HeroData();
 				var cardData:CardData;
 				GlobalData.mainActData.cardList = [];
-				GlobalData.mainActData.maxHP = 500;
-				for (var i:int = 6; i <= 7; i++)
+				GlobalData.mainActData.maxHP = 5000;
+				for (var i:int = 20; i <= 29; i++)
 				{
 					cardData = new CardData();
 					cardData.templateID = i;
+					cardData.lv = 10;
 					cardData.update();
 					GlobalData.mainActData.cardList.push(cardData);
 				}
-				GlobalData.mainActData.combatCardIdxList = [0, 1/*, 2, 3*/];
+				GlobalData.mainActData.combatCardIdxList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 				
 				PlayerInfoShareManager.setShareHeroData(GlobalData.mainActData);
 			}
+			
+			GlobalData.mainPlayerInfo.totalBody = 50;
 			GlobalData.mainActObj = new BaseActObj(GlobalData.mainActData);
 			
 		}
