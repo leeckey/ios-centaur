@@ -53,7 +53,10 @@ package centaur.logic.combat
 				
 				// 攻击对方,true时直接已经分出胜负，无需继续
 				if (curAct.doCombat())
+				{
+					combatResult = checkWin();
 					break;
+				}
 				
 				// 当前回合结束
 				selfAct.roundEndCallback();
