@@ -90,5 +90,17 @@ package centaur.logic.skills
 			card.removeEventListener(CardEvent.ON_ROUND_END, onRoundEnd);
 			card.deductAttack(attack);
 		}
+		
+		/**
+		 * 显示技能描述 
+		 * @return 
+		 * 
+		 */		
+		public override function getSkillDesc():String
+		{
+			var desc:String = super.getSkillDesc();
+			
+			return desc.replace("{0}", attack.toString());
+		}
 	}
 }

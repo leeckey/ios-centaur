@@ -41,5 +41,17 @@ package centaur.logic.skills
 			if (targetCard.onSkillHurt(this, 0) >= 0)
 				targetCard.deductAttack(deAttack);
 		}
+		
+		/**
+		 * 显示技能描述 
+		 * @return 
+		 * 
+		 */		
+		public override function getSkillDesc():String
+		{
+			var desc:String = super.getSkillDesc();
+			
+			return desc.replace("{0}", deAttack.toString());
+		}
 	}
 }

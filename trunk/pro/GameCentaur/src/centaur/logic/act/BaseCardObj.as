@@ -270,6 +270,20 @@ package centaur.logic.act
 		}
 		
 		/**
+		 * 获得卡牌的第index个技能,从1开始,第0个技能默认是普通攻击
+		 * @param id
+		 * @return 
+		 * 
+		 */		
+		public function getSkillByIndex(index:int):BaseSkill
+		{
+			if (skills.length <= index)
+				return null;
+			
+			return skills[index] as BaseSkill;
+		}
+		
+		/**
 		 *  施放技能
 		 */ 
 		public function onSkill():Boolean

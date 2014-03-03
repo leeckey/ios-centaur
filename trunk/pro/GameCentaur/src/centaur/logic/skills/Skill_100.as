@@ -63,6 +63,18 @@ package centaur.logic.skills
 				new buff(targetCard, data);
 			}
 		}
+		
+		/**
+		 * 显示技能描述 
+		 * @return 
+		 * 
+		 */		
+		public override function getSkillDesc():String
+		{
+			var desc:String = super.getSkillDesc();
+			
+			return desc.replace("{0}", damage.toString()).replace("{1}", (rate*100).toString());
+		}
 
 	}
 }

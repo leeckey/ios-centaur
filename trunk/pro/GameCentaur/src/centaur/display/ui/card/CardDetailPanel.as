@@ -11,6 +11,7 @@ package centaur.display.ui.card
 	import centaur.logic.act.BaseCardObj;
 	import centaur.logic.render.CardDetailRender;
 	import centaur.logic.render.CardMediumRender;
+	import centaur.logic.skills.BaseSkill;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -95,32 +96,36 @@ package centaur.display.ui.card
 				return;
 			
 			var discrip:String = "";
-			var cardTemplateData:CardTemplateData = CardTemplateDataList.getCardData(_cardData.cardData.templateID);
-			if (cardTemplateData)
+
+			var skillData:BaseSkill = null;
+			skillData = _cardData.getSkillByIndex(1);
+			if (skillData)
 			{
-				var skillData:SkillData = null;
-				skillData = SkillDataList.getSkillData(cardTemplateData.skill1ID);
-				if (skillData)
-				{
-					discrip += skillData.name + "\n";
-					discrip += "  " + skillData.discription + "\n";
-				}
-				
-				skillData = SkillDataList.getSkillData(cardTemplateData.skill2ID);
-				if (skillData)
-				{
-					discrip += "\n";
-					discrip += skillData.name + "\n";
-					discrip += "  " + skillData.discription + "\n";
-				}
-				
-				skillData = SkillDataList.getSkillData(cardTemplateData.skill3ID);
-				if (skillData)
-				{
-					discrip += "\n";
-					discrip += skillData.name + "\n";
-					discrip += "  " + skillData.discription + "\n";
-				}
+				discrip += skillData.skillName;
+				if (skillData.skillLevel > 0)
+					discrip += skillData.skillLevel.toString();
+				discrip += "\n  " + skillData.getSkillDesc() + "\n";
+			}
+			
+			skillData = _cardData.getSkillByIndex(2);
+			if (skillData)
+			{
+				discrip += "\n";
+				discrip += skillData.skillName;
+				if (skillData.skillLevel > 0)
+					discrip += skillData.skillLevel.toString();
+				discrip += "\n  " + skillData.getSkillDesc() + "\n";
+			}
+			
+			skillData = _cardData.getSkillByIndex(3);
+			if (skillData)
+			{
+				discrip += "\n";
+				discrip += skillData.skillName;
+				if (skillData.skillLevel > 0)
+					discrip += skillData.skillLevel.toString();
+				discrip += "\n  " + skillData.getSkillDesc() + "\n";
+			}
 /*				var skillLen:int = cardTemplateData.skillList.length;
 				
 				for (var i:int = 0; i < skillLen; ++i)
@@ -132,7 +137,6 @@ package centaur.display.ui.card
 					discrip += skillData.name + "\n";
 					discrip += "  " + skillData.discription + "\n";
 				}*/
-			}
 			
 			discriptionText.textField.multiline = true;
 			discriptionText.textField.wordWrap = true;

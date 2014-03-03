@@ -57,6 +57,11 @@ package centaur.logic.skills
 		protected var _buffID:int;
 		
 		/**
+		 * 技能名称 
+		 */		
+		protected var _skillName:String;
+		
+		/**
 		 * 技能所有者 
 		 */	
 		public var card:BaseCardObj;
@@ -89,6 +94,10 @@ package centaur.logic.skills
 		public function set buffID(id:int):void
 		{
 			_buffID = id;
+		}
+		public function get skillName():String
+		{
+			return _skillName;
 		}
 		
 		public function BaseSkill(data:SkillData, card:BaseCardObj, skillPara:Array)
@@ -145,6 +154,7 @@ package centaur.logic.skills
 			_selectTargetType = data.selectTargetType;
 			_skillType = data.skillType;
 			_magicType = data.magicType;
+			_skillName = data.name;
 			// _skillLevel = data.skillLevel;
 		}
 		
@@ -197,7 +207,19 @@ package centaur.logic.skills
 		
 		protected function _doSkill(targetCard:BaseCardObj):void
 		{
-	
+			
+		}
+		
+		/**
+		 *  获得技能的描述
+		 * @return 
+		 * 
+		 */		
+		public function getSkillDesc():String
+		{
+			var skillData:SkillData = null;
+			skillData = SkillDataList.getSkillData(skillID);
+			return skillData.discription;
 		}
 		
 		/**

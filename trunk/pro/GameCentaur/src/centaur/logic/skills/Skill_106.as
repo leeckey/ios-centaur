@@ -58,5 +58,17 @@ package centaur.logic.skills
 			enemy.deductHp(damage);
 			CombatLogic.combatList.push(SkillEndAction.getAction(card.objID, skillID));
 		}
+		
+		/**
+		 * 显示技能描述 
+		 * @return 
+		 * 
+		 */		
+		public override function getSkillDesc():String
+		{
+			var desc:String = super.getSkillDesc();
+			
+			return desc.replace("{0}", damage.toString());
+		}
 	}
 }

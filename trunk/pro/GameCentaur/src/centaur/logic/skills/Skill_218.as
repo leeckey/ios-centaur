@@ -16,7 +16,7 @@ package centaur.logic.skills
 	public class Skill_218 extends BaseSkill
 	{
 		/**
-		 * 造成的伤害值 
+		 * 复活的概率
 		 */		
 		public var rate:Number;
 		
@@ -82,6 +82,18 @@ package centaur.logic.skills
 				
 				card.doReturn();
 			}
+		}
+		
+		/**
+		 * 显示技能描述 
+		 * @return 
+		 * 
+		 */		
+		public override function getSkillDesc():String
+		{
+			var desc:String = super.getSkillDesc();
+			
+			return desc.replace("{0}", (rate*100).toString());
 		}
 	}
 }
