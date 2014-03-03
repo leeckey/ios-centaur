@@ -47,5 +47,17 @@ package centaur.logic.skills
 			var damage:int = min + (max - min) * Math.random();
 			targetCard.onSkillHurt(this, damage);
 		}
+		
+		/**
+		 * 显示技能描述 
+		 * @return 
+		 * 
+		 */		
+		public override function getSkillDesc():String
+		{
+			var desc:String = super.getSkillDesc();
+			
+			return desc.replace("{0}", min.toString()).replace("{1}", max.toString());
+		}
 	}
 }

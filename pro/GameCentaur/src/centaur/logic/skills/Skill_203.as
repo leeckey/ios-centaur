@@ -70,6 +70,16 @@ package centaur.logic.skills
 				attacker.onHurt(damage);
 		}
 		
-		
+		/**
+		 * 显示技能描述 
+		 * @return 
+		 * 
+		 */		
+		public override function getSkillDesc():String
+		{
+			var desc:String = super.getSkillDesc();
+			
+			return desc.replace("{0}", damage.toString());
+		}
 	}
 }

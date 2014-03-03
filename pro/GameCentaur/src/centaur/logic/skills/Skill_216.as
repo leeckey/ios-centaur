@@ -152,5 +152,17 @@ package centaur.logic.skills
 					target.removeEventListener(CardEvent.ON_PRESENT, onOtherCardPresent);
 			}
 		}
+		
+		/**
+		 * 显示技能描述 
+		 * @return 
+		 * 
+		 */		
+		public override function getSkillDesc():String
+		{
+			var desc:String = super.getSkillDesc();
+			
+			return desc.replace("{0}", attack.toString());
+		}
 	}
 }

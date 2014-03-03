@@ -38,5 +38,17 @@ package centaur.logic.skills
 			var hurt:int = targetCard.onSkillHurt(this, damage);
 			card.addHP(hurt);
 		}
+		
+		/**
+		 * 显示技能描述 
+		 * @return 
+		 * 
+		 */		
+		public override function getSkillDesc():String
+		{
+			var desc:String = super.getSkillDesc();
+			
+			return desc.replace("{0}", damage.toString());
+		}
 	}
 }

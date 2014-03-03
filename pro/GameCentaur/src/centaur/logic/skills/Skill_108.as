@@ -34,5 +34,6 @@ package centaur.logic.skills
 				targetCard.doDead();
 			}
 		}
+		
 	}
 }
