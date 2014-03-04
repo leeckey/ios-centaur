@@ -131,7 +131,7 @@ package centaur.logic.skills
 		{
 			var desc:String = super.getSkillDesc();
 			
-			return desc.replace("{0}", (rate*100).toString()).replace("{1}", attackUp.toString());
+			return desc.replace("{0}", ((int)(rate*100)).toString()).replace("{1}", attackUp.toString());
 		}
 
 	}

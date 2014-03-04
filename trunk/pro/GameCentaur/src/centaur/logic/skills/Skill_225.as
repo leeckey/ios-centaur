@@ -19,6 +19,9 @@ package centaur.logic.skills
 		// 释放的技能等级
 		public var param2:int;
 		
+		// 降临时释放的技能
+		private var skill:BaseSkill;
+		
 		public function Skill_225(data:SkillData, card:BaseCardObj, skillPara:Array)
 		{
 			super(data, card, skillPara);
@@ -29,6 +32,8 @@ package centaur.logic.skills
 			super.SetCardData(data);
 			param1 = data[1];
 			param2 = data[2];
+			
+			skill = getSkillByID(card, param1, [param2]);
 		}
 		
 		/**
@@ -67,8 +72,35 @@ package centaur.logic.skills
 		 */		
 		public function onPresent(event:CardEvent):void
 		{
-			var skill:BaseSkill = getSkillByID(card, param1, [param2]);
-			skill.doSkill();
+			if (skill != null)
+				skill.doSkill();
+		}
+		
+		/**
+		 * 降临技能的特殊名称显示方法 
+		 * @return 
+		 * 
+		 */		
+		public override function get skillName():String
+		{
+			var temp:String = "[" +　super.skillName + "]";
+			temp += skill.skillName;
+			if (param2 > 0)
+				temp += param2.toString();
+			
+			return temp;
+		}
+		
+		/**
+		 * 显示技能描述 
+		 * @return 
+		 * 
+		 */		
+		public override function getSkillDesc():String
+		{
+			var desc:String = super.getSkillDesc();
+			
+			return desc.replace("{0}", skill.skillName).replace("{1}", skill.getSkillDesc());
 		}
 	}
 }
