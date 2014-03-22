@@ -72,7 +72,7 @@ package centaur.display.ui.map
 				var item:MapItem = new MapItem();
 				item.addEventListener(MouseEvent.CLICK, onMapItemClick);
 				item.data = i + 1;
-				item.x = i * (180);
+				item.x = i * (130);
 				item.setEnable(i < GlobalData.mainPlayerInfo.mapEnableCount);
 				(insListPanel.content as Sprite).addChild(item);
 				mapItemList.push(item);
@@ -80,7 +80,7 @@ package centaur.display.ui.map
 			insListPanel.wheelDirect = UIConst.HORIZONTAL;
 			insListPanel.wheelSpeed = 1;
 			insListPanel.scrollRect = new Rectangle(0, 0, 900, 100);
-			insListPanel.x = (960 - 180 * 5) * 0.5;
+			insListPanel.x = (960 - 130 * 7) * 0.5;
 			insListPanel.enableSmooth = true;
 			
 			_itemList = [];
@@ -143,8 +143,22 @@ package centaur.display.ui.map
 			{
 				_mapID = value;
 				
+				updateMapItems();
 				updateBackground();
 				updateMapInsItems();
+			}
+		}
+		
+		private function updateMapItems():void
+		{
+			var len:int = mapItemList ? this.mapItemList.length : 0;
+			for (var i:int = 0; i < len; ++i)
+			{
+				var mapItem:MapItem = mapItemList[i];
+				if (!mapItem)
+					continue;
+				
+				mapItem.setSelected(mapItem.data == _mapID);
 			}
 		}
 		
@@ -192,6 +206,7 @@ package centaur.display.ui.map
 				item.insIdx = i + 1;
 				item.x = itemPos.x - item.width * 0.5;
 				item.y = itemPos.y - item.height * 0.5;
+				item.setKingEffect(i == (len - 1));
 				
 				// 更新副本是否开启,如果当前地图的副本全部开启，则检测下个地图是否开启
 				if (item.starLv > 0)

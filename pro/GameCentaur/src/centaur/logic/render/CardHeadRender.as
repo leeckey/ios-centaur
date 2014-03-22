@@ -22,6 +22,8 @@ package centaur.logic.render
 		public var hpText:GBitmapNumberText;		// 血量信息
 		public var waitRoundText:GBitmapNumberText;	// 如果是等待区的头像卡牌,则需要显示等待回合
 		public var borderSide:GBase;
+		public var atkSignTxt:GText;
+		public var hpSignTxt:GText;
 		
 		private var _originWidth:Number;
 		private var _originHeight:Number;

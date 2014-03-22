@@ -20,7 +20,8 @@ package centaur.logic.act
 		public var actData:ActData;              // 角色数据
 		public var render:BaseActRender;         // 角色渲染控制
 		public var cardObjList:Array;            // 角色卡牌
-
+		public var allCardObjList:Array;		// 角色所有卡牌
+		
 		public var scene:CombatScene;
 		public var combatData:CombatData;        // 战斗数据区
 		public var enemyActObj:BaseActObj;       // 对手
@@ -48,17 +49,28 @@ package centaur.logic.act
 			if (!actData)
 				return;
 			
+			var cardData:CardData;
 			cardObjList = [];
 			var cardDataList:Array = actData.getCombatCardList();
 			var len:int = cardDataList ? cardDataList.length : 0;
 			for (var i:int = 0; i < len; ++i)
 			{
-				var cardData:CardData = cardDataList[i] as CardData;
+				cardData = cardDataList[i] as CardData;
 				var cardObj:BaseCardObj = new BaseCardObj(cardData, this);
 				cardObjList.push(cardObj);
 			}
 			
 			resetCombatData();
+			
+			//  初始化所有卡牌
+			allCardObjList = [];
+			len = actData.cardList.length;
+			for (i = 0; i < len; ++i)
+			{
+				cardData = actData.cardList[i] as CardData;
+				var cardObj:BaseCardObj = new BaseCardObj(cardData, this);
+				allCardObjList.push(cardObj);
+			}
 		}
 		
 		/**

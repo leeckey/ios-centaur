@@ -51,7 +51,8 @@ package centaur.data
 				detailCardPanel = new CardDetailPanel();
 			
 			if (!detailCardPanel.parent)
-				GlobalAPI.layerManager.setModuleContent(detailCardPanel);
+//				GlobalAPI.layerManager.setModuleContent(detailCardPanel);
+				GlobalAPI.layerManager.getPopLayer().addChild(detailCardPanel);
 			detailCardPanel.cardData = cardData;
 			
 			GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.DETAIL_CARD_SHOW));
@@ -63,7 +64,7 @@ package centaur.data
 			{
 				detailCardPanel.parent.removeChild(detailCardPanel);
 				
-				GlobalAPI.layerManager.returnLastModule();
+//				GlobalAPI.layerManager.returnLastModule();
 				GlobalEventDispatcher.dispatch(new Event(GlobalEventDispatcher.DETAIL_CARD_HIDE));
 			}
 		}

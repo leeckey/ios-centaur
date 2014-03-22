@@ -8,6 +8,7 @@ package centaur.display.ui.map
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.MouseEvent;
+	import flash.text.TextFormat;
 	
 	import ghostcat.display.GBase;
 	import ghostcat.ui.controls.GBuilderBase;
@@ -22,6 +23,9 @@ package centaur.display.ui.map
 		public var insMapIdxText:GText;
 		public var InsMapStarLv:GBase;
 		private var _back:Bitmap;
+		private var _king1:Bitmap;
+		private var _king2:Bitmap;
+		private var _mapIdxFormat:TextFormat;
 		
 		public var mapID:uint;
 		public var insIdx:uint;
@@ -32,6 +36,7 @@ package centaur.display.ui.map
 		
 		private var _starLv:int = 0;
 		private var _starItemList:Array;
+		private var _hasKing:Boolean = false;
 		
 		public function InsItem()
 		{
@@ -50,7 +55,29 @@ package centaur.display.ui.map
 		{
 			_back = new Bitmap();
 			addChildAt(_back, 0);
+			_king1 = new Bitmap();
+			_king2 = new Bitmap();
+			_king1.visible = _king2.visible = false;
+			addChild(_king1);
+			addChild(_king2);
+			GlobalAPI.loaderManager.getBitmapInstance(GlobalAPI.pathManager.getMapInsItemKing1Path(), king1Complete);
+			GlobalAPI.loaderManager.getBitmapInstance(GlobalAPI.pathManager.getMapInsItemKing2Path(), king2Complete);
+			
 			this.addEventListener(MouseEvent.CLICK, onMouseClick);
+		}
+		
+		private function king1Complete(data:BitmapData):void
+		{
+			_king1.bitmapData = data;
+			_king1.x = (125 - _king1.width) * 0.5;
+			_king1.y = -_king1.height - 10;
+		}
+		
+		private function king2Complete(data:BitmapData):void
+		{
+			_king2.bitmapData = data;
+			_king2.x = (125 - _king2.width) * 0.5;
+			_king2.y = -_king2.height - 10;
 		}
 		
 		private function onMouseClick(e:MouseEvent):void
@@ -84,6 +111,15 @@ package centaur.display.ui.map
 				
 				this.invalidateDisplayList();
 			}
+		}
+		
+		public function setKingEffect(val:Boolean):void
+		{
+			if (_hasKing == val)
+				return;
+			
+			_hasKing = val;
+			this.invalidateDisplayList();
 		}
 		
 		private function updateInsMapDataList():void
@@ -123,8 +159,18 @@ package centaur.display.ui.map
 		private function updateSelf():void
 		{
 			insMapNameText.text = _insMapData ? _insMapData.name : "";
-			insMapIdxText.text = _insMapData ? (mapID + "_" + insIdx) : "";
+			insMapIdxText.italic = true;
+			insMapIdxText.text = _insMapData ? (mapID + "-" + insIdx) : "";
+			
 			updateStarLvDisplay();
+			
+			if (_hasKing)
+			{
+				_king1.visible = (_starLv > 0);
+				_king2.visible = (_starLv == 0);
+			}
+			else
+				_king1.visible = _king2.visible = false;
 			
 //			GlobalAPI.loaderManager.getBitmapInstance(GlobalAPI.pathManager.getMapItemPath(mapID, insIdx), onItemBackComplete);
 		}
