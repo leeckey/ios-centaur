@@ -34,7 +34,13 @@ package
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.StageOrientationEvent;
+	import flash.text.AntiAliasType;
+	import flash.text.Font;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
+	
+	import ghostcat.ui.controls.GText;
 	
 	import net.HttpNetManager;
 	import net.hires.debug.Stats;
@@ -43,6 +49,12 @@ package
 	
 	public class GameMain extends Sprite
 	{
+//		[Embed(source="font/embedfont3.otf", fontName="simhei", embedAsCFF="false", mimeType="application/x-font")]
+//		private var Font1 : Class;
+		
+//		[Embed(systemFont="Arial", fontName="FontName", fontWeight="bold", unicodeRange="U+8f93,U+5165,U+6587,U+5b57,", mimeType="application/x-font")]
+//		var Font1 : Class;
+		
 		public function GameMain()
 		{
 			super();
@@ -58,6 +70,23 @@ package
 		
 		protected function init():void
 		{
+			Font.registerFont(FontLibrary.Embed_HEI);
+			GText.defaultEmbedFont = FontLibrary.fontName1;
+			
+//			var a:Array = Font.enumerateFonts(true);
+//			
+//			var format:TextFormat = new TextFormat("font1", 30);
+//			var  text:TextField = new TextField();
+//			text.autoSize = TextFieldAutoSize.LEFT;
+//			text.antiAliasType = AntiAliasType.ADVANCED;
+//			
+//			text.border = true;
+//			text.embedFonts = true;
+//			text.text = "123中文字体示范abc伤害长枪兵";
+//			text.setTextFormat(format);
+//			this.addChild(text);
+//			
+//			return;////----wangq
 			setupGlobals();
 			
 			// 初始化配置表
@@ -109,7 +138,7 @@ package
 			this.addChild(loginPanel);
 			
 			////----wangq
-//			GSaveManager.instance.clear();
+			GSaveManager.instance.clear();
 			initMainInfo();
 //			var test:PlayerInfo = PlayerInfoShareManager.getSharePlayerInfo();
 ////			GSaveManager.instance.clear();
@@ -160,7 +189,7 @@ package
 				GlobalData.mainPlayerInfo.maxBody = 70;
 				GlobalData.mainPlayerInfo.maxCombatCard = 4;
 				GlobalData.mainPlayerInfo.mapEnableCount = 1;
-				GlobalData.mainPlayerInfo.insFinishList = [];//[1,2, 4,5,6, 7, 10,11,12  ];	//  模拟记录角色已完成的关卡ID
+				GlobalData.mainPlayerInfo.insFinishList = [1,2, 4,5,6, 7, 10,11,12 ,13, 16 ];	//  模拟记录角色已完成的关卡ID
 			
 				PlayerInfoShareManager.setSharePlayerInfo(GlobalData.mainPlayerInfo);
 			}
