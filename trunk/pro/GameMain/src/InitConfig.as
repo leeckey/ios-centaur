@@ -5,6 +5,7 @@ package
 	import centaur.data.buff.BuffDataList;
 	import centaur.data.card.CardTemplateDataList;
 	import centaur.data.map.MapDataList;
+	import centaur.data.player.RoleGrowUpList;
 	import centaur.data.skill.SkillDataList;
 	import centaur.logic.skills.SkillManager;
 	
@@ -33,6 +34,9 @@ package
 			
 			// 地图配置表
 			MapDataList.loadStrData(load("MapData.txt"));
+			
+			// 角色成长配置表
+			RoleGrowUpList.loadStrData(load("RoleGrowUpData.txt"));
 			
 			// 初始化技能参数
 			SkillManager.init();
