@@ -6,9 +6,11 @@ package centaur.display.ui.role
 	import centaur.data.player.PlayerInfo;
 	import centaur.display.control.ScaledScrollPanel;
 	import centaur.logic.act.BaseCardObj;
+	import centaur.logic.render.CardDetailRender;
 	import centaur.logic.render.CardHeadDeadRender;
 	import centaur.logic.render.CardHeadRender;
 	import centaur.logic.render.CardMediumRender;
+	import centaur.logic.render.CardViewRender;
 	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -63,6 +65,7 @@ package centaur.display.ui.role
 			cardScrollPanel.wheelSpeed = 1;
 			cardScrollPanel.scrollRect = new Rectangle(0, -100, 1200, 600);
 			cardScrollPanel.enableSmooth = true;
+			cardScrollPanel.scaleBase = 0.5;	////----wangq 卡牌从detail缩放显示
 			
 			initCardData();
 			initCombatCardData();
@@ -74,7 +77,7 @@ package centaur.display.ui.role
 		 */
 		private function initCardData():void
 		{
-			var cardObjList:Array = GlobalData.mainActObj.cardObjList;
+			var cardObjList:Array = GlobalData.mainActObj.allCardObjList;
 			if (!cardObjList)
 				return;
 			var combatIdxList:Array = GlobalData.mainActData.combatCardIdxList;
@@ -85,20 +88,20 @@ package centaur.display.ui.role
 			for (var i:int = 0; i < len; ++i)
 			{
 				var cardObj:BaseCardObj = cardObjList[i];
-				var item:CardMediumRender = cardItemList[i];
+				var item:CardViewRender = cardItemList[i];
 				if (!item)
-					item = cardItemList[i] = new CardMediumRender(cardObj);
+					item = cardItemList[i] = new CardViewRender(cardObj);
 				itemWidth = item.width;
 				itemHeight = item.height;
 				
 				// 是否被选中
 				var selected:Boolean = (combatIdxList && combatIdxList.indexOf(i) != -1);
-				item.setSelectState(selected);
+//				item.setSelectState(selected);
 				item.removeEvents();
 				item.addEventListener(MouseEvent.CLICK, onMediumItemClick);
 			}
 			
-			cardScrollPanel.setupContent(cardItemList, itemWidth + 2, itemHeight);
+			cardScrollPanel.setupContent(cardItemList, itemWidth + 5, itemHeight);
 		}
 		
 		private function onMediumItemClick(e:MouseEvent):void

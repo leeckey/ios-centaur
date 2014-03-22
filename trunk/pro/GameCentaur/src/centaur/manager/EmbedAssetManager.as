@@ -12,6 +12,7 @@ package centaur.manager
 //		private static var FamTestBytes:Class;
 		
 		private static var _cardRaceList:Array = [CardRace1, CardRace2, CardRace3, CardRace4];
+		private static var _cardViewRaceList:Array = [CardViewRace1, CardViewRace2, CardViewRace3, CardViewRace4];	////----wangq111
 		private static var _cardDetailRaceList:Array = [CardBigRace1, CardBigRace2, CardBigRace3, CardBigRace4];
 		
 		/**
@@ -28,6 +29,14 @@ package centaur.manager
 		public static function getCardDetailRace(race:int):Class
 		{
 			return _cardDetailRaceList[race];
+		}
+		
+		/**
+		 *  卡牌的种族背景作为嵌入资源，确保第一时间至少显示背景
+		 */ 
+		public static function getCardViewRace(race:int):Class
+		{
+			return _cardViewRaceList[race];
 		}
 		
 		public static function setup():void

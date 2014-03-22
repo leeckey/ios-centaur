@@ -20,7 +20,7 @@ package centaur.logic.render
 	 *   卡牌的详细信息显示类
 	 *   @author wangq 2013.12.19
 	 */ 
-	public final class CardDetailRender extends SubCardRender
+	public class CardDetailRender extends SubCardRender
 	{
 		public var costText:GBitmapNumberText;
 		public var lvText:GBitmapNumberText;
@@ -30,15 +30,16 @@ package centaur.logic.render
 		public var waitRoundText:GBitmapNumberText;
 		public var starContainer:GBase;
 		
-		private var _starList:Array;
-		private var _width:Number = 0.0;
-		private var _height:Number = 0.0;
+		protected var _baseScale:Number = 1.0;
+		protected var _starList:Array;
+		protected var _width:Number = 0.0;
+		protected var _height:Number = 0.0;
 		
-		private var _raceBitmap:Bitmap;				// 种族背景图片
+		protected var _raceBitmap:Bitmap;				// 种族背景图片
 		
-		public function CardDetailRender(cardObj:BaseCardObj)
+		public function CardDetailRender(cardObj:BaseCardObj, skin:* = null)
 		{
-			super(cardObj, cardDetailRenderSkin);
+			super(cardObj, skin ? skin : cardDetailRenderSkin);
 		}
 		
 		override public function destory():void
@@ -81,6 +82,15 @@ package centaur.logic.render
 			if (!_cardObj)
 				return;
 			
+			initSetup();
+			
+			super.setup();
+			
+			this.invalidateDisplayList();
+		}
+		
+		protected function initSetup():void
+		{
 			// 优先添加卡牌种族背景,先随机测试，到时读取配置表
 			_raceBitmap = new Bitmap(GlobalAPI.loaderManager.getBitmapByClass(EmbedAssetManager.getCardDetailRace(_cardObj.cardData.country)));
 			addChildAt(_raceBitmap, 0);
@@ -92,10 +102,6 @@ package centaur.logic.render
 				_width = 385;
 				_height = 580;
 			}
-			
-			super.setup();
-			
-			this.invalidateDisplayList();
 		}
 		
 		override protected function updateDisplayList():void
@@ -122,6 +128,10 @@ package centaur.logic.render
 			waitRoundText.setNumber(templateData.maxWaitRound, NumberType.MIDDLE_WHITE_NUMBER);
 			
 			updateStarDisplay(templateData.starLv);
+			
+			costText.scaleX = costText.scaleY = _baseScale;
+			lvText.scaleX = lvText.scaleY = _baseScale;
+			starContainer.scaleX = starContainer.scaleY = _baseScale;
 		}
 		
 		private function updateStarDisplay(starLv:uint):void

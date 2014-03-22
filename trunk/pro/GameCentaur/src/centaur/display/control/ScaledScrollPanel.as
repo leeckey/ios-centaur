@@ -16,6 +16,7 @@ package centaur.display.control
 	{
 		public var scaleMin:Number = 1.0;
 		public var scaleMax:Number = 2.0;
+		public var scaleBase:Number = 1.0;
 		
 		private var _itemList:Array;
 		private var _itemWidth:int;
@@ -34,8 +35,8 @@ package centaur.display.control
 		public function setupContent(itemList:Array, itemWidth:int, itemHeight):void
 		{
 			_itemList = itemList;
-			_itemWidth = itemWidth;
-			_itemHeight = itemHeight;
+			_itemWidth = itemWidth * scaleBase;
+			_itemHeight = itemHeight * scaleBase;
 			
 			updateItemContent();
 		}
@@ -193,10 +194,11 @@ package centaur.display.control
 				else if (nextIdx == i)
 					scale = scaleMin + part * (scaleMax - scaleMin);
 				
-				item.scaleX = item.scaleY = scale;
+//				scale *= ;	// 添加基础缩放系数
+				item.scaleX = item.scaleY = scale * scaleBase;
 				item.x = posX;
 				item.y = (_itemHeight - _itemHeight * scale) * 0.5;
-				posX += item.scaleX * _itemWidth;
+				posX += scale * _itemWidth;
 				
 				// 确保Item添加显示
 				if (item.parent != this.content)

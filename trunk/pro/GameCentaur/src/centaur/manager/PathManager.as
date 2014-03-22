@@ -25,6 +25,11 @@ package centaur.manager
 			return GlobalData.asite + "assets/ui/DetailCard/" + id + ".jpg";
 		}
 		
+		public function getCardViewBodyByID(id:uint):String
+		{
+			return GlobalData.asite + "assets/ui/normalCard/" + id + ".jpg";
+		}
+		
 		public function getRoundActionEffectPath():String
 		{
 			return GlobalData.asite + "assets/effects/huihexg.fam";
@@ -45,6 +50,11 @@ package centaur.manager
 			return GlobalData.asite + "assets/ui/map/mapbtnback.png";
 		}
 		
+		public function getMapItemBack3Path():String
+		{
+			return GlobalData.asite + "assets/ui/map/mapbtnselect.png";
+		}
+		
 		public function getMapItemLockPath():String
 		{
 			return GlobalData.asite + "assets/ui/map/mapbtnlock.png";
@@ -58,6 +68,16 @@ package centaur.manager
 		public function getMapItemNamePath(mapID:uint, itemIdx:uint):String
 		{
 			return GlobalData.asite + "assets/ui/map/" + mapID + "/itemname" + itemIdx + ".png";
+		}
+		
+		public function getMapInsItemKing1Path():String
+		{
+			return GlobalData.asite + "assets/ui/map/king1.png";
+		}
+		
+		public function getMapInsItemKing2Path():String
+		{
+			return GlobalData.asite + "assets/ui/map/king2.png";
 		}
 	}
 }

@@ -23,6 +23,7 @@ package centaur.display.ui.card
 
 	public final class CardDetailPanel extends GBuilderBase
 	{
+		public var backgroundImg:GBase;
 		public var cardPanel:GBase;
 		public var okBtn:GButton;
 		public var configBtn:GButton;
@@ -45,6 +46,9 @@ package centaur.display.ui.card
 		
 		public function setup():void
 		{
+			if (backgroundImg)
+				backgroundImg.alpha = 0.8;
+			
 			okBtn.addEventListener(MouseEvent.CLICK, onOKClick);
 			this.addEventListener(MouseEvent.CLICK, onOKClick);
 		}
