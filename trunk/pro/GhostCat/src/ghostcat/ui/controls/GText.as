@@ -8,6 +8,7 @@ package ghostcat.ui.controls
     import flash.events.FocusEvent;
     import flash.events.KeyboardEvent;
     import flash.events.TextEvent;
+    import flash.filters.GlowFilter;
     import flash.geom.Matrix;
     import flash.geom.Point;
     import flash.geom.Rectangle;
@@ -47,6 +48,7 @@ package ghostcat.ui.controls
     
     public class GText extends GBase
     {
+		public static var glowFilter:GlowFilter;
         public static var defaultSkin:ClassFactory = new ClassFactory(TextField,{autoSize:TextFieldAutoSize.LEFT});
         public static var defaultTextFormat:String;
         /**
@@ -88,7 +90,7 @@ package ghostcat.ui.controls
         private var _separateTextField:Boolean = false;
         private var isSkinText:Boolean = false;//文本框是否是由皮肤提供
         
-        
+        public static var defaultEmbedFont:String = "embed_hei";
         
         /**
          * 包含的TextField。此属性会在设置皮肤时自动设置成搜索到的第一个TextField。 
@@ -610,6 +612,28 @@ package ghostcat.ui.controls
                 else
                     textField.text = str;
                 
+				// 默认所有的使用defaultEmbedFont嵌入字体
+				var format:TextFormat;
+				if (defaultEmbedFont && !textField.embedFonts)
+				{
+					var oldFormat:TextFormat = textField.defaultTextFormat;
+					format = new TextFormat(defaultEmbedFont, oldFormat.size, oldFormat.color);
+					textField.embedFonts = true;
+					textField.defaultTextFormat = format;
+					textField.setTextFormat(format);
+					
+					textField.filters = [glowFilter ? glowFilter : (glowFilter = new GlowFilter(0, 1, 2, 2, 10))];
+				}
+				
+				if (_invalideItalic)
+				{
+					_invalideItalic = false;
+					format = textField.defaultTextFormat;
+					format.italic = _italic;
+					textField.defaultTextFormat = format;
+					textField.setTextFormat(format);
+				}
+				
                 if (enabledTruncateToFit)
                     truncateToFit();
                 
@@ -624,6 +648,17 @@ package ghostcat.ui.controls
             }
         }
         
+		private var _italic:Boolean;
+		private var _invalideItalic:Boolean = true;
+		public function set italic(val:Boolean):void
+		{
+			if (_italic == val)
+				return;
+			
+			_italic = val;
+			_invalideItalic = true;
+		}
+		
         /**
          * 将TextField替换成Bitmap，以实现设备文本的平滑旋转缩放效果
          * 
