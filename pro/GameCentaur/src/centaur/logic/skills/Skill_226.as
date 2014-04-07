@@ -32,8 +32,6 @@ package centaur.logic.skills
 			super.SetCardData(data);
 			param1 = data[1];
 			param2 = data[2];
-			
-			skill = getSkillByID(card, param1, [param2]);
 		}
 		
 		/**
@@ -44,6 +42,7 @@ package centaur.logic.skills
 		public override function registerCard(card:BaseCardObj):void
 		{
 			super.registerCard(card);
+			skill = getSkillByID(card, param1, [param2]);
 			
 			if (card != null)
 			{

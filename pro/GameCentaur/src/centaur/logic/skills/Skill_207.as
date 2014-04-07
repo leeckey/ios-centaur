@@ -54,8 +54,9 @@ package centaur.logic.skills
 		 */		
 		public function onPreSkillHurt(event:CardEvent):void
 		{
-			if (card.lastBeAttackVal >= 0)
-			{				
+			if (card.lastBeAttackVal >= 0 && card.attackerSKill.magicType == 1)
+			{
+				event.stopImmediatePropagation();
 				CombatLogic.combatList.push(SkillStartAction.getAction(card.objID, skillID, [card.objID]));
 				card.lastBeAttackVal = -1;
 				trace(card.objID + "免疫了技能伤害");
