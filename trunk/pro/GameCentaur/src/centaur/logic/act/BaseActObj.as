@@ -198,7 +198,7 @@ package centaur.logic.act
 			// 从其他区中移除
 			var idx:int = combatData.selfCombatArea.indexOf(cardObj);
 			if (idx > -1)
-				combatData.selfCombatArea[idx] = null;	// 位置不变，回合结束后梳理
+				combatData.selfCombatArea.splice(idx, 1);	// 位置不变，回合结束后梳理
 			else if ((idx = combatData.selfCardArea.indexOf(cardObj)) > -1)
 				combatData.selfCardArea.splice(idx, 1);
 			else if ((idx = combatData.selfWaitArea.indexOf(cardObj)) > -1)

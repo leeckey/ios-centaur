@@ -118,7 +118,7 @@ package centaur.logic.skills
 		{
 			var desc:String = super.getSkillDesc();
 			
-			return desc.replace("{0}", damage.toString());
+			return desc.replace("{0}", (damage*skillLevel).toString());
 		}
 	}
 }

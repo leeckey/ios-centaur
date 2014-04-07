@@ -43,7 +43,7 @@ package centaur.logic.skills
 			super.initConfig(data);
 			
 			enemyType = data.param1;
-			attackUp = 0.3 + data.param2 * skillLevel;
+			attackUp = data.param2 * skillLevel + data.param3;
 			tempAttack = 0;
 		}
 		
@@ -128,7 +128,7 @@ package centaur.logic.skills
 		{
 			var desc:String = super.getSkillDesc();
 			
-			return desc.replace("{0}", ((int)(attackUp*100)).toString());
+			return desc.replace("{0}", attackUp.toString());
 		}
 	}
 }
