@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\GameMain.cs">
+    <Files>
+      <File FileName="Assets\Script\GameMain.cs" Line="33" Column="39" />
+      <File FileName="Assets\Script\UI\LightSpeed\LightSpeed.cs" Line="96" Column="3" />
+      <File FileName="Assets\Script\UI\LoginUI\LoginUI.cs" Line="18" Column="3" />
+      <File FileName="Assets\Script\Manager\EventManager\EventManager.cs" Line="66" Column="61" />
+      <File FileName="Assets\Script\Manager\EventManager\GEvent.cs" Line="18" Column="53" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
