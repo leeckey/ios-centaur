@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 /// <summary>
@@ -15,19 +15,19 @@ public class BaseSkill
 	// 卡牌类型
 	public int SkillType
 	{
-		get { return skillData.skillType; };
+		get { return skillData.skillType; }
 	}
 
 	// 卡牌释放技能类型
 	public int TargetType
 	{
-		get { return skillData.selectTargetType; };
+		get { return skillData.selectTargetType; }
 	}
 
 	// 卡牌名称
 	public string SkillName
 	{
-		get { return skillData.name; };
+		get { return skillData.name; }
 	}
 
 	// 卡牌配置数据,不能做修改
@@ -35,6 +35,12 @@ public class BaseSkill
 
 	// 技能所属的卡牌
 	public Card card;
+
+	public BaseSkill()
+	{
+		card = null;
+		skillData = null;
+	}
 
 	public BaseSkill(Card card, SkillData skillData)
 	{
@@ -64,7 +70,7 @@ public class BaseSkill
 		if (card == null || card.IsDead)
 			return;
 
-		List<BaseFighter> targetList = card.owner.GetTargetByType(card, targetType);
+		List<BaseFighter> targetList = card.owner.GetTargetByType(card, TargetType);
 
 		if (targetList.Count == 0)
 			return;

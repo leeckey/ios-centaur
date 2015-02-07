@@ -26,7 +26,7 @@ public class BattleTest : MonoBehaviour
 		for (int i = 0; i < 10; i++)
 		{
 			Card card = new Card();
-			card.attackSkill = new Skill100(card);
+			card.attackSkill = SkillFactory.GetSkillByID(100, card);
 			card.ID = i;
 
 			if (i < 5)
