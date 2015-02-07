@@ -23,8 +23,8 @@ public class SystemPath
             case RuntimePlatform.WindowsEditor:
             case RuntimePlatform.OSXEditor:
             case RuntimePlatform.OSXPlayer:
-                dataRoot = "file://" + Application.dataPath + "/_Project/ResRoot/Data/";
-                break;
+				dataRoot = "file://" + Application.dataPath + "/Temp/";
+				break;
             }
             return dataRoot;
         }
@@ -51,7 +51,7 @@ public class SystemPath
             case RuntimePlatform.WindowsEditor:
             case RuntimePlatform.OSXEditor:
             case RuntimePlatform.OSXPlayer:
-                dataRoot = Application.dataPath + "/_Project/ResRoot/Data/";
+                dataRoot = Application.dataPath + "/Temp/";
                 break;
             }
             return dataRoot;
@@ -78,8 +78,8 @@ public class SystemPath
             case RuntimePlatform.WindowsEditor:
             case RuntimePlatform.OSXEditor:
             case RuntimePlatform.OSXPlayer:
-                dataRoot = "file://" + Application.dataPath + "/_Project/ResRoot/Data/";
-                break;
+				dataRoot = "file://" + Application.dataPath + "/Temp/";
+				break;
             }
             return dataRoot;
         }

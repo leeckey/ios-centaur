@@ -54,7 +54,7 @@ public class XmlUtil
 		object obj = null;
 		if (!System.IO.File.Exists(path))
 		{
-			Log.Info(path + "file not exist");
+			Log.Info(path + " file not exist");
 		}
 		else
 		{
