@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Test table.
+/// 玩家等级信息
 /// </summary>
 [Serializable]
 public class HeroInfo : IDataTable
@@ -17,7 +17,7 @@ public class HeroInfo : IDataTable
 
 	public string GetFileName()
 	{
-		return "HeroInfo.txt";
+		return "HeroInfo.csv";
 	}
 
 	// key值

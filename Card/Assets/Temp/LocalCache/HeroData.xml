@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HeroData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <heroID>88888</heroID>
+  <name>mickey</name>
+  <level>1</level>
+  <money>10000</money>
+  <gem>10000</gem>
+  <icon>1</icon>
+</HeroData>

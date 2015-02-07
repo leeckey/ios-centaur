@@ -20,7 +20,6 @@ public class GameMain : MonoBehaviour
 		StartCoroutine(GameInit());
 	}
 
-
 	// 开始初始化游戏
 	IEnumerator GameInit()
 	{
@@ -28,6 +27,11 @@ public class GameMain : MonoBehaviour
 
 		// 初始化数据
 		DataManager.GetInstance().Init();
+
+		yield return null;
+
+		// 初始化全局数据
+		GD_Manager.Init();
 
 		// 模拟等待2秒
 		yield return new WaitForSeconds(2f);

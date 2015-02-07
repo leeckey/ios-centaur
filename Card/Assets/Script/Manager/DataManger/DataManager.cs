@@ -11,13 +11,17 @@ public class DataManager: ScriptableObject
 	// 数据数组,由于不能序列化Dictionary,所有数据都是存为List保存
 	[SerializeField]
 	List<HeroInfo> heroInfoList;
+	[SerializeField]
+	List<SkillData> skillDataList;
 
 	// 反序列化以后再保存为Dictionary数据
 	[NonSerialized]
 	public Dictionary<int, HeroInfo> heroInfo;
+	[NonSerialized]
+	public Dictionary<int, SkillData> skillData;
 
 	// 资源文件路径
-	public static string ASSET_PATH = "DataBase/DataManager";
+	public static string ASSET_PATH = "DataBase/DataManager"; 
 
 	// 单例
 	private static DataManager instance;
@@ -42,7 +46,7 @@ public class DataManager: ScriptableObject
 	{
 		// 转换所有配置
 		ChangeData<HeroInfo>(ref heroInfoList, ref heroInfo);
-
+		ChangeData<SkillData>(ref skillDataList, ref skillData);
 		Clear();
 	}
 
@@ -50,6 +54,7 @@ public class DataManager: ScriptableObject
 	void Clear()
 	{
 		heroInfoList = null;
+		skillDataList = null;
 
 		GC.Collect();
 	}
@@ -75,6 +80,7 @@ public class DataManager: ScriptableObject
 	public void Load()
 	{
 		LoadData<HeroInfo>(ref heroInfoList);
+		LoadData<SkillData>(ref skillDataList);
 	}
 
 	/// <summary>
