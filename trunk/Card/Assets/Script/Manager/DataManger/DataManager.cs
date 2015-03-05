@@ -47,7 +47,7 @@ public class DataManager: ScriptableObject
 		// 转换所有配置
 		ChangeData<HeroInfo>(ref heroInfoList, ref heroInfo);
 		ChangeData<SkillData>(ref skillDataList, ref skillData);
-		Clear();
+		//Clear();
 	}
 
 	// 清理数据
@@ -105,7 +105,7 @@ public class DataManager: ScriptableObject
 		Type type = typeof(T);
 		List<FieldInfo> fieldInfos = new List<FieldInfo>();
 		FieldInfo fileInfo;
-		string[] columns = lines[0].Split(',');
+		string[] columns = lines[0].Split('\t');
 		for (int i = 0; i < columns.Length; i++)
 		{
 			string field = columns[i];
@@ -129,7 +129,7 @@ public class DataManager: ScriptableObject
 			
 			// 新建数据
 			row = new T();
-			rowData = lines[i].Split(',');
+			rowData = lines[i].Split('\t');
 			if (rowData.Length != columns.Length)
 			{
 				Debug.LogWarning("数据列数错误");

@@ -11,14 +11,14 @@ public class SkillStartAction : BaseAction
 	public int skillID;
 
 	// 被攻击对象
-	public List<int> target;
+	public List<int> targets;
 
 	SkillStartAction(int attacker, int skillID, List<int> targets)
 	{
 		type = ActionType.SkillStart;
 		sourceID = attacker;
 		this.skillID = skillID;
-		this.target = target;
+		this.targets = targets;
 	}
 	
 	public override string ToString()

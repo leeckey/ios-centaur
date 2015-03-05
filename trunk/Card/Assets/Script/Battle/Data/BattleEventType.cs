@@ -2,6 +2,9 @@
 
 public class BattleEventType
 {
-	// 卡牌攻击事件
-	public static string CARD_ATTACK = "CARD_ATTACK";
+	// 普通攻击前事件
+	public static string ON_PRE_ATTACK = "ON_PRE_ATTACK";
+
+	// 普通攻击后事件
+	public static string ON_AFTER_ATTACK = "ON_AFTER_ATTACK";
 }

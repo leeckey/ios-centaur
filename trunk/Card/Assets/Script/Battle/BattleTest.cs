@@ -8,11 +8,12 @@ public class BattleTest : MonoBehaviour
 {
 	void Awake()
 	{
-		// TestFight();
 		DataManager.GetInstance().Init();
 
-		foreach (SkillData data in DataManager.GetInstance().skillData.Values)
-			print(data.id);
+		TestFight();
+
+		//foreach (SkillData data in DataManager.GetInstance().skillData.Values)
+		//	print(data.id);
 	}
 
 	void TestFight()
@@ -26,7 +27,7 @@ public class BattleTest : MonoBehaviour
 		for (int i = 0; i < 10; i++)
 		{
 			Card card = new Card();
-			card.attackSkill = SkillFactory.GetSkillByID(100, card);
+			card.attackSkill = SkillFactory.GetAttackSkill(card);
 			card.ID = i;
 
 			if (i < 5)

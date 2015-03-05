@@ -17,7 +17,7 @@ public class HeroInfo : IDataTable
 
 	public string GetFileName()
 	{
-		return "HeroInfo.csv";
+		return "HeroInfo.txt";
 	}
 
 	// key值

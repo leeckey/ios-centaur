@@ -7,19 +7,18 @@ using System.Collections.Generic;
 /// </summary>
 public class Skill100 : BaseSkill
 {
-//	public Skill100(Card card) : base(card)
-//	{
-//		skillID = 100;
-//		// TargetType = (int)SkillTargetType.TARGET_SELF_FRONT_OR_FIGHTER;
-//	}
+	public Skill100(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	{
+
+	}
 
 	protected override void _DoSkill(BaseFighter target)
 	{
-		if (card.attack <= 0)
+		if (card.Attack <= 0)
 			return;
 
 		// 卡牌存在,攻击卡牌
-		target.OnAttackHurt(card, card.attack);
+		target.OnAttackHurt(card, card.Attack);
 	}
 
 }

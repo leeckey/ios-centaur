@@ -42,10 +42,38 @@ public class BaseSkill
 		skillData = null;
 	}
 
-	public BaseSkill(Card card, SkillData skillData)
+	/// <summary>
+	/// 构造函数
+	/// </summary>
+	public BaseSkill(Card card, SkillData skillData, int[] skillParam)
 	{
-		RegisterCard(card);
+		// 设置卡牌自带参数
+		SetSkillParam(skillParam);
 
+		// 设置配置参数
+		InitConfig(skillData);
+
+		// 设置技能关联
+		RegisterCard(card);
+	}
+
+	/// <summary>
+	/// 卡牌自带技能参数,一般第一个参数是技能级别
+	/// </summary>
+	protected void SetSkillParam(int[] skillParam)
+	{
+		if (skillParam == null || skillParam.Length == 0)
+			return;
+
+		skillLevel = skillParam[0];
+	}
+
+	/// <summary>
+	/// 设置参数
+	/// </summary>
+	protected virtual void InitConfig(SkillData skillData)
+	{
+		this.skillID = skillData.id;
 		this.skillData = skillData;
 	}
 
@@ -76,14 +104,15 @@ public class BaseSkill
 			return;
 
 		List<int> cardIDs = GetTargetID(targetList);
-		card.owner.Room.actions.Add(SkillStartAction.GetAction(card.ID, skillID, cardIDs));
+		card.Actions.Add(SkillStartAction.GetAction(card.ID, skillID, cardIDs));
 
 		foreach (BaseFighter target in targetList)
 		{
-			_DoSkill(target);
+			if (target != null && !target.IsDead)
+				_DoSkill(target);
 		}
 
-		card.owner.Room.actions.Add(SkillEndAction.GetAction(card.ID, skillID));
+		card.Actions.Add(SkillEndAction.GetAction(card.ID, skillID));
 	}
 
 	/// <summary>
