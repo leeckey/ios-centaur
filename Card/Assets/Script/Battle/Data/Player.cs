@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -180,7 +180,7 @@ public class Player : BaseFighter
 			if (card == null || card.IsDead)
 				continue;
 
-			card.Attack();
+			card.DoAttack();
 		}
 
 		status = FigtherStatus.actionEnd;
@@ -191,10 +191,37 @@ public class Player : BaseFighter
 		status = FigtherStatus.waiting;
 	}
 
-	public void CardTocemetery(Card card)
+	/// <summary>
+	/// 卡牌进入牌堆
+	/// </summary>
+	public void CardToCemetery(Card card)
 	{
 		fightCard.Remove(card);
 		cemeteryCard.Add(card);
+	}
+
+	/// <summary>
+	/// 卡牌进入牌堆
+	/// </summary>
+	public void CardToCardArea(Card card)
+	{
+		if (fightCard.Contains(card))
+			fightCard.Remove(card);
+		else if (waitCard.Contains(card))
+			waitCard.Remove(card);
+		else if (cemeteryCard.Contains(card))
+			cemeteryCard.Remove(card);
+
+		initialCard.Add(card);
+	}
+
+	/// <summary>
+	/// 卡牌复活
+	/// </summary>
+	public void CardRevive(Card card)
+	{
+		cemeteryCard.Remove(card);
+		fightCard.Add(card);
 	}
 
 	/// <summary>

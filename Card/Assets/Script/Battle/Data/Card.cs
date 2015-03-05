@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Card : BaseFighter
 {
@@ -14,30 +15,53 @@ public class Card : BaseFighter
 	/// <summary>
 	/// 开始攻击
 	/// </summary>
-	public void Attack()
+	public void DoAttack()
 	{
+		DispatchEvent(BattleEventType.ON_PRE_ATTACK);
+
 		if (attackSkill != null)
 			attackSkill.DoSkill();
+
+		DispatchEvent(BattleEventType.ON_AFTER_ATTACK);
+	}
+
+	/// <summary>
+	/// 战斗Action
+	/// </summary>
+	public override List<BaseAction> Actions
+	{
+		get { return owner.Actions; }
 	}
 	
 	/// <summary>
 	/// 当卡牌受到伤害
 	/// </summary>
-	public override void OnAttackHurt(BaseFighter attacker, int damage)
+	public override int OnAttackHurt(BaseFighter attacker, int damage)
 	{
-		base.OnAttackHurt(attacker, damage);
+		return base.OnAttackHurt(attacker, damage);
 	}
 
-	public override void ReduceHp(int num)
+	/// <summary>
+	/// 卡牌死亡
+	/// </summary>
+	public override void DoDead()
 	{
-		base.ReduceHp(num);
-		
-		CheckDead();
+		owner.CardToCemetery(this);
 	}
 
-	void CheckDead()
+	/// <summary>
+	/// 卡牌回到牌堆
+	/// </summary>
+	public void DoBack()
 	{
-		if (HP <= 0)
-			owner.CardTocemetery(this);
+		owner.CardToCardArea(this);
+	}
+
+	/// <summary>
+	/// 卡牌复活
+	/// </summary>
+	public void DoRevive()
+	{
+		owner.CardRevive(this);
 	}
 }

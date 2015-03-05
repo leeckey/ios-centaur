@@ -24,7 +24,7 @@ public class SkillData : IDataTable
 
 	public string GetFileName()
 	{
-		return "SkillData.csv";
+		return "SkillData.txt";
 	}
 	
 	// key值

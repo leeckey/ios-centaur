@@ -16,7 +16,7 @@ public class BaseAction
 	public int targetID;
 
 	// 输出为字符串调试用
-	public virtual string ToString()
+	public override string ToString()
 	{
 		return string.Empty;
 	}
