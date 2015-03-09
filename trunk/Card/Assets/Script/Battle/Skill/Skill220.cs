@@ -11,5 +11,29 @@ public class Skill220 : BaseSkill
 		
 	}
 
-	// TODO 等buff做好
+	protected override void InitConfig(SkillData skillData)
+	{
+		base.InitConfig(skillData);
+	}
+	
+	public override void RegisterCard(Card card)
+	{
+		base.RegisterCard(card);
+		
+		card.AddEventListener(BattleEventType.ON_AFTER_ATTACK_HURT, OnAttackSucc);
+	}
+	
+	public override void RemoveCard(Card card)
+	{
+		card.RemoveEventListener(BattleEventType.ON_AFTER_ATTACK_HURT, OnAttackSucc);
+		
+		base.RemoveCard(card);
+	}
+	
+	void OnAttackSucc(FighterEvent e)
+	{
+		BaseBuff buff = BuffFactory.GetBuffByID(BuffID, skillLevel);
+		card.attacker.AddBuff(buff);
+		card.Actions.Add(SkillStartAction.GetAction(card.ID, skillID, GetTargetID(card)));
+	}
 }

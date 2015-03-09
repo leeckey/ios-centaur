@@ -6,17 +6,35 @@ using System.Collections;
 /// </summary>
 public class Skill101 : BaseSkill
 {
+	// 伤害值
+	int damage;
+
+	// 中buff的概率
+	int rate;
+
 	public Skill101(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
-	
+
+	protected override void InitConfig(SkillData skillData)
+	{
+		base.InitConfig (skillData);
+		
+		damage = skillData.param1 * skillLevel;
+		rate = skillData.param2;
+	}
+
 	protected override void _DoSkill(BaseFighter target)
 	{
-		if (card.Attack <= 0)
-			return;
-		
 		// 卡牌存在,攻击卡牌
-		target.OnAttackHurt(card, card.Attack);
+		target.OnSkillHurt(this, damage);
+
+		// 判定成功增加Buff
+		if (target.canDoSkill && BuffID > 0 && !target.IsDead && Random.Range(0, 100) < rate)
+		{
+			BaseBuff buff = BuffFactory.GetBuffByID(BuffID, skillLevel);
+			card.attacker.AddBuff(buff);
+		}
 	}
 }

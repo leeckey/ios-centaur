@@ -192,7 +192,7 @@ public class Player : BaseFighter
 			if (card == null || card.IsDead)
 				continue;
 
-			card.DoAttack();
+			card.Action();
 		}
 
 		status = FigtherStatus.actionEnd;

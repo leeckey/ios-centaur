@@ -36,5 +36,7 @@ public enum ActionType
 	Attack,        // 攻击
 	Damage,        // 受到伤害
 	SkillStart,
-	SkillEnd
+	SkillEnd,
+	BuffAdd,
+	BuffRemov
 }

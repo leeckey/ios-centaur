@@ -23,28 +23,31 @@ public class Card : BaseFighter
 
 	// 我攻击的卡牌
 	public Card target;
-
-	// 是否免疫技能
-	public bool canDoSkill = true;
-
-	// 是否可被治疗
-	public bool canBeCure = true;
-
+	
 	// 是否可被摧毁或送还
 	public bool canBeMove = true;
+
+	// 是否可行动
+	public int isActive = 0;
+
+	// 是否可释放技能
+	public int canUseSkill = 0;
 
 	// 卡牌数据
 	public CardData cardData;
 
-	/// <summary>
-	/// 治疗加血
-	/// </summary>
-	public override int AddHp(int num)
+	// 卡牌Buff
+	List<BaseBuff> buffs;
+	
+	// 重置数据
+	protected override void Init()
 	{
-		if (!canBeCure)
-			return 0;
-
-		return base.AddHp(num);
+		buffs = new List<BaseBuff>();
+		HP = MaxHP;
+		lastAttackValue = 0;
+		lastHurtValue = 0;
+		attacker = null;
+		target = null;
 	}
 
 	/// <summary>
@@ -52,12 +55,63 @@ public class Card : BaseFighter
 	/// </summary>
 	public void DoAttack()
 	{
+		if (isActive > 0)
+			return;
+
 		DispatchEvent(BattleEventType.ON_PRE_ATTACK);
 
 		if (attackSkill != null)
 			attackSkill.DoSkill();
 
 		DispatchEvent(BattleEventType.ON_AFTER_ATTACK);
+	}
+
+	/// <summary>
+	/// 卡牌开始行动
+	/// </summary>
+	public void Action()
+	{
+		// 回合开始
+		RoundStart();
+
+		if (IsDead)
+			return;
+
+		// 释放技能
+		DoSkill();
+
+		if (IsDead)
+			return;
+
+		// 普通攻击
+		DoAttack();
+
+		if (IsDead)
+			return;
+
+		// 回合结束
+		RoundEnd();
+	}
+
+	// 回合开始
+	void RoundStart()
+	{
+		DispatchEvent(BattleEventType.ON_ROUND_START);
+	}
+
+	// 回合结束
+	public void RoundEnd()
+	{
+		DispatchEvent(BattleEventType.ON_ROUND_END);
+	}
+
+	/// <summary>
+	/// 开始释放技能
+	/// </summary>
+	public void DoSkill()
+	{
+		if (isActive > 0 || canUseSkill > 0)
+			return;
 	}
 
 	/// <summary>
@@ -192,5 +246,39 @@ public class Card : BaseFighter
 	public void DoWait()
 	{
 		owner.CardToWait(this);
+	}
+
+	/// <summary>
+	/// 添加一个buff
+	/// </summary>
+	public void AddBuff(BaseBuff buff)
+	{
+		if (!buff.SuperPositon && HasBuff(buff.ID))
+			return;
+
+		buff.AddBuff(this);
+		buffs.Add(buff);
+	}
+
+	/// <summary>
+	/// 移除一个Buff
+	/// </summary>
+	public void RemoveBuff(BaseBuff buff)
+	{
+		buffs.Remove(buff);
+	}
+
+	/// <summary>
+	/// 是否有同样的Buff
+	/// </summary>
+	public bool HasBuff(int id)
+	{
+		foreach (BaseBuff buff in buffs)
+		{
+			if (buff.ID == id && buff.Round > 0)
+				return true;
+		}
+
+		return false;
 	}
 }

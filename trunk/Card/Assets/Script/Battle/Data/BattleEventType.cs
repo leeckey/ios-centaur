@@ -37,4 +37,10 @@ public class BattleEventType
 
 	// 卡牌死亡消息
 	public static string ON_CARD_DEAD = "ON_CARD_DEAD";
+
+	// 回合开始
+	public static string ON_ROUND_START = "ON_ROUND_START";
+
+	// 回合结束
+	public static string ON_ROUND_END = "ON_ROUND_END";
 }
