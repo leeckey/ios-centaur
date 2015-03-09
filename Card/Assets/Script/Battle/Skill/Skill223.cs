@@ -1,38 +1,39 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
-/// 暴击:攻击时有50几率提高100%攻击力 
+/// 圣光:当攻击目标是地狱时,攻击力加成60%
 /// </summary>
-public class Skill201 : BaseSkill
+public class Skill223 : BaseSkill
 {
-	// 暴击概率
-	int rate;
-
+	// 暴击种族
+	int enemyType;
+	
 	// 提升攻击力的概率
 	float attackUpRate;
-
+	
 	// 提升的攻击力
 	int attackUp;
-
-	public Skill201(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	
+	public Skill223(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
-
+	
 	protected override void InitConfig(SkillData skillData)
 	{
 		base.InitConfig(skillData);
-
-		rate = skillData.param1;
-		attackUpRate = skillData.param2 * skillLevel;
+		
+		enemyType = skillData.param1;
+		attackUpRate = skillData.param2 * skillLevel + skillData.param3;
 		attackUp = 0;
 	}
 	
 	public override void RegisterCard(Card card)
 	{
 		base.RegisterCard(card);
-
+		
 		card.AddEventListener(BattleEventType.ON_PRE_ATTACK, OnPreAttack);
 	}
 	
@@ -41,24 +42,30 @@ public class Skill201 : BaseSkill
 		card.RemoveEventListener(BattleEventType.ON_PRE_ATTACK, OnPreAttack);
 		
 		card.RemoveEventListener(BattleEventType.ON_PRE_ATTACK, OnAfterAttack);
-
+		
 		base.RemoveCard(card);
 	}
-
+	
 	// 攻击前判断暴击
 	void OnPreAttack(FighterEvent e)
 	{
-		if (Random.Range(0, 100) < rate)
+		List<BaseFighter> targets = card.owner.GetTargetByType(card, TargetType);
+		if (targets == null || targets.Count == 0)
+			return;
+
+		Card target = targets[0] as Card;
+
+		if (target != null && target.cardData.country == enemyType)
 		{
 			card.Actions.Add(SkillStartAction.GetAction(card.ID, skillID, GetTargetID(card)));
-
+			
 			// 触发暴击
 			attackUp = (int)(card.Attack * attackUpRate / 100f);
 			card.AddAttack(attackUp);
 			card.AddEventListener(BattleEventType.ON_PRE_ATTACK, OnAfterAttack);
 		}
 	}
-
+	
 	// 攻击后还原攻击
 	void OnAfterAttack(FighterEvent e)
 	{
@@ -66,7 +73,7 @@ public class Skill201 : BaseSkill
 		{
 			card.DeductAttack(attackUp);
 			attackUp = 0;
-
+			
 			card.RemoveEventListener(BattleEventType.ON_PRE_ATTACK, OnAfterAttack);
 		}
 	}

@@ -112,7 +112,7 @@ public class BaseSkill
 				_DoSkill(target);
 		}
 
-		card.Actions.Add(SkillEndAction.GetAction(card.ID, skillID));
+		// card.Actions.Add(SkillEndAction.GetAction(card.ID, skillID));
 	}
 
 	/// <summary>
@@ -124,6 +124,13 @@ public class BaseSkill
 		foreach (BaseFighter card in targets)
 			result.Add(card.ID);
 
+		return result;
+	}
+	protected List<int> GetTargetID(BaseFighter target)
+	{
+		List<int> result = new List<int>();
+		result.Add(target.ID);
+		
 		return result;
 	}
 

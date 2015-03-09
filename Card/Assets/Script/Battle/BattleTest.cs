@@ -33,12 +33,12 @@ public class BattleTest : MonoBehaviour
 			if (i < 5)
 			{
 				card.owner = player0;
-				player0.initialCard.Add(card);
+				player0.allCard.Add(card);
 			}
 			else
 			{
 				card.owner = player1;
-				player1.initialCard.Add(card);
+				player1.allCard.Add(card);
 			}
 		}
 

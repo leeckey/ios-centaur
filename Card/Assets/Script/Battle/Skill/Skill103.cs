@@ -23,7 +23,7 @@ public class Skill103 : BaseSkill
 	
 	protected override void _DoSkill(BaseFighter target)
 	{
-		int hurt = target.OnSkillHurt(card, damage);
+		int hurt = target.OnSkillHurt(this, damage);
 
 		// 给自己加血
 		card.AddHp(hurt);

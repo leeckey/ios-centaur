@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -25,6 +25,6 @@ public class Skill104 : BaseSkill
 	protected override void _DoSkill(BaseFighter target)
 	{
 		if (target.CanDoSkill())
-			target.DeduceAttack(deAttack);
+			target.DeductAttack(deAttack);
 	}
 }

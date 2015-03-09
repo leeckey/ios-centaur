@@ -24,6 +24,6 @@ public class Skill106 : BaseSkill
 	protected override void _DoSkill(BaseFighter target)
 	{
 		// 给自己加血
-		target.OnSkillHurt(card, damage);
+		target.OnSkillHurt(this, damage);
 	}
 }

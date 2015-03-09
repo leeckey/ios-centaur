@@ -13,12 +13,16 @@ public class DataManager: ScriptableObject
 	List<HeroInfo> heroInfoList;
 	[SerializeField]
 	List<SkillData> skillDataList;
+	[SerializeField]
+	List<BuffData> buffDataList;
 
 	// 反序列化以后再保存为Dictionary数据
 	[NonSerialized]
 	public Dictionary<int, HeroInfo> heroInfo;
 	[NonSerialized]
 	public Dictionary<int, SkillData> skillData;
+	[NonSerialized]
+	public Dictionary<int, BuffData> buffData;
 
 	// 资源文件路径
 	public static string ASSET_PATH = "DataBase/DataManager"; 
@@ -47,6 +51,7 @@ public class DataManager: ScriptableObject
 		// 转换所有配置
 		ChangeData<HeroInfo>(ref heroInfoList, ref heroInfo);
 		ChangeData<SkillData>(ref skillDataList, ref skillData);
+		ChangeData<BuffData>(ref buffDataList, ref buffData);
 		//Clear();
 	}
 
@@ -81,6 +86,7 @@ public class DataManager: ScriptableObject
 	{
 		LoadData<HeroInfo>(ref heroInfoList);
 		LoadData<SkillData>(ref skillDataList);
+		LoadData<BuffData>(ref buffDataList);
 	}
 
 	/// <summary>

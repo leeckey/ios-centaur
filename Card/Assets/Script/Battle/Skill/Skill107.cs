@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -27,7 +27,7 @@ public class Skill107 : BaseSkill
 			return;
 
 		// 给自己加血
-		target.OnSkillHurt(card, damage);
-		target.DeduceAttack(damage);
+		target.OnSkillHurt(this, damage);
+		target.DeductAttack(damage);
 	}
 }
