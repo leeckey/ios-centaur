@@ -15,6 +15,23 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 
 	public BaseSkill attackerSkill;
 
+	// 是否免疫技能
+	public bool canDoSkill = true;
+	
+	// 是否可被治疗
+	public int canBeCure = 0;
+
+	public BaseFighter()
+	{
+		Init();
+	}
+
+	// 初始化
+	protected virtual void Init()
+	{
+
+	}
+
 	// 战斗者ID
 	public int ID
 	{
@@ -90,6 +107,9 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	/// </summary>
 	public virtual int AddHp(int num)
 	{
+		if (canBeCure > 0)
+			return 0;
+
 		this.hp += num;
 
 		return num;
@@ -184,7 +204,7 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	/// </summary>
 	public virtual bool CanDoSkill()
 	{
-		return true;
+		return canDoSkill;
 	}
 
 }

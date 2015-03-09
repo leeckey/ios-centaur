@@ -9,7 +9,7 @@ public class SkillFactory
 	/// </summary>
 	public static BaseSkill GetSkillByID(int id, Card card, int[] skillParam)
 	{
-		SkillData skillData = DataManager.GetInstance().skillData[1];
+		SkillData skillData = DataManager.GetInstance().skillData[id];
 		string className = "Skill" + skillData.templateID;
 		Object obj = Activator.CreateInstance(Type.GetType(className), card, skillData, skillParam);
 		return obj as BaseSkill;

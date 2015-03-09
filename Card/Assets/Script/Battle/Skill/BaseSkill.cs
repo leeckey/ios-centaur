@@ -30,6 +30,12 @@ public class BaseSkill
 		get { return skillData.name; }
 	}
 
+	// BuffID
+	public int BuffID
+	{
+		get { return skillData.buffID; }
+	}
+
 	// 卡牌配置数据,不能做修改
 	SkillData skillData;
 
