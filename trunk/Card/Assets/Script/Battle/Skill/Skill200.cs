@@ -51,6 +51,6 @@ public class Skill200 : BaseSkill
 			fighter.OnAttackHurt(card, damage);
 		}
 
-		card.Actions.Add(SkillEndAction.GetAction(card.ID, skillID));
+		// card.Actions.Add(SkillEndAction.GetAction(card.ID, skillID));
 	}
 }

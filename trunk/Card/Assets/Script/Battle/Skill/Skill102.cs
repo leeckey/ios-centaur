@@ -31,6 +31,6 @@ public class Skill102 : BaseSkill
 		int damage = Random.Range(min, max + 1);
 
 		// 卡牌存在,攻击卡牌
-		target.OnSkillHurt(card, damage);
+		target.OnSkillHurt(this, damage);
 	}
 }

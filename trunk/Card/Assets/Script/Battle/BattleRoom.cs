@@ -45,6 +45,9 @@ public class BattleRoom
 	/// </summary>
 	public void StartFight()
 	{
+		fighter0.InitFight();
+		fighter1.InitFight();
+
 		// 循环直到一方死亡
 		while ((result = CheckWin()) == 0 && !pause && round <= 100)
 		{

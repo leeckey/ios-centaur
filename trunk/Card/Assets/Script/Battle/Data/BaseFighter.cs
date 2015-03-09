@@ -13,6 +13,8 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	private int hp = 1000;
 	private int level;
 
+	public BaseSkill attackerSkill;
+
 	// 战斗者ID
 	public int ID
 	{
@@ -64,6 +66,26 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	}
 
 	/// <summary>
+	/// 增加最大血量
+	/// </summary>
+	public virtual void AddMaxHp(int num)
+	{
+		maxHp += num;
+
+		hp += num;
+	}
+
+	/// <summary>
+	/// 减少最大血量
+	/// </summary>
+	public virtual void DeductMaxHp(int num)
+	{
+		maxHp -= num;
+		if (hp > maxHp)
+			hp = maxHp;
+	}
+
+	/// <summary>
 	/// 加血,最大不超过MaxHP
 	/// </summary>
 	public virtual int AddHp(int num)
@@ -76,14 +98,14 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	/// <summary>
 	/// 扣HP,最少为0
 	/// </summary>
-	public virtual int ReduceHp(int num)
+	public virtual int DeductHp(int num, bool checkDead = false)
 	{
 		this.hp -= num;
 
 		Actions.Add(DamageNotifyAction.GetAction(this.id, num));
 
-
-		CheckDead();
+		if (checkDead)
+			CheckDead();
 
 		return num;
 	}
@@ -116,7 +138,7 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	/// <summary>
 	/// 减少攻击力最低为0
 	/// </summary>
-	public virtual int DeduceAttack(int num)
+	public virtual int DeductAttack(int num)
 	{
 		this.attack -= num;
 		
@@ -131,7 +153,7 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 		if (IsDead)
 			return 0;
 		
-		ReduceHp(damage);
+		DeductHp(damage);
 
 		return damage;
 	}
@@ -139,14 +161,22 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	/// <summary>
 	/// 受到技能攻击
 	/// </summary>
-	public virtual int OnSkillHurt(BaseFighter attacker, int damage)
+	public virtual int OnSkillHurt(BaseSkill skill, int damage)
 	{
 		if (IsDead)
 			return 0;
 		
-		ReduceHp(damage);
+		DeductHp(damage);
 
 		return damage;
+	}
+
+	/// <summary>
+	/// 直接收到伤害
+	/// </summary>
+	public virtual int OnHurt(int damage)
+	{
+		return DeductHp(damage, true);
 	}
 
 	/// <summary>

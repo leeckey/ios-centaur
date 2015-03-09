@@ -14,17 +14,20 @@ public class Player : BaseFighter
 	// 是否自动
 	public bool auto = true;
 
+	// 所有卡牌
+	public List<Card> allCard;
+
 	// 初始卡组
-	public List<Card> initialCard;
+	List<Card> initialCard;
 
 	// 等待卡组
-	public List<Card> waitCard;
+	List<Card> waitCard;
 
 	// 战斗卡组
-	public List<Card> fightCard;
+	List<Card> fightCard;
 
 	// 墓地卡组
-	public List<Card> cemeteryCard;
+	List<Card> cemeteryCard;
 
 	// 玩家状态
 	FigtherStatus status;
@@ -43,6 +46,7 @@ public class Player : BaseFighter
 
 	public Player()
 	{
+		allCard = new List<Card>();
 		initialCard = new List<Card>();
 		waitCard = new List<Card>();
 		fightCard = new List<Card>();
@@ -75,6 +79,11 @@ public class Player : BaseFighter
 	public override List<BaseAction> Actions
 	{
 		get { return room.actions; }
+	}
+
+	public void InitFight()
+	{
+		allCard.ForEach(i => initialCard.Add(i));
 	}
 	
 	/// <summary>
@@ -161,6 +170,9 @@ public class Player : BaseFighter
 
 			// 记录Action
 			Actions.Add(PlayCardAction.GetAction(this.ID, card.ID));
+
+			// 卡牌出场消息
+			card.OnPresent();
 		}
 
 		status = FigtherStatus.attack;
@@ -216,6 +228,21 @@ public class Player : BaseFighter
 	}
 
 	/// <summary>
+	/// 卡牌进入等待区
+	/// </summary>
+	public void CardToWait(Card card)
+	{
+		if (fightCard.Contains(card))
+			fightCard.Remove(card);
+		else if (initialCard.Contains(card))
+			initialCard.Remove(card);
+		else if (cemeteryCard.Contains(card))
+			cemeteryCard.Remove(card);
+		
+		waitCard.Add(card);
+	}
+
+	/// <summary>
 	/// 卡牌复活
 	/// </summary>
 	public void CardRevive(Card card)
@@ -265,6 +292,21 @@ public class Player : BaseFighter
 		}
 
 		return targets;
+	}
+
+	/// <summary>
+	/// 返回同一个国家的卡牌
+	/// </summary>
+	public List<BaseFighter> GetTargetByCountry(int country)
+	{
+		List<BaseFighter> result = new List<BaseFighter>();
+		foreach (Card card in allCard)
+		{
+			// TODO:判断相同国家
+			result.Add(card);
+		}
+
+		return result;
 	}
 }
 
