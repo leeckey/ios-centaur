@@ -1,8 +1,8 @@
-id	templateID	name	effectPath	discription	param1	round	superposition
-¼¼ÄÜID	Ä£°åID	Ãû³Æ	×ÊÔ´Â·¾¶	ÃèÊö	²ÎÊı1	³ÖĞø»ØºÏ	ÊÇ·ñ¿Éµş¼Ó
-1	100	±ù¶³	assets/effects/bingdong.fam	ÎŞ·¨ĞĞ¶¯	0	1	0
-2	101	Âé±Ô	assets/effects/mabi.fam	ÎŞ·¨ÆÕÍ¨¹¥»÷	0	1	0
-3	102	ÖĞ¶¾	assets/effects/zhongdu.fam	ĞĞ¶¯½áÊøºóÊÜµ½20µãÉËº¦	20	1	1
-4	100	ÏİÚå	assets/effects/shuoding.fam	ÎŞ·¨ĞĞ¶¯	0	1	0
-5	102	È¼ÉÕ	assets/effects/ranshaoBuff.fam	ĞĞ¶¯½áÊøºóÊÜµ½20µãÉËº¦	20	9999	1
-6	103	ÁÑÉË	assets/effects/lieshang.fam	ÎŞ·¨»Ø´ººÍ±»ÖÎÁÆ	0	9999	0
+ï»¿id	templateID	name	effectPath	discription	param1	round	superposition
+æŠ€èƒ½ID	æ¨¡æ¿ID	åç§°	èµ„æºè·¯å¾„	æè¿°	å‚æ•°1	æŒç»­å›åˆ	æ˜¯å¦å¯å åŠ 
+1	100	å†°å†»	assets/effects/bingdong.fam	æ— æ³•è¡ŒåŠ¨	0	1	0
+2	101	éº»ç—¹	assets/effects/mabi.fam	æ— æ³•æ™®é€šæ”»å‡»	0	1	0
+3	102	ä¸­æ¯’	assets/effects/zhongdu.fam	è¡ŒåŠ¨ç»“æŸåå—åˆ°20ç‚¹ä¼¤å®³	20	1	1
+4	100	é™·é˜±	assets/effects/shuoding.fam	æ— æ³•è¡ŒåŠ¨	0	1	0
+5	102	ç‡ƒçƒ§	assets/effects/ranshaoBuff.fam	è¡ŒåŠ¨ç»“æŸåå—åˆ°20ç‚¹ä¼¤å®³	20	9999	1
+6	103	è£‚ä¼¤	assets/effects/lieshang.fam	æ— æ³•å›æ˜¥å’Œè¢«æ²»ç–—	0	9999	0

@@ -9,7 +9,7 @@ public class Skill107 : BaseSkill
 	// 攻击伤害
 	int damage;
 	
-	public Skill107(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill107(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}

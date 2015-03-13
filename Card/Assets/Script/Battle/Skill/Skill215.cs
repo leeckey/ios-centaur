@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,7 +10,7 @@ public class Skill215 : BaseSkill
 	// 伤害比率
 	int damage;
 
-	public Skill215(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill215(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 
 	}
@@ -22,14 +22,14 @@ public class Skill215 : BaseSkill
 		damage = skillData.param1 * skillLevel;
 	}
 
-	public override void RegisterCard(Card card)
+	public override void RegisterCard(CardFighter card)
 	{
 		base.RegisterCard(card);
 
 		card.AddEventListener(BattleEventType.ON_CARD_DEAD, OnCardDead);
 	}
 
-	public override void RemoveCard(Card card)
+	public override void RemoveCard(CardFighter card)
 	{
 		card.RemoveEventListener(BattleEventType.ON_CARD_DEAD, OnCardDead);
 
@@ -39,12 +39,12 @@ public class Skill215 : BaseSkill
 	// 对对面以及相邻三张卡牌造成100点伤害
 	void OnCardDead(FighterEvent e)
 	{
-		List<BaseFighter> targetList = card.owner.GetTargetByType(card, TargetType);
+		List<BaseFighter> targetList = card.owner.GetTargetByType(this, TargetType);
 		if (targetList != null || targetList.Count == 0)
 			return;
 
 		card.Actions.Add(SkillStartAction.GetAction(card.ID, skillID, GetTargetID(targetList)));
-		foreach (Card target in targetList)
+		foreach (CardFighter target in targetList)
 		{
 			if (target.CanDoSkill() && !target.IsDead)
 				target.OnHurt(damage);

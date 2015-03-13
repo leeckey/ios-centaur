@@ -16,7 +16,7 @@ public class Skill223 : BaseSkill
 	// 提升的攻击力
 	int attackUp;
 	
-	public Skill223(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill223(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
@@ -30,14 +30,14 @@ public class Skill223 : BaseSkill
 		attackUp = 0;
 	}
 	
-	public override void RegisterCard(Card card)
+	public override void RegisterCard(CardFighter card)
 	{
 		base.RegisterCard(card);
 		
 		card.AddEventListener(BattleEventType.ON_PRE_ATTACK, OnPreAttack);
 	}
 	
-	public override void RemoveCard(Card card)
+	public override void RemoveCard(CardFighter card)
 	{
 		card.RemoveEventListener(BattleEventType.ON_PRE_ATTACK, OnPreAttack);
 		
@@ -49,11 +49,11 @@ public class Skill223 : BaseSkill
 	// 攻击前判断暴击
 	void OnPreAttack(FighterEvent e)
 	{
-		List<BaseFighter> targets = card.owner.GetTargetByType(card, TargetType);
+		List<BaseFighter> targets = card.owner.GetTargetByType(this, TargetType);
 		if (targets == null || targets.Count == 0)
 			return;
 
-		Card target = targets[0] as Card;
+		CardFighter target = targets[0] as CardFighter;
 
 		if (target != null && target.cardData.country == enemyType)
 		{

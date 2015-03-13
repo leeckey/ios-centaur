@@ -9,7 +9,7 @@ public class Skill104 : BaseSkill
 	// 降低的攻击力
 	public int deAttack;
 
-	public Skill104(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill104(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}

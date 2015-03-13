@@ -16,7 +16,7 @@ public class SkillEndAction : BaseAction
 
 	public override string ToString()
 	{
-		return string.Format("{0}释放技能{1}结束", sourceID, skillID);
+		return string.Format("{0}释放技能{1}结束", sourceID, DataManager.GetInstance().skillData[skillID].name);
 	}
 
 	public static SkillEndAction GetAction(int sourceID, int skillID)

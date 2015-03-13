@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -6,7 +6,7 @@ using System.Collections;
 /// </summary>
 public class Skill109 : BaseSkill
 {
-	public Skill109(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill109(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
@@ -14,7 +14,7 @@ public class Skill109 : BaseSkill
 	// 回到牌堆
 	protected override void _DoSkill(BaseFighter target)
 	{
-		Card tempCard = target as Card;
+		CardFighter tempCard = target as CardFighter;
 
 		if (tempCard != null)
 			tempCard.DoBack();

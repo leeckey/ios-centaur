@@ -9,7 +9,7 @@ public class Skill221 : BaseSkill
 	// 减少攻击力数值
 	int deAtt;
 	
-	public Skill221(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill221(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
@@ -21,14 +21,14 @@ public class Skill221 : BaseSkill
 		deAtt = skillData.param1 * skillLevel;
 	}
 	
-	public override void RegisterCard(Card card)
+	public override void RegisterCard(CardFighter card)
 	{
 		base.RegisterCard(card);
 		
 		card.AddEventListener(BattleEventType.ON_ATTACK_SUCC, OnAttackSucc);
 	}
 	
-	public override void RemoveCard(Card card)
+	public override void RemoveCard(CardFighter card)
 	{
 		card.RemoveEventListener(BattleEventType.ON_ATTACK_SUCC, OnAttackSucc);
 		

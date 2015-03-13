@@ -23,7 +23,7 @@ public class SkillStartAction : BaseAction
 	
 	public override string ToString()
 	{
-		return string.Format("{0}释放了{1}技能", sourceID, skillID);
+		return string.Format("{0}释放了{1}技能", sourceID, DataManager.GetInstance().skillData[skillID].name);
 	}
 	
 	/// <summary>

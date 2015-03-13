@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -6,7 +6,7 @@ using System.Collections;
 /// </summary>
 public class Skill220 : BaseSkill
 {
-	public Skill220(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill220(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
@@ -16,14 +16,14 @@ public class Skill220 : BaseSkill
 		base.InitConfig(skillData);
 	}
 	
-	public override void RegisterCard(Card card)
+	public override void RegisterCard(CardFighter card)
 	{
 		base.RegisterCard(card);
 		
 		card.AddEventListener(BattleEventType.ON_AFTER_ATTACK_HURT, OnAttackSucc);
 	}
 	
-	public override void RemoveCard(Card card)
+	public override void RemoveCard(CardFighter card)
 	{
 		card.RemoveEventListener(BattleEventType.ON_AFTER_ATTACK_HURT, OnAttackSucc);
 		

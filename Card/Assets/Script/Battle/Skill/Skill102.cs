@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -13,7 +13,7 @@ public class Skill102 : BaseSkill
 	public int max;
 
 
-	public Skill102(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill102(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}

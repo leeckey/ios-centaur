@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -11,7 +11,7 @@ public class Buff100 : BaseBuff
 
 	}
 
-	public override void AddBuff(Card card)
+	public override void AddBuff(CardFighter card)
 	{
 		base.AddBuff(card);
 

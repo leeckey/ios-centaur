@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public class Skill100 : BaseSkill
 {
-	public Skill100(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill100(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 
 	}

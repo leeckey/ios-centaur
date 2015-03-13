@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -9,7 +9,7 @@ public class Skill210 : BaseSkill
 	// 反击的伤害
 	int damage;
 	
-	public Skill210(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill210(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
@@ -21,14 +21,14 @@ public class Skill210 : BaseSkill
 		damage = skillData.param1 * skillLevel;
 	}
 	
-	public override void RegisterCard(Card card)
+	public override void RegisterCard(CardFighter card)
 	{
 		base.RegisterCard(card);
 		
 		card.AddEventListener(BattleEventType.ON_AFTER_ATTACK_HURT, OnAfterAttackHurt);
 	}
 	
-	public override void RemoveCard(Card card)
+	public override void RemoveCard(CardFighter card)
 	{
 		card.RemoveEventListener(BattleEventType.ON_AFTER_ATTACK_HURT, OnAfterAttackHurt);
 		

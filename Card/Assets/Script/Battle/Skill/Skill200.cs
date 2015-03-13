@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -7,19 +7,19 @@ using System.Collections.Generic;
 /// </summary>
 public class Skill200 : BaseSkill
 {
-	public Skill200(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill200(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
 
-	public override void RegisterCard(Card card)
+	public override void RegisterCard(CardFighter card)
 	{
 		base.RegisterCard(card);
 
 		card.attackSkill = this;
 	}
 
-	public override void RemoveCard(Card card)
+	public override void RemoveCard(CardFighter card)
 	{
 		base.RemoveCard(card);
 
@@ -34,7 +34,7 @@ public class Skill200 : BaseSkill
 		if (card == null || card.IsDead || card.Attack <= 0)
 			return;
 		
-		List<BaseFighter> targetList = card.owner.GetTargetByType(card, TargetType);
+		List<BaseFighter> targetList = card.owner.GetTargetByType(this, TargetType);
 		
 		if (targetList.Count == 0)
 			return;

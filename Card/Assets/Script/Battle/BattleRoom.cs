@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,8 +11,8 @@ public class BattleRoom
 	public int round = 0;
 
 	// 战斗对象
-	public Player fighter0;
-	public Player fighter1;
+	public PlayerFighter fighter0;
+	public PlayerFighter fighter1;
 
 	// 是否暂停中
 	public bool pause = false;
@@ -28,7 +28,7 @@ public class BattleRoom
 		actions = new List<BaseAction>();
 	}
 
-	public void SetFighters(Player fighter0, Player fighter1)
+	public void SetFighters(PlayerFighter fighter0, PlayerFighter fighter1)
 	{
 		this.fighter0 = fighter0;
 		this.fighter1 = fighter1;
@@ -72,6 +72,11 @@ public class BattleRoom
 		{
 			Debug.Log(action.ToString());
 		}
+
+		if (result == 1)
+			Debug.Log(string.Format("{0}死亡,{1}胜利", fighter1.ID, fighter0.ID));
+		else
+			Debug.Log(string.Format("{0}死亡,{1}胜利", fighter0.ID, fighter1.ID));
 	}
 
 	/// <summary>

@@ -15,7 +15,7 @@ public class Skill201 : BaseSkill
 	// 提升的攻击力
 	int attackUp;
 
-	public Skill201(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill201(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
@@ -29,14 +29,14 @@ public class Skill201 : BaseSkill
 		attackUp = 0;
 	}
 	
-	public override void RegisterCard(Card card)
+	public override void RegisterCard(CardFighter card)
 	{
 		base.RegisterCard(card);
 
 		card.AddEventListener(BattleEventType.ON_PRE_ATTACK, OnPreAttack);
 	}
 	
-	public override void RemoveCard(Card card)
+	public override void RemoveCard(CardFighter card)
 	{
 		card.RemoveEventListener(BattleEventType.ON_PRE_ATTACK, OnPreAttack);
 		

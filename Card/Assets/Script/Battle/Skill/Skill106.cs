@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -9,7 +9,7 @@ public class Skill106 : BaseSkill
 	// 攻击伤害
 	int damage;
 	
-	public Skill106(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill106(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}

@@ -10,7 +10,7 @@ public class Skill217 : BaseSkill
 	// 提升攻击力的概率
 	int hpUp;
 	
-	public Skill217(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill217(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
@@ -22,14 +22,14 @@ public class Skill217 : BaseSkill
 		hpUp = skillData.param1 * skillLevel;
 	}
 	
-	public override void RegisterCard(Card card)
+	public override void RegisterCard(CardFighter card)
 	{
 		base.RegisterCard(card);
 		
 		card.AddEventListener(BattleEventType.ON_CARD_PRESENT, OnPresent);
 	}
 	
-	public override void RemoveCard(Card card)
+	public override void RemoveCard(CardFighter card)
 	{
 		card.RemoveEventListener(BattleEventType.ON_CARD_PRESENT, OnPresent);
 		
@@ -43,20 +43,20 @@ public class Skill217 : BaseSkill
 	{
 		card.AddEventListener(BattleEventType.ON_CARD_DEAD, OnDead);
 		
-		List<BaseFighter> targetList = card.owner.GetTargetByType(card, TargetType);
+		List<BaseFighter> targetList = card.owner.GetTargetByType(this, TargetType);
 		card.Actions.Add(SkillStartAction.GetAction(card.ID, skillID, GetTargetID(targetList)));
 		if (targetList != null || targetList.Count == 0)
 			return;
 		
 		// 在场的同国家增加攻击力
-		foreach (Card target in targetList)
+		foreach (CardFighter target in targetList)
 		{
 			target.AddMaxHp(hpUp);
 		}
 		
 		// 不在场的增加出场回调
 		targetList = card.owner.GetTargetByCountry(card.cardData.country);
-		foreach (Card target in targetList)
+		foreach (CardFighter target in targetList)
 		{
 			if (target == card)
 				continue;
@@ -67,7 +67,7 @@ public class Skill217 : BaseSkill
 
 	void OnOtherCardPresent(FighterEvent e)
 	{
-		Card target = e.fighter as Card;
+		CardFighter target = e.fighter as CardFighter;
 		if (target == null)
 			return;
 		
@@ -80,20 +80,20 @@ public class Skill217 : BaseSkill
 	{
 		card.RemoveEventListener(BattleEventType.ON_CARD_DEAD, OnDead);
 		
-		List<BaseFighter> targetList = card.owner.GetTargetByType(card, TargetType);
+		List<BaseFighter> targetList = card.owner.GetTargetByType(this, TargetType);
 		card.Actions.Add(SkillStartAction.GetAction(card.ID, skillID, GetTargetID(targetList)));
 		if (targetList != null || targetList.Count == 0)
 			return;
 		
 		// 在场的同国家增加血量上限
-		foreach (Card target in targetList)
+		foreach (CardFighter target in targetList)
 		{
 			target.DeductMaxHp(hpUp);
 		}
 		
 		// 不在场的增加出场回调
 		targetList = card.owner.GetTargetByCountry(card.cardData.country);
-		foreach (Card target in targetList)
+		foreach (CardFighter target in targetList)
 		{
 			if (target == card)
 				continue;
