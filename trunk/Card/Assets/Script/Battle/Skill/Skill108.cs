@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -6,7 +6,7 @@ using System.Collections;
 /// </summary>
 public class Skill108 : BaseSkill
 {
-	public Skill108(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill108(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}

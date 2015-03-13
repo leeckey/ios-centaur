@@ -15,6 +15,8 @@ public class DataManager: ScriptableObject
 	List<SkillData> skillDataList;
 	[SerializeField]
 	List<BuffData> buffDataList;
+	[SerializeField]
+	List<CardTemplateData> cardDataList;
 
 	// 反序列化以后再保存为Dictionary数据
 	[NonSerialized]
@@ -23,6 +25,8 @@ public class DataManager: ScriptableObject
 	public Dictionary<int, SkillData> skillData;
 	[NonSerialized]
 	public Dictionary<int, BuffData> buffData;
+	[NonSerialized]
+	public Dictionary<int, CardTemplateData> cardData;
 
 	// 资源文件路径
 	public static string ASSET_PATH = "DataBase/DataManager"; 
@@ -52,6 +56,7 @@ public class DataManager: ScriptableObject
 		ChangeData<HeroInfo>(ref heroInfoList, ref heroInfo);
 		ChangeData<SkillData>(ref skillDataList, ref skillData);
 		ChangeData<BuffData>(ref buffDataList, ref buffData);
+		ChangeData<CardTemplateData>(ref cardDataList, ref cardData);
 		//Clear();
 	}
 
@@ -60,6 +65,8 @@ public class DataManager: ScriptableObject
 	{
 		heroInfoList = null;
 		skillDataList = null;
+		buffDataList = null;
+		cardDataList = null;
 
 		GC.Collect();
 	}
@@ -87,6 +94,7 @@ public class DataManager: ScriptableObject
 		LoadData<HeroInfo>(ref heroInfoList);
 		LoadData<SkillData>(ref skillDataList);
 		LoadData<BuffData>(ref buffDataList);
+		LoadData<CardTemplateData>(ref cardDataList);
 	}
 
 	/// <summary>

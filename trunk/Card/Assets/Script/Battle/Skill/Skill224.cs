@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -7,7 +7,7 @@ using System.Collections;
 public class Skill224 : BaseSkill
 {
 
-	public Skill224(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill224(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
@@ -17,7 +17,7 @@ public class Skill224 : BaseSkill
 		base.InitConfig(skillData);
 	}
 	
-	public override void RegisterCard(Card card)
+	public override void RegisterCard(CardFighter card)
 	{
 		base.RegisterCard(card);
 		
@@ -25,7 +25,7 @@ public class Skill224 : BaseSkill
 		card.AddEventListener(BattleEventType.ON_CHECK_MOVE, OnCheckMove);
 	}
 	
-	public override void RemoveCard(Card card)
+	public override void RemoveCard(CardFighter card)
 	{
 		card.canBeMove = true;
 		card.RemoveEventListener(BattleEventType.ON_CHECK_MOVE, OnCheckMove);

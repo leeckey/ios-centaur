@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Card : BaseFighter
+public class CardFighter : BaseFighter
 {
 	public int waitRound = 2;
 	
@@ -10,7 +10,7 @@ public class Card : BaseFighter
 	public BaseSkill attackSkill;
 	
 	// 所有者
-	public Player owner;
+	public PlayerFighter owner;
 
 	// 上次攻击造成的伤害
 	public int lastAttackValue;
@@ -19,10 +19,10 @@ public class Card : BaseFighter
 	public int lastHurtValue;
 
 	// 攻击我的卡牌
-	public Card attacker;
+	public CardFighter attacker;
 
 	// 我攻击的卡牌
-	public Card target;
+	public CardFighter target;
 	
 	// 是否可被摧毁或送还
 	public bool canBeMove = true;
@@ -34,14 +34,70 @@ public class Card : BaseFighter
 	public int canUseSkill = 0;
 
 	// 卡牌数据
-	public CardData cardData;
+	public CardTemplateData cardData;
+
+	// 卡牌技能
+	List<BaseSkill> skills;
 
 	// 卡牌Buff
 	List<BaseBuff> buffs;
-	
-	// 重置数据
-	protected override void Init()
+
+	// 返回一个卡牌对象
+	public static CardFighter NewCard(CardData cardData)
 	{
+		return new CardFighter(cardData.ID, cardData.cardTemplateID, cardData.cardLevel);
+	}
+
+	// 构造函数
+	public CardFighter(int ID, int templateID, int level)
+	{
+		this.ID = ID;
+		this.cardData = DataManager.GetInstance().cardData[templateID];
+		this.Level = level;
+
+		// 初始化技能
+		InitSkill();
+
+		// 重置数据
+		Reset();
+	}
+
+
+	void InitSkill()
+	{
+		skills = new List<BaseSkill>();
+
+		// 普攻技能
+		attackSkill = SkillFactory.GetSkillByID(cardData.normolAttID, this);
+
+		BaseSkill skill = null;
+		if (cardData.skill1ID > 0)
+		{
+			skill = SkillFactory.GetSkillByID(cardData.skill1ID, this, cardData.GetSkillPara(1));
+			skills.Add(skill);
+		}
+
+		if (cardData.skill2ID > 0)
+		{
+			skill = SkillFactory.GetSkillByID(cardData.skill2ID, this, cardData.GetSkillPara(2));
+			skills.Add(skill);
+		}
+
+		if (cardData.skill3ID > 0)
+		{
+			skill = SkillFactory.GetSkillByID(cardData.skill3ID, this, cardData.GetSkillPara(2));
+			skills.Add(skill);
+		}
+	}
+
+	// 重置数据
+	protected override void Reset()
+	{
+		// 最大血量和攻击力
+		MaxHP = cardData.baseHP + cardData.growUpHP * Level;
+		Attack = cardData.baseACK + cardData.growUpACK * Level;
+		waitRound = cardData.maxWaitRound;
+
 		buffs = new List<BaseBuff>();
 		HP = MaxHP;
 		lastAttackValue = 0;
@@ -112,6 +168,12 @@ public class Card : BaseFighter
 	{
 		if (isActive > 0 || canUseSkill > 0)
 			return;
+
+		foreach (BaseSkill skill in skills)
+		{
+			if (skill.SkillType == (int)SkillTypeEnum.SKILL_ACTIVE_TYPE)
+				skill.DoSkill();
+		}
 	}
 
 	/// <summary>
@@ -130,7 +192,7 @@ public class Card : BaseFighter
 		if (IsDead)
 			return 0;
 
-		this.attacker = attacker as Card;
+		this.attacker = attacker as CardFighter;
 		this.attacker.target = this;
 
 		lastHurtValue = damage;
@@ -165,6 +227,7 @@ public class Card : BaseFighter
 	/// </summary>
 	public void OnPresent()
 	{
+		Actions.Add(CardFightAction.GetAction(owner.ID, this.ID));
 		DispatchEvent(BattleEventType.ON_CARD_PRESENT);
 	}
 
@@ -221,6 +284,11 @@ public class Card : BaseFighter
 	/// </summary>
 	public override void DoDead()
 	{
+		if (isDead)
+			return;
+		
+		isDead = true;
+		Actions.Add(CardDeadAction.GetAction(owner.ID, this.ID));
 		owner.CardToCemetery(this);
 	}
 
@@ -229,6 +297,7 @@ public class Card : BaseFighter
 	/// </summary>
 	public void DoBack()
 	{
+		Actions.Add(CardBackAction.GetAction(owner.ID, this.ID));
 		owner.CardToCardArea(this);
 	}
 
@@ -245,6 +314,7 @@ public class Card : BaseFighter
 	/// </summary>
 	public void DoWait()
 	{
+		Actions.Add(CardWaitAction.GetAction(owner.ID, this.ID));
 		owner.CardToWait(this);
 	}
 

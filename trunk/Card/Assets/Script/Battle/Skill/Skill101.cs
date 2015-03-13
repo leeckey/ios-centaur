@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -12,7 +12,7 @@ public class Skill101 : BaseSkill
 	// 中buff的概率
 	int rate;
 
-	public Skill101(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill101(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}

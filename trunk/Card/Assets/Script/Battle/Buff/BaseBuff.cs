@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -12,7 +12,7 @@ public class BaseBuff
 	int level;
 
 	// 作用的对象
-	protected Card card;
+	protected CardFighter card;
 
 	/// <summary>
 	/// BuffID
@@ -61,7 +61,7 @@ public class BaseBuff
 	/// <summary>
 	/// 增加Buff效果
 	/// </summary>
-	public virtual void AddBuff(Card card)
+	public virtual void AddBuff(CardFighter card)
 	{
 		this.card = card;
 

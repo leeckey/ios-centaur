@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 /// <summary>
@@ -40,7 +40,7 @@ public class BaseSkill
 	SkillData skillData;
 
 	// 技能所属的卡牌
-	public Card card;
+	public CardFighter card;
 
 	public BaseSkill()
 	{
@@ -51,7 +51,7 @@ public class BaseSkill
 	/// <summary>
 	/// 构造函数
 	/// </summary>
-	public BaseSkill(Card card, SkillData skillData, int[] skillParam)
+	public BaseSkill(CardFighter card, SkillData skillData, int[] skillParam)
 	{
 		// 设置卡牌自带参数
 		SetSkillParam(skillParam);
@@ -86,12 +86,12 @@ public class BaseSkill
 	/// <summary>
 	/// 注册卡牌
 	/// </summary>
-	public virtual void RegisterCard(Card card)
+	public virtual void RegisterCard(CardFighter card)
 	{
 		this.card = card;
 	}
 
-	public virtual void RemoveCard(Card card)
+	public virtual void RemoveCard(CardFighter card)
 	{
 		this.card = null;
 	}
@@ -104,7 +104,7 @@ public class BaseSkill
 		if (card == null || card.IsDead)
 			return;
 
-		List<BaseFighter> targetList = card.owner.GetTargetByType(card, TargetType);
+		List<BaseFighter> targetList = card.owner.GetTargetByType(this, TargetType);
 
 		if (targetList.Count == 0)
 			return;
@@ -128,7 +128,11 @@ public class BaseSkill
 	{
 		List<int> result = new List<int>();
 		foreach (BaseFighter card in targets)
+		{
+			if (card == null)
+				continue;
 			result.Add(card.ID);
+		}
 
 		return result;
 	}

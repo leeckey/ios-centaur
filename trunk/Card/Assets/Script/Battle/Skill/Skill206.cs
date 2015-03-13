@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 /// <summary>
@@ -9,7 +9,7 @@ public class Skill206 : BaseSkill
 	// 最高伤害
 	int maxHurt;
 	
-	public Skill206(Card card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
+	public Skill206(CardFighter card, SkillData skillData, int[] skillParam) : base(card, skillData, skillParam)
 	{
 		
 	}
@@ -21,14 +21,14 @@ public class Skill206 : BaseSkill
 		maxHurt = skillData.param1 * skillLevel;
 	}
 	
-	public override void RegisterCard(Card card)
+	public override void RegisterCard(CardFighter card)
 	{
 		base.RegisterCard(card);
 		
 		card.AddEventListener(BattleEventType.ON_PRE_SKILL_HURT, OnPreSkillHurt);
 	}
 	
-	public override void RemoveCard(Card card)
+	public override void RemoveCard(CardFighter card)
 	{
 		card.RemoveEventListener(BattleEventType.ON_PRE_ATTACK, OnPreSkillHurt);
 		
@@ -38,7 +38,7 @@ public class Skill206 : BaseSkill
 	// 最高受到伤害
 	void OnPreSkillHurt(FighterEvent e)
 	{
-		if (card.attackSkill.SkillType != (int)SkillTypeEnum.SKILL_MAAGIC_TYPE)
+		if (card.attackSkill.SkillType != (int)SkillMagicEnum.SKILL_MAAGIC_TYPE)
 			return;
 
 		card.lastHurtValue = Mathf.Min(maxHurt, card.lastHurtValue);

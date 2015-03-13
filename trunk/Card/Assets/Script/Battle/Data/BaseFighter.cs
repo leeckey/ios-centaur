@@ -13,6 +13,8 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	private int hp = 1000;
 	private int level;
 
+	protected bool isDead;
+
 	public BaseSkill attackerSkill;
 
 	// 是否免疫技能
@@ -21,13 +23,8 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	// 是否可被治疗
 	public int canBeCure = 0;
 
-	public BaseFighter()
-	{
-		Init();
-	}
-
 	// 初始化
-	protected virtual void Init()
+	protected virtual void Reset()
 	{
 
 	}
@@ -90,6 +87,8 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 		maxHp += num;
 
 		hp += num;
+
+		Actions.Add(MaxHpChangeAction.GetAction(this.ID, num));
 	}
 
 	/// <summary>
@@ -100,6 +99,8 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 		maxHp -= num;
 		if (hp > maxHp)
 			hp = maxHp;
+
+		Actions.Add(MaxHpChangeAction.GetAction(this.ID, -num));
 	}
 
 	/// <summary>
@@ -110,9 +111,13 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 		if (canBeCure > 0)
 			return 0;
 
-		this.hp += num;
+		int temp = this.hp;
+		this.hp = Mathf.Min(maxHp, this.hp + num);
+		temp = this.hp - temp;
 
-		return num;
+		Actions.Add(CureNotifyAction.GetAction(this.ID, temp));
+
+		return temp;
 	}
 
 	/// <summary>
@@ -120,14 +125,20 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	/// </summary>
 	public virtual int DeductHp(int num, bool checkDead = false)
 	{
-		this.hp -= num;
+		if (IsDead)
+			return 0;
 
-		Actions.Add(DamageNotifyAction.GetAction(this.id, num));
+		int temp = this.hp;
+
+		this.hp = Mathf.Max(0, this.hp - num);
+		temp -= hp;
+
+		Actions.Add(DamageNotifyAction.GetAction(this.ID, temp));
 
 		if (checkDead)
 			CheckDead();
 
-		return num;
+		return temp;
 	}
 
 	// 死亡检查
@@ -142,7 +153,10 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	/// </summary>
 	public virtual void DoDead()
 	{
+		if (isDead)
+			return;
 
+		isDead = true;
 	}
 
 	/// <summary>
@@ -151,6 +165,8 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	public virtual int AddAttack(int num)
 	{
 		this.attack += num;
+		
+		AttackChangeAction.GetAction(this.ID, num);
 
 		return num;
 	}
@@ -160,9 +176,12 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 	/// </summary>
 	public virtual int DeductAttack(int num)
 	{
-		this.attack -= num;
-		
-		return num;
+		int temp = this.attack;
+		this.attack = Mathf.Max(0, this.attack - num);
+		temp -= this.attack;
+
+		AttackChangeAction.GetAction(this.ID, temp);
+		return temp;
 	}
 
 	/// <summary>
@@ -173,7 +192,7 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 		if (IsDead)
 			return 0;
 		
-		DeductHp(damage);
+		DeductHp(damage, true);
 
 		return damage;
 	}
@@ -186,7 +205,7 @@ public class BaseFighter : EventDispatcher<FighterEvent>
 		if (IsDead)
 			return 0;
 		
-		DeductHp(damage);
+		DeductHp(damage, true);
 
 		return damage;
 	}

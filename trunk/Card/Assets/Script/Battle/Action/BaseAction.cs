@@ -30,8 +30,10 @@ public enum ActionType
 	None,          // 空类型
 	RoundStart,    // 回合开始
 	RoundEnd,      // 回合结束
-	DrawCard,      // 抽牌
-	PlayCard,      // 出牌
+	CardWait,      // 抽牌
+	CardFight,      // 出牌
+	CardDead,      // 卡牌死亡
+	CardBack,      // 卡牌回到牌堆
 	RemoveCard,    // 弃牌
 	Attack,        // 攻击
 	Damage,        // 受到伤害
