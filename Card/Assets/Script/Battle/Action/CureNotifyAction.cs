@@ -11,7 +11,7 @@ public class CureNotifyAction : BaseAction
 	
 	CureNotifyAction(int target, int cure)
 	{
-		type = ActionType.Damage;
+		type = ActionType.Cure;
 		// sourceID = attacker;
 		targetID = target;
 		this.cure = cure;

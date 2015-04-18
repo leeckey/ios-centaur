@@ -7,7 +7,7 @@ using System.Collections;
 public class RoundStartAction : BaseAction
 {
 	// 回合数
-	int round;
+	public int round;
 
 	RoundStartAction(int round)
 	{

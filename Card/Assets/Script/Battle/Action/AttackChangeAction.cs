@@ -11,7 +11,7 @@ public class AttackChangeAction : BaseAction
 	
 	AttackChangeAction(int target, int num)
 	{
-		type = ActionType.SkillStart;
+		type = ActionType.AttackChange;
 		targetID = target;
 		this.num = num;
 	}

@@ -12,7 +12,7 @@ public class BuffRemoveAction : BaseAction
 	
 	BuffRemoveAction(int attacker, int skillID)
 	{
-		type = ActionType.SkillStart;
+		type = ActionType.BuffRemove;
 		sourceID = attacker;
 		this.buffID = skillID;
 	}

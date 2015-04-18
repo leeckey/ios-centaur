@@ -10,6 +10,7 @@ public class SkillEndAction : BaseAction
 
 	SkillEndAction(int sourceID, int skillID)
 	{
+		type = ActionType.SkillEnd;
 		this.sourceID = sourceID;
 		this.skillID = skillID;
 	}
