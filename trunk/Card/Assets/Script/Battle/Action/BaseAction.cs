@@ -40,5 +40,8 @@ public enum ActionType
 	SkillStart,
 	SkillEnd,
 	BuffAdd,
-	BuffRemov
+	BuffRemove,
+	AttackChange,
+	Cure,
+	MaxHpChange
 }

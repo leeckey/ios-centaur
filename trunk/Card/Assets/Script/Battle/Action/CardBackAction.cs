@@ -8,7 +8,7 @@ public class CardBackAction : BaseAction
 {
 	CardBackAction(int ownerID, int cardID)
 	{
-		type = ActionType.CardDead;
+		type = ActionType.CardBack;
 		sourceID = ownerID;
 		targetID = cardID;
 	}

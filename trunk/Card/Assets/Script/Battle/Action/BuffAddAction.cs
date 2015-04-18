@@ -12,7 +12,7 @@ public class BuffAddAction : BaseAction
 	
 	BuffAddAction(int target, int skillID)
 	{
-		type = ActionType.SkillStart;
+		type = ActionType.BuffAdd;
 		sourceID = target;
 		this.buffID = skillID;
 	}

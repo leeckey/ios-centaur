@@ -8,7 +8,7 @@ public class CardWaitAction : BaseAction
 {
 	CardWaitAction(int ownerID, int cardID)
 	{
-		type = ActionType.CardDead;
+		type = ActionType.CardWait;
 		sourceID = ownerID;
 		targetID = cardID;
 	}

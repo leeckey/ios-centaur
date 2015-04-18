@@ -11,7 +11,7 @@ public class MaxHpChangeAction : BaseAction
 	
 	MaxHpChangeAction(int target, int num)
 	{
-		type = ActionType.SkillStart;
+		type = ActionType.MaxHpChange;
 		targetID = target;
 		this.num = num;
 	}
